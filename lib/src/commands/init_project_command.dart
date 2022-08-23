@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:args/command_runner.dart';
 import 'package:json_rest_server/src/core/templates/template_utils.dart';
+import 'package:json_rest_server/src/core/templates/templates.dart';
 import 'package:json_rest_server/src/exceptions/command_exception.dart';
 
 class InitProjectCommand extends Command {
@@ -45,17 +46,14 @@ class InitProjectCommand extends Command {
   }
 
   void _createDatabase(Directory dir) {
-    final databaseString = TemplateUtils().readTemplate(TemplateType.database);
     var db = File('${dir.path}/database.json');
     db.createSync(recursive: true);
-    db.writeAsStringSync(databaseString);
+    db.writeAsStringSync(TemplateType.database.templateBody);
   }
-  
+
   void _createConfig(Directory dir) {
-    
-    final databaseString = TemplateUtils().readTemplate(TemplateType.config);
     var db = File('${dir.path}/config.yaml');
     db.createSync(recursive: true);
-    db.writeAsStringSync(databaseString);
+    db.writeAsStringSync(TemplateType.config.templateBody);
   }
 }

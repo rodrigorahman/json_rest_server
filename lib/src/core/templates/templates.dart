@@ -1,3 +1,14 @@
+enum TemplateType {
+  database(_database),
+  config(_config);
+
+  final String templateBody;
+
+  const TemplateType(this.templateBody);
+}
+
+
+const String _database = r'''
 {
     "users": [
         {
@@ -28,3 +39,23 @@
         }
     ]
 }
+''';
+
+
+const _config = r'''
+name: Json Rest Server
+port: 8080
+host: 0.0.0.0
+database: database.json
+
+# storage:
+#   folder: storage/
+#   name: "file"
+
+# auth:
+#   key: dajdi3cdj8jw40jv89cj4uybfg9wh9vcnvb
+#   exp: 3600
+#   scape:
+#     - storage
+#     - file
+''';
