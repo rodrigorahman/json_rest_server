@@ -6,12 +6,12 @@ import 'package:args/command_runner.dart';
 import '../core/exceptions/command_exception.dart';
 import '../core/templates/templates.dart';
 
-class InitProjectCommand extends Command {
+class CreateProjectCommand extends Command {
   @override
-  String get description => 'Initial project';
+  String get description => 'create project';
 
   @override
-  String get name => 'init';
+  String get name => 'create';
 
   @override
   void run() {

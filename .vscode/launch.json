@@ -24,6 +24,13 @@
             "type": "dart",
             "program": "${workspaceFolder}/bin/json_rest_server.dart",
             "args": ["run"]
+        },
+        {
+            "name": "json_rest_server (upgrade)",
+            "request": "launch",
+            "type": "dart",
+            "program": "${workspaceFolder}/bin/json_rest_server.dart",
+            "args": ["upgrade"]
         }
         
     ]

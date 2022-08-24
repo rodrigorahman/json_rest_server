@@ -53,9 +53,9 @@ database: database.json
 #   name: "file"
 
 # auth:
-#   key: dajdi3cdj8jw40jv89cj4uybfg9wh9vcnvb
-#   exp: 3600
-#   scape:
-#     - storage
-#     - file
+#   jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl
+#   jwtExpire: 3600
+#   unauthorizedStatusCode: 403
+#   urlSkip:
+#     - products
 ''';

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:get_it/get_it.dart';
 import 'package:shelf/shelf.dart';
 
-import '../../core/exceptions/table_not_exists_exception.dart';
 import '../../repositories/database_repository.dart';
 
 class PatchHandler {
@@ -29,6 +28,6 @@ class PatchHandler {
       });
     }
 
-    throw TableNotExistsException();
+    return Response(404);
   }
 }

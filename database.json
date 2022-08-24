@@ -1,1 +1,36 @@
-{"users":[{"id":1,"name":"Rodrigo Rahman","email":"rodrigorahman@academiadoflutter.com.br","password":"123"},{"id":2,"name":"Carls","email":"carls@gmail.com","password":"1234"},{"id":3,"name":"Luana Rahman Alterado Patch","email":"luana@academiadoflutter.com.br","password":"123"}],"products":[{"id":0,"title":"Academia do flutter"},{"id":1,"title":"Jornada Dart"},{"id":2,"title":"Jornada GetX"}]}
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "Rodrigo Rahman",
+            "email": "rodrigorahman@academiadoflutter.com.br",
+            "password": "123"
+        },
+        {
+            "id": 2,
+            "name": "Carls",
+            "email": "carls@gmail.com",
+            "password": "1234"
+        },
+        {
+            "id": 3,
+            "name": "Luana Rahman Alterado Patch",
+            "email": "luana@academiadoflutter.com.br",
+            "password": "123"
+        }
+    ],
+    "products": [
+        {
+            "id": 0,
+            "title": "Academia do flutter"
+        },
+        {
+            "id": 1,
+            "title": "Jornada Dart"
+        },
+        {
+            "id": 2,
+            "title": "Jornada GetX"
+        }
+    ]
+}
