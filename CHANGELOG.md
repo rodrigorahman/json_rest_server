@@ -37,3 +37,7 @@ auth:
     - /products/{*}:
         method: get
 ```
+
+## 1.0.8
+
+- Add Readme en
