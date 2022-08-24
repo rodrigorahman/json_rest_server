@@ -32,10 +32,41 @@ class GetHandler {
 
   Future<Response> _processGetAll(
       String table, Map<String, String> queryParameters) async {
-    return Response(200,
-        body: jsonEncode(_databaseRepository.getAll(table)),
-        headers: {
-          'content-type': 'application/json',
-        });
+    var tableData = _databaseRepository.getAll(table);
+
+    if (queryParameters.containsKey('page')) {
+      tableData = _processPagination(tableData, queryParameters);
+    }
+
+    return Response(200, body: jsonEncode(tableData), headers: {
+      'content-type': 'application/json',
+    });
+  }
+
+  List<Map<String, dynamic>> _processPagination(
+      List<Map<String, dynamic>> tableData,
+      Map<String, String> queryParameters) {
+
+    final page = int.parse(queryParameters['page'] ?? '1') - 1;
+    final limit = int.parse(queryParameters['limit'] ?? '10');
+    final totalList = tableData.length;
+
+    var start = 0;
+
+    if (page == 1) {
+      start = limit;
+    } else if (page > 1) {
+      start = limit * page;
+    }
+
+    if (start > totalList) {
+      start = totalList;
+    }
+
+    var end = start + limit;
+    if (end > totalList) {
+      end = totalList;
+    }
+    return tableData.sublist(start, end);
   }
 }
