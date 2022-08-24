@@ -20,4 +20,4 @@
 
 ## 1.0.6
 
-- Fix Readme and example
+- Fix Readme and examples
