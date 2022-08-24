@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
@@ -19,18 +18,18 @@ class CreateProjectCommand extends Command {
       var dirServer = _createFolder();
       _createDatabase(dirServer);
       _createConfig(dirServer);
-      log('Backend Created');
-      log('use json_rest_server run for start project');
+      print('Backend Created');
+      print('use json_rest_server run for start project');
     } on CommandException catch (e) {
-      log(e.message);
+      print(e.message);
     }
   }
 
   Directory _createFolder() {
     final args = argResults?.arguments;
-    var path = '.';
+    var path = './';
 
-    if (args != null) {
+    if (args != null && args.isNotEmpty) {
       path = args[0];
     }
 

@@ -2,7 +2,7 @@ import 'package:args/command_runner.dart';
 
 class VersionCommand extends Command<dynamic> {
 
-  final _version = '1.0.0';
+  final _version = '1.0.4';
 
   @override
   String get description => 'Show json rest server version';

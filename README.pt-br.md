@@ -1,3 +1,11 @@
+Json Rest Server is a RESTful server based on JSON
+<div align="center">
+
+**Languages:**
+
+[![Portuguese](https://img.shields.io/badge/Language-Portuguese-red?style=for-the-badge)](README.pt-br.md)
+</div>
+
 # Json Rest Server 
 
 Um RESTful server baseado em JSON
@@ -14,6 +22,9 @@ dart pub global activate json_rest_server
 ```
 
 ## Commands
+
+***ATENÇÃO**: 
+O executável padrão do projeto é json_rest_server porém você também pode utilizar ***jsonRestServer*** ou somente ***jrs*** facilitando assim a digitação ;-)
 
 **Atualizando**:
 
@@ -118,12 +129,12 @@ Para realizar o login você precisa fazer um post para a url ex: http://localhos
 
 ```json
 {
-    "email": "luana@academiadoflutter.com.br",
+    "email": "rodrigorahman@academiadoflutter.com.br",
     "password": "123"
 }
 ```
 
-O Json Rest Server fará uma busca na sua tabela de users registrada no arquivo database.json e tudo estiver correto será retornado um json com o token de acesso:
+O Json Rest Server fará uma busca na sua tabela de users registrada no arquivo database.json e se tudo estiver correto será retornado um json com o token de acesso:
 
 ```json
 {
