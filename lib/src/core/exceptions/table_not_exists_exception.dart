@@ -1,0 +1,3 @@
+class TableNotExistsException implements Exception {
+
+}

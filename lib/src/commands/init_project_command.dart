@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:json_rest_server/src/core/templates/template_utils.dart';
-import 'package:json_rest_server/src/core/templates/templates.dart';
-import 'package:json_rest_server/src/exceptions/command_exception.dart';
+
+import '../core/exceptions/command_exception.dart';
+import '../core/templates/templates.dart';
 
 class InitProjectCommand extends Command {
   @override

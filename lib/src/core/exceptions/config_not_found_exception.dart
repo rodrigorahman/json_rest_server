@@ -1,0 +1,1 @@
+class ConfigNotFoundException implements Exception {}

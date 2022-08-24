@@ -1,0 +1,1 @@
+class DatabaseNotFoundException implements Exception {}
