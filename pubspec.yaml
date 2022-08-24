@@ -1,6 +1,6 @@
 name: json_rest_server
 description: Json Rest Server is a RESTful server based on JSON
-version: 1.0.8
+version: 1.0.9
 homepage: https://github.com/rodrigorahman/json_rest_server
 
 environment:
