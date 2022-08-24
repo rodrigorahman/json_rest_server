@@ -29,14 +29,29 @@ class JsonRestServer {
 
     // Configure a pipeline that logs requests.
     final handler = Pipeline()
-      .addMiddleware(logRequests())
-      .addMiddleware(DefaultContentType('application/json').handler)
-      .addMiddleware(AuthMiddleware().handler)
-      .addHandler(HandlerRequest().execute);
+        .addMiddleware(logRequests())
+        .addMiddleware(DefaultContentType('application/json').handler)
+        .addMiddleware(AuthMiddleware().handler)
+        .addHandler(HandlerRequest().execute);
 
     // For running in containers, we respect the PORT environment variable.
     final port = _config.port;
     final server = await serve(handler, ip, port);
-    print('Server listening on port ${server.port}');
+    if (ip == '0.0.0.0') {
+      final networks = await NetworkInterface.list();
+      final networksMap = {
+        for (var element in networks)
+          element.name.toLowerCase(): element.addresses.first.address
+      };
+      final ethernet = networksMap['ethernet'];
+
+      final wifi = networksMap['wi-fi'];
+      print('${_config.name} Server started, responding on:');
+      print('http://localhost:8080/');
+      if (ethernet != null) print('http://$ethernet:8080/');
+      if (wifi != null) print('http://$wifi:8080/');
+    } else {
+      print('${_config.name} Server started on http://$ip:${server.port}');
+    }
   }
 }

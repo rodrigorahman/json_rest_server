@@ -21,3 +21,19 @@
 ## 1.0.6
 
 - Fix Readme and examples
+
+## 1.0.7
+
+- Fix logs
+- Adding the possibility to bypass authentication by paths and methods
+```yaml
+auth:
+  jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl
+  jwtExpire: 3600
+  unauthorizedStatusCode: 403
+  urlSkip:
+    - /users:
+        method: post
+    - /products/{*}:
+        method: get
+```

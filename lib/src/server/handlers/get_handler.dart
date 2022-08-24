@@ -22,6 +22,11 @@ class GetHandler {
   }
 
   Future<Response> _processById(String table, String id) async {
+
+    if(id.isEmpty){
+      return Response.badRequest(body: jsonEncode({'error': 'param id required'}));
+    }
+
     final result = _databaseRepository.getById(table, int.parse(id));
 
     return Response(200, body: jsonEncode(result), headers: {

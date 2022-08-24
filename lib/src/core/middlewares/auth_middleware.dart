@@ -66,9 +66,40 @@ class AuthMiddleware extends Middlewares {
 
   Future<Response> _checkLogin(Request request) async {
     try {
-      final segments = request.url.pathSegments;
       final skipUrl = _config.auth!.urlSkip;
-      if (skipUrl != null && skipUrl.contains(segments[0])) {
+      final pathUrl = '/${request.url.path}';
+      final method = request.method;
+
+      if (skipUrl != null &&
+          skipUrl.any((element) {
+            if (element.path.contains('{*}')) {
+              final segments = Uri(path: element.path).pathSegments;
+              final pathSegments = request.url.pathSegments;
+              var valid = true;
+
+              if (segments.length != pathSegments.length) {
+                valid = false;
+              } else {
+                for (int i = 0; i < pathSegments.length; i++) {
+                  if (segments[i] == '{*}' &&
+                      int.tryParse(pathSegments[i]) != null) {
+                    continue;
+                  }
+
+                  if (segments[i] == pathSegments[i]) {
+                    continue;
+                  }
+                  valid = false;
+                  break;
+                }
+              }
+
+              return valid;
+            } else {
+              return (element.path == pathUrl &&
+                  element.method.toLowerCase() == method.toLowerCase());
+            }
+          })) {
         return innerHandler(request);
       }
 
