@@ -4,7 +4,7 @@ Json Rest Server is a RESTful server based on JSON
 **Languages:**
 
 [![Portuguese](https://img.shields.io/badge/Language-Portuguese-red?style=for-the-badge)](README.pt-br.md)
-</div>
+[![English](https://img.shields.io/badge/Language-English-red?style=for-the-badge)](README.en.md)</div>
 
 # Json Rest Server 
 
@@ -21,10 +21,23 @@ Tenha um servidor restfull 100% funcional com autenticação, paginação e todo
 dart pub global activate json_rest_server
 ```
 
-## Commands
+## Configurações
 
-***ATENÇÃO**: 
-O executável padrão do projeto é json_rest_server porém você também pode utilizar ***jsonRestServer*** ou somente ***jrs*** facilitando assim a digitação ;-)
+No arquivo config.yaml ficam as configurações do servidor
+
+Segue descrição dos parametros:
+
+```
+name -> Nome do seu servidor
+port -> porta de acesso
+host -> Ip de acesso, caso queira que responda por ip e localhost coloque 0.0.0.0
+database -> nome do arquivo do seu banco de dados
+```
+
+## Comandos
+
+**ATENÇÃO**: 
+O executável padrão do projeto é json_rest_server porém você também pode utilizar **jsonRestServer** ou somente **jrs** facilitando assim a digitação ;-)
 
 **Atualizando**:
 
@@ -82,7 +95,7 @@ Cada chave criada nesse arquivo terá suas rotas completas ex:
 }
 ```
 
-***Teremos as rotas***:
+**Teremos as rotas**:
 
 ```
 GET    /products                     -> Recuperar todos os produtos
@@ -94,7 +107,7 @@ PATCH  /products/1                   -> Editar um produto
 DELETE /products/1                   -> Deletar um produto
 ```
 
-***OBS: Lembre que os método post, put e patch devem conter um body json***
+**OBS: Lembre que os método post, put e patch devem conter um body json**
 
 Na pasta exemplos existe um arquivo postman com todos os exemplos mencionados acima
 
@@ -111,7 +124,8 @@ auth:
   jwtExpire: 3600
   unauthorizedStatusCode: 403
   urlSkip:
-    - path_sem_autenticacao
+    - path_sem_autenticacao:
+        method: metodo http (post,get,put,patch ou delete)
 ```
 
 Descrição das tags:
@@ -120,10 +134,33 @@ Descrição das tags:
 jwtSecret -> Chave de autenticação do jwt (essa chave é importante para validação do token)
 jwtExpire -> Tempo de expiração do token
 unauthorizedStatusCode -> Status de retorno para acesso negado
-urlSkip -> Coloque aqui as urls que você não quer que sejam verificadas (paths não autenticados)
+urlSkip -> Coloque aqui as urls e métodos http que você não que seja verificada a autenticação do usuário (paths não autenticados)
 ```
 
-***Como realizar o login***
+**Exemplo**
+
+No exemplo abaixo, não será verificada a autenticação para o path /users no método post (Cadastro de um novo usuário).
+
+Agora o segundo path **/products/{\*}** você deve ter achado estranho o parâmetro **{\*}**, mas ele é um coringa de acesso, pois, todos os paths configurados no database.json respondem a busca de dados por id, na url ex: **/producs/1** e precisavamos ignorar o id para identificar a url, sendo assim criamos o coringa **{\*}** deixando esse pedaço da url dinâmico permitindo que uma url **/products/1** possa ser acessada sem autenticação.
+
+```json
+auth:
+  jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl
+  jwtExpire: 3600
+  unauthorizedStatusCode: 403
+  urlSkip:
+    - /users:
+        method: post
+    - /products/{*}:
+        method: get
+
+```
+
+
+
+
+
+**Como realizar o login**
 
 Para realizar o login você precisa fazer um post para a url ex: http://localhost:8080/auth com o body:
 
