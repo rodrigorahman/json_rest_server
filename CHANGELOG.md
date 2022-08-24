@@ -41,3 +41,7 @@ auth:
 ## 1.0.8
 
 - Add Readme en
+
+## 1.0.11
+
+- Add Example and fix pub points 
