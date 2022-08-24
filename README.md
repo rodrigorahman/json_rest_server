@@ -4,6 +4,7 @@ Json Rest Server is a RESTful server based on JSON
 **Languages:**
 
 [![Portuguese](https://img.shields.io/badge/Language-Portuguese-red?style=for-the-badge)](README.pt-br.md)
+[![English](https://img.shields.io/badge/Language-English-red?style=for-the-badge)](README.en.md)
 </div>
 
 # Json Rest Server 

@@ -7,7 +7,6 @@ enum TemplateType {
   const TemplateType(this.templateBody);
 }
 
-
 const String _database = r'''
 {
     "users": [
@@ -41,7 +40,6 @@ const String _database = r'''
 }
 ''';
 
-
 const _config = r'''
 name: Json Rest Server
 port: 8080
@@ -57,8 +55,8 @@ database: database.json
 #   jwtExpire: 3600
 #   unauthorizedStatusCode: 403
 #   urlSkip:
-      - /users:
-        method: post
-      - /products/{*}:
-        method: get
+#     - /users:
+#        method: post
+#      - /products/{*}:
+#        method: get
 ''';
