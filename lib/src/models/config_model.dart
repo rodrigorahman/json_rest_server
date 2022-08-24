@@ -5,7 +5,6 @@ import 'package:yaml/yaml.dart';
 import 'config_auth_model.dart';
 
 class ConfigModel {
-  
   final String name;
   final int port;
   final String? host;
@@ -31,7 +30,6 @@ class ConfigModel {
   }
 
   factory ConfigModel.fromMap(Map<String, dynamic> map) {
-
     final YamlMap? auth = map['auth'];
 
     return ConfigModel(
@@ -45,5 +43,6 @@ class ConfigModel {
 
   String toJson() => json.encode(toMap());
 
-  factory ConfigModel.fromJson(String source) => ConfigModel.fromMap(json.decode(source));
+  factory ConfigModel.fromJson(String source) =>
+      ConfigModel.fromMap(json.decode(source));
 }

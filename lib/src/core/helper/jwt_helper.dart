@@ -26,6 +26,7 @@ class JwtHelper {
 
     return issueJwtHS256(claimSet, jwtSecret);
   }
+
   static JwtClaim getClaims(String token) {
     final config = GetIt.I.get<ConfigModel>();
     final jwtExpire = config.auth?.jwtExpire;

@@ -45,3 +45,7 @@ auth:
 ## 1.0.11
 
 - Add Example and fix pub points 
+
+## 1.0.12
+
+- dart format all files

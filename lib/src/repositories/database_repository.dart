@@ -36,10 +36,7 @@ class DatabaseRepository {
     } else {
       final tableData = getAll(table);
       final lastId = tableData.last['id'];
-      final saveData = {
-        'id': (lastId + 1),
-        ...data
-      };
+      final saveData = {'id': (lastId + 1), ...data};
       tableData.add(saveData);
     }
 

@@ -22,9 +22,9 @@ class GetHandler {
   }
 
   Future<Response> _processById(String table, String id) async {
-
-    if(id.isEmpty){
-      return Response.badRequest(body: jsonEncode({'error': 'param id required'}));
+    if (id.isEmpty) {
+      return Response.badRequest(
+          body: jsonEncode({'error': 'param id required'}));
     }
 
     final result = _databaseRepository.getById(table, int.parse(id));
@@ -50,7 +50,6 @@ class GetHandler {
   List<Map<String, dynamic>> _processPagination(
       List<Map<String, dynamic>> tableData,
       Map<String, String> queryParameters) {
-
     final page = int.parse(queryParameters['page'] ?? '1') - 1;
     final limit = int.parse(queryParameters['limit'] ?? '10');
     final totalList = tableData.length;
