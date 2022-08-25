@@ -49,3 +49,12 @@ auth:
 ## 1.0.12
 
 - dart format all files
+
+## 1.0.13
+
+- adding filter support in getAll searches
+
+```
+GET    /products?title=jornada                      -> Get all the products with filter
+GET    /products?page=1&limit=10&title=jornada      -> Get all products with pagination with filter
+```

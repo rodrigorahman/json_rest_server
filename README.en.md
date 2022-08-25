@@ -83,13 +83,15 @@ Each key will be created in this file and also your routes, ex:
 ***Routes created***:
 
 ```
-GET    /products                     -> Get all the products
-GET    /products?page=1&limit=10     -> Get all products with pagination
-GET    /products/1                   -> Get 1 product based on ID
-POST   /products                     -> Create a product
-PUT    /products/1                   -> Edit a product based on ID
-PATCH  /products/1                   -> Edit a product based on ID
-DELETE /products/1                   -> Delete a product based on ID
+GET    /products                                    -> Get all the products
+GET    /products?title=jornada                      -> Get all the products with filter
+GET    /products?page=1&limit=10                    -> Get all products with pagination
+GET    /products?page=1&limit=10&title=jornada      -> Get all products with pagination with filter
+GET    /products/1                                  -> Get 1 product based on ID
+POST   /products                                    -> Create a product
+PUT    /products/1                                  -> Edit a product based on ID
+PATCH  /products/1                                  -> Edit a product based on ID
+DELETE /products/1                                  -> Delete a product based on ID
 ```
 
 ***IMPORTANT: The post, put and patch MUST have a json body ***

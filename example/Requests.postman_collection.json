@@ -9,6 +9,16 @@
 		{
 			"name": "Get All",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE5NzIzNTQyMzMsImlhdCI6MTY2MTMxNDIzMywiaXNzIjoianNvbl9yZXN0X3NlcnZlciIsIm5iZiI6MTY2MTMxNDIzMywic3ViIjoiMyJ9.cA_j1KqiyeRkFfnVrpd0gHxpiyR90FLArTr2-xp8Or4",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -26,19 +36,118 @@
 			"response": []
 		},
 		{
-			"name": "Get All Paginate",
+			"name": "Get All Filter",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE5NzI0MjUyNzMsImlhdCI6MTY2MTM4NTI3MywiaXNzIjoianNvbl9yZXN0X3NlcnZlciIsIm5iZiI6MTY2MTM4NTI3Mywic3ViIjoiMyJ9.qwLb0YbjAHUD2MizTzAIKnsjPSXRflrmrOpVlhM8Abs",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users",
+					"raw": "http://localhost:8080/products?title=Jornada Getx",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"users"
+						"products"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Jornada GetX",
+							"disabled": true
+						},
+						{
+							"key": "id",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "title",
+							"value": "Jornada Getx"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Paginate Filter",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE5NzI0MjUyNzMsImlhdCI6MTY2MTM4NTI3MywiaXNzIjoianNvbl9yZXN0X3NlcnZlciIsIm5iZiI6MTY2MTM4NTI3Mywic3ViIjoiMyJ9.qwLb0YbjAHUD2MizTzAIKnsjPSXRflrmrOpVlhM8Abs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products?page=2&limit=2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "limit",
+							"value": "2"
+						},
+						{
+							"key": "title",
+							"value": "jornada",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Paginate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/products?page=1&limit=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "limit",
+							"value": "1"
+						}
 					]
 				}
 			},
@@ -50,15 +159,15 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/users/0",
+					"raw": "http://localhost:8080/products/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"users",
-						"0"
+						"products",
+						"1"
 					]
 				}
 			},
@@ -186,7 +295,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Luana Rahman\",\r\n    \"email\": \"luana@academiadoflutter.com.br\",\r\n    \"password\": \"123\"\r\n}",
+					"raw": "{\r\n    \"email\": \"luana@academiadoflutter.com.br\",\r\n    \"password\": \"123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -194,14 +303,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/users",
+					"raw": "http://localhost:8080/auth",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"users"
+						"auth"
 					]
 				}
 			},

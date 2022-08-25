@@ -99,13 +99,15 @@ Cada chave criada nesse arquivo terá suas rotas completas ex:
 **Teremos as rotas**:
 
 ```
-GET    /products                     -> Recuperar todos os produtos
-GET    /products?page=1&limit=10     -> Recuperar todos os produtos paginado
-GET    /products/1                   -> Recuperar 1 produto
-POST   /products                     -> Adicionar um produto
-PUT    /products/1                   -> Editar um produto
-PATCH  /products/1                   -> Editar um produto
-DELETE /products/1                   -> Deletar um produto
+GET    /products                                    -> Recuperar todos os produtos
+GET    /products?title=jornada                      -> Recuperar todos os produtos com filtro
+GET    /products?page=1&limit=10                    -> Recuperar todos os produtos paginado
+GET    /products?page=1&limit=10&title=Jornada      -> Recuperar todos os produtos paginado com filtro
+GET    /products/1                                  -> Recuperar 1 produto
+POST   /products                                    -> Adicionar um produto
+PUT    /products/1                                  -> Editar um produto
+PATCH  /products/1                                  -> Editar um produto
+DELETE /products/1                                  -> Deletar um produto
 ```
 
 **OBS: Lembre que os método post, put e patch devem conter um body json**

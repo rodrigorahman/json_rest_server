@@ -37,9 +37,14 @@ class GetHandler {
   Future<Response> _processGetAll(
       String table, Map<String, String> queryParameters) async {
     var tableData = _databaseRepository.getAll(table);
+    var params = {...queryParameters};
 
-    if (queryParameters.containsKey('page')) {
+    if (params.containsKey('page')) {
       tableData = _processPagination(tableData, queryParameters);
+    } else {
+      if (params.isNotEmpty) {
+        tableData = _filterData(tableData, queryParameters);
+      }
     }
 
     return Response(200, body: jsonEncode(tableData), headers: {
@@ -50,6 +55,15 @@ class GetHandler {
   List<Map<String, dynamic>> _processPagination(
       List<Map<String, dynamic>> tableData,
       Map<String, String> queryParameters) {
+
+    final params = {...queryParameters};
+    params.remove('page');
+    params.remove('limit');
+
+    if(params.isNotEmpty){
+      tableData = _filterData(tableData, params);
+    }
+
     final page = int.parse(queryParameters['page'] ?? '1') - 1;
     final limit = int.parse(queryParameters['limit'] ?? '10');
     final totalList = tableData.length;
@@ -71,5 +85,17 @@ class GetHandler {
       end = totalList;
     }
     return tableData.sublist(start, end);
+  }
+
+  List<Map<String, dynamic>> _filterData(List<Map<String, dynamic>> tableData,
+      Map<String, String> queryParameters) {
+    final data = [...tableData];
+
+    queryParameters.forEach((key, value) {
+      data.retainWhere((element) =>
+          element[key].toString().toLowerCase().contains(value.toLowerCase()));
+    });
+
+    return data;
   }
 }
