@@ -55,12 +55,11 @@ class GetHandler {
   List<Map<String, dynamic>> _processPagination(
       List<Map<String, dynamic>> tableData,
       Map<String, String> queryParameters) {
-
     final params = {...queryParameters};
     params.remove('page');
     params.remove('limit');
 
-    if(params.isNotEmpty){
+    if (params.isNotEmpty) {
       tableData = _filterData(tableData, params);
     }
 

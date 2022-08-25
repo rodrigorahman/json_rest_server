@@ -58,3 +58,7 @@ auth:
 GET    /products?title=jornada                      -> Get all the products with filter
 GET    /products?page=1&limit=10&title=jornada      -> Get all products with pagination with filter
 ```
+
+## 1.0.14
+
+- Running dart format in files for updating pub points.
