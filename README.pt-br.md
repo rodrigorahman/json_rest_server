@@ -10,7 +10,7 @@ Json Rest Server is a RESTful server based on JSON
 
 Um RESTful server baseado em JSON
 
-Tenha um servidor restfull 100% funcional com autenticação, paginação e todos os serviços necessários para desenvolvimento de aplicações
+Tenha um servidor RESTful 100% funcional com autenticação, paginação e todos os serviços necessários para desenvolvimento de aplicações
 
 ## Instalação
 1. Faça a instalação do Dart (https://dart.dev/get-dart

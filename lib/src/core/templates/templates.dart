@@ -18,8 +18,8 @@ const String _database = r'''
         },
         {
             "id": 1,
-            "name": "Carls",
-            "email": "carls@gmail.com",
+            "name": "Guilherme",
+            "email": "guilherme@gmail.com",
             "password": "1234"
         }
     ],
@@ -45,10 +45,6 @@ name: Json Rest Server
 port: 8080
 host: 0.0.0.0
 database: database.json
-
-# storage:
-#   folder: storage/
-#   name: "file"
 
 # auth:
 #   jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl

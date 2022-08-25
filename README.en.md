@@ -10,7 +10,7 @@ Json Rest Server is a RESTful server based on JSON
 # Json Rest Server 
 A RESTful server based on JSON
 
-With this package you can have a fully functional restfull server with auth, pagination and all the necessaries services do build an application
+With this package you can have a fully functional RESTful server with auth, pagination and all the necessaries services do build an application
 
 ## Installation
 1. Install dart Dart (https://dart.dev/get-dart), just IF you don't have the flutter in your computer

@@ -36,7 +36,7 @@ class JsonRestServer {
 
     // For running in containers, we respect the PORT environment variable.
     final port = _config.port;
-    final server = await serve(handler, ip, port);
+    await serve(handler, ip, port);
     if (ip == '0.0.0.0') {
       final networks = await NetworkInterface.list();
       final networksMap = {
@@ -47,11 +47,11 @@ class JsonRestServer {
 
       final wifi = networksMap['wi-fi'];
       print('${_config.name} Server started, responding on:');
-      print('http://localhost:8080/');
-      if (ethernet != null) print('http://$ethernet:8080/');
-      if (wifi != null) print('http://$wifi:8080/');
+      print('http://localhost:$port/');
+      if (ethernet != null) print('http://$ethernet:$port/');
+      if (wifi != null) print('http://$wifi:$port/');
     } else {
-      print('${_config.name} Server started on http://$ip:${server.port}');
+      print('${_config.name} Server started on http://$ip:$port');
     }
   }
 }
