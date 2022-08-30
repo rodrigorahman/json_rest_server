@@ -82,3 +82,6 @@ GET    /products?page=1&limit=10&title=jornada      -> Get all products with pag
 
 ## 1.1.2
 - fix bug: post with id null
+
+## 1.1.3
+- fix bug: Error for save a first data on table
