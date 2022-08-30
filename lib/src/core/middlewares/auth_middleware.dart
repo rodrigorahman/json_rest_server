@@ -20,6 +20,11 @@ class AuthMiddleware extends Middlewares {
     var segments = request.url.pathSegments;
     if (segments.last == 'auth') {
       return _login(request);
+    } else if (request.method == 'PUT' &&
+        segments.length > 1 &&
+        segments[segments.length - 2] == 'auth' &&
+        segments.last == 'refresh') {
+      return _refreshToken(request);
     } else if (_config.auth != null) {
       return _checkLogin(request);
     } else {
@@ -52,9 +57,14 @@ class AuthMiddleware extends Middlewares {
       }
 
       final token = JwtHelper.generateJWT(user['id']);
+      final refreshToken = JwtHelper.refreshToken(token);
 
       return Response.ok(
-        jsonEncode({'access_token': token, 'type': 'Bearer'}),
+        jsonEncode({
+          'access_token': token,
+          'refresh_token': refreshToken,
+          'type': 'Bearer',
+        }),
       );
     } on ConfigNotFoundException catch (e, s) {
       log('Auth config not found check config.yaml', error: e, stackTrace: s);
@@ -141,5 +151,43 @@ class AuthMiddleware extends Middlewares {
       log('Internal Server Error', error: e, stackTrace: s);
       return Response(_config.auth?.unauthorizedStatusCode ?? 403);
     }
+  }
+
+  Future<Response> _refreshToken(Request request) async {
+    final bodyText = await request.readAsString();
+    final body = jsonDecode(bodyText);
+
+    final authHeader = request.headers['Authorization'] ?? '';
+    final authHeaderContent = authHeader.split(' ');
+
+    if (authHeaderContent[0] != 'Bearer') {
+      throw JwtException.invalidToken;
+    }
+    _validRefreshToken(authHeaderContent[1], body['refresh_token'] ?? '');
+    final claims = JwtHelper.getClaims(authHeaderContent[1]);
+
+    final id = claims.toJson()['sub'];
+
+    final token = JwtHelper.generateJWT(int.parse(id));
+    final refreshToken = JwtHelper.refreshToken(token);
+
+    return Response.ok(
+      jsonEncode({
+        'access_token': token,
+        'refresh_token': refreshToken,
+        'type': 'Bearer',
+      }),
+    );
+  }
+
+  void _validRefreshToken(String accessToken, String refreshToken) {
+    // final refreshTokenArr = refreshToken.split(' ');
+
+    // if (refreshTokenArr.length != 2 || refreshTokenArr.first != 'Bearer') {
+    //   throw JwtException('Refresh token invalido');
+    // }
+
+    final refreshTokenClaim = JwtHelper.getClaims(refreshToken);
+    refreshTokenClaim.validate(issuer: accessToken);
   }
 }

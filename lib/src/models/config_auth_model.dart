@@ -29,7 +29,7 @@ class ConfigAuthModel {
     return ConfigAuthModel(
       jwtSecret: map['jwtSecret'] ?? '',
       jwtExpire: map['jwtExpire']?.toInt() ?? 0,
-      unauthorizedStatusCode: map['unauthorizedStatusCode']?.toInt() ?? 0,
+      unauthorizedStatusCode: map['unauthorizedStatusCode']?.toInt() ?? 403,
       urlSkip: urlSkip?.map<UrlSkip>(
             (element) {
               var key = element.keys.first;

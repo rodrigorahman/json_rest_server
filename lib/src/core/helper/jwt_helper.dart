@@ -19,9 +19,34 @@ class JwtHelper {
     final claimSet = JwtClaim(
       issuer: 'json_rest_server',
       subject: userId.toString(),
-      expiry: DateTime.now().add(Duration(days: jwtExpire)),
+      expiry: DateTime.now().add(Duration(seconds: jwtExpire)),
       notBefore: DateTime.now(),
       issuedAt: DateTime.now(),
+    );
+
+    return issueJwtHS256(claimSet, jwtSecret);
+  }
+
+  static String refreshToken(String accessToken) {
+    
+    final config = GetIt.I.get<ConfigModel>();
+    final jwtExpire = config.auth?.jwtExpire;
+    final jwtSecret = config.auth?.jwtSecret;
+
+    if (jwtExpire == null || jwtSecret == null) {
+      throw ConfigNotFoundException();
+    }
+    
+    final expiry = 7;
+    final notBefore = jwtExpire;
+
+    final claimSet = JwtClaim(
+      issuer: accessToken,
+      subject: 'RefreshToken',
+      expiry: DateTime.now().add(Duration(days: expiry)),
+      notBefore: DateTime.now().add(Duration(seconds: notBefore)),
+      issuedAt: DateTime.now(),
+      otherClaims: <String, dynamic>{},
     );
 
     return issueJwtHS256(claimSet, jwtSecret);
