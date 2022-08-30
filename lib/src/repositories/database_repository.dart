@@ -34,9 +34,11 @@ class DatabaseRepository {
     if (lineData.isNotEmpty) {
       lineData.updateAll((key, value) => data[key]);
     } else {
+      final bodyData = {...data};
+      bodyData.remove('id');
       final tableData = getAll(table);
       final lastId = tableData.last['id'];
-      final saveData = {'id': (lastId + 1), ...data};
+      final saveData = {'id': (lastId + 1), ...bodyData};
       tableData.add(saveData);
     }
 
