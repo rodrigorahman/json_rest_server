@@ -79,3 +79,6 @@ GET    /products?page=1&limit=10&title=jornada      -> Get all products with pag
 
 ## 1.1.1
 - fix format code
+
+## 1.1.2
+- fix bug: post with id null
