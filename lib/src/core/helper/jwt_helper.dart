@@ -28,7 +28,6 @@ class JwtHelper {
   }
 
   static String refreshToken(String accessToken) {
-    
     final config = GetIt.I.get<ConfigModel>();
     final jwtExpire = config.auth?.jwtExpire;
     final jwtSecret = config.auth?.jwtSecret;
@@ -36,7 +35,7 @@ class JwtHelper {
     if (jwtExpire == null || jwtSecret == null) {
       throw ConfigNotFoundException();
     }
-    
+
     final expiry = 7;
     final notBefore = jwtExpire;
 
