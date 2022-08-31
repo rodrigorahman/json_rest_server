@@ -85,3 +85,6 @@ GET    /products?page=1&limit=10&title=jornada      -> Get all products with pag
 
 ## 1.1.3
 - fix bug: Error for save a first data on table
+
+## 1.2.0
+- new feature, now we can get the data of the user logged in by the token

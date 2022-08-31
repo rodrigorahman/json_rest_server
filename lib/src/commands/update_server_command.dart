@@ -11,8 +11,11 @@ class UpdateServerCommand extends Command {
 
   @override
   void run() {
-    Process.run('dart', ['pub', 'global', 'activate', 'json_rest_server'],
+    final updateProcess = Process.runSync(
+        'dart', ['pub', 'global', 'activate', 'json_rest_server'],
         runInShell: true);
+
+    stdout.write(updateProcess.stdout);
     print('Json Rest Server Upgrated!');
   }
 }

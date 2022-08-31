@@ -193,6 +193,31 @@ Response response = await http.get(
 );
 ```
 
+**Recuperando dados do usuário logado**
+
+Para recuperar os dados do usuário logado você deve acessar o path `/me` enviando o token jwt no header. Automaticamente o Json Rest Server vai recuperar o id do usuário de dentro do token e retornar os dados do usuário sem o atributo password.
+
+Lembrando que fará uma busca na "table" users buscando pelo id.
+
+Ex:
+
+```dart
+Response response = await http.get(
+  'http://localhost:8080/me',
+  headers: {'authorization': "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE5NzIzNDMyNTYsImlhdCI6MTY2MTMwMzI1NiwiaXNzIjoianNvbl9yZXN0X3NlcnZlciIsIm5iZiI6MTY2MTMwMzI1Niwic3ViIjoiMyJ9.VVZ_FsW9qXEbR6ktREzVdZ2p9Qw-slXL4EI4CSHHR9o"},
+);
+```
+
+**Resposta**
+
+```json
+{
+    "id": 3,
+    "name": "Rodrigo Rahman",
+    "email": "rodrigorahman@academiadoflutter.com.br"
+}
+```
+
 **Refresh token**
 
 O token de acesso tem a duração que você definiu dentro do arquivo config.yaml após esse tempo você não poderá mais acessar as rotas, mas sabemos que em aplicativos existe o processo de acesso permanente e o json_rest_client te ajuda também com isso disponibilizando uma rota para fazer o refresh do token de acesso, não obrigando o usuário a realizar um novo login
