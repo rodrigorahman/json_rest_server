@@ -1,17 +1,21 @@
 import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
+import 'package:json_rest_server/src/models/config_model.dart';
 import 'package:shelf/shelf.dart';
 
 import '../../repositories/database_repository.dart';
 
 class GetHandler {
   final _databaseRepository = GetIt.I.get<DatabaseRepository>();
+  final _config = GetIt.I.get<ConfigModel>();
   Future<Response> execute(Request request) async {
     final segments = request.url.pathSegments;
     final String table = segments.first;
 
-    if (_databaseRepository.tableExists(table)) {
+    if (table == 'me') {
+      return _processMe(request);
+    } else if (_databaseRepository.tableExists(table)) {
       if (segments.length > 1) {
         return _processById(table, segments[1]);
       } else {
@@ -28,6 +32,32 @@ class GetHandler {
     }
 
     final result = _databaseRepository.getById(table, int.parse(id));
+
+    return Response(200, body: jsonEncode(result), headers: {
+      'content-type': 'application/json',
+    });
+  }
+
+  Future<Response> _processMe(Request request) async {
+    String? id;
+
+    if (_config.auth == null) {
+      return Response(404,
+          body: jsonEncode({
+            'message':
+                'authentication not configured, please check documentation'
+          }));
+    } else {
+      id = request.headers['user'];
+    }
+
+    if (id == null || id.isEmpty) {
+      return Response.badRequest(
+          body: jsonEncode({'error': 'param id required'}));
+    }
+
+    final result = _databaseRepository.getById('users', int.parse(id));
+    result.remove('password');
 
     return Response(200, body: jsonEncode(result), headers: {
       'content-type': 'application/json',
