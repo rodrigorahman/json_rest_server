@@ -11,6 +11,10 @@ class GetHandler {
   final _config = GetIt.I.get<ConfigModel>();
   Future<Response> execute(Request request) async {
     final segments = request.url.pathSegments;
+
+    if (segments.isEmpty) {
+      return Response(404);
+    }
     final String table = segments.first;
 
     if (table == 'me') {
