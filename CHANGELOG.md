@@ -1,4 +1,7 @@
 
+## 1.2.3
+- fix Json Rest Server - Bad state: No element #4  
+
 ## 1.2.2
 - License Review
 
