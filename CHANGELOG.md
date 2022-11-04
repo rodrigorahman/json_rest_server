@@ -1,3 +1,5 @@
+## 1.2.4
+- fix Json Rest Server - Did not authenticate any path  
 
 ## 1.2.3
 - fix Json Rest Server - Bad state: No element #4  
