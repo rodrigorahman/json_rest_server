@@ -7,9 +7,9 @@ database: database.json
 #   folder: storage/
 #   name: "file"
 
-# auth:
-#   jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl
-#   jwtExpire: 3600
-#   unauthorizedStatusCode: 403
-#   urlSkip:
+auth:
+  jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl
+  jwtExpire: 3600
+  unauthorizedStatusCode: 403
+  urlSkip:
 #     - products

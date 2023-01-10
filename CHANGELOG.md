@@ -1,3 +1,6 @@
+## 1.3.0
+- new feature, now we can associate user_id of user logged in any json field
+
 ## 1.2.4
 - fix Json Rest Server - Did not authenticate any path  
 

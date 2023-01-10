@@ -13,7 +13,12 @@ class PostHandler {
     final String table = segments.first;
 
     if (_databaseRepository.tableExists(table)) {
-      final body = await request.readAsString();
+      var body = await request.readAsString();
+
+      if (body.contains('#userAuthRef')) {
+        body = body.replaceAll('#userAuthRef', request.headers['user'] ?? '0');
+      }
+
       _databaseRepository.save(table, jsonDecode(body));
       return Response(200, headers: {
         'content-type': 'application/json',

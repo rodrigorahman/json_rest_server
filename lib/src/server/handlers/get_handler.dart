@@ -23,7 +23,8 @@ class GetHandler {
       if (segments.length > 1) {
         return _processById(table, segments[1]);
       } else {
-        return _processGetAll(table, request.url.queryParameters);
+        return _processGetAll(
+            table, request.url.queryParameters, request.headers);
       }
     }
     return Response(404);
@@ -68,16 +69,16 @@ class GetHandler {
     });
   }
 
-  Future<Response> _processGetAll(
-      String table, Map<String, String> queryParameters) async {
+  Future<Response> _processGetAll(String table,
+      Map<String, String> queryParameters, Map<String, String> headers) async {
     var tableData = _databaseRepository.getAll(table);
     var params = {...queryParameters};
 
     if (params.containsKey('page')) {
-      tableData = _processPagination(tableData, queryParameters);
+      tableData = _processPagination(tableData, queryParameters, headers);
     } else {
       if (params.isNotEmpty) {
-        tableData = _filterData(tableData, queryParameters);
+        tableData = _filterData(tableData, queryParameters, headers);
       }
     }
 
@@ -88,13 +89,14 @@ class GetHandler {
 
   List<Map<String, dynamic>> _processPagination(
       List<Map<String, dynamic>> tableData,
-      Map<String, String> queryParameters) {
+      Map<String, String> queryParameters,
+      Map<String, String> headers) {
     final params = {...queryParameters};
     params.remove('page');
     params.remove('limit');
 
     if (params.isNotEmpty) {
-      tableData = _filterData(tableData, params);
+      tableData = _filterData(tableData, params, headers);
     }
 
     final page = int.parse(queryParameters['page'] ?? '1') - 1;
@@ -121,12 +123,20 @@ class GetHandler {
   }
 
   List<Map<String, dynamic>> _filterData(List<Map<String, dynamic>> tableData,
-      Map<String, String> queryParameters) {
+      Map<String, String> queryParameters, Map<String, String> headers) {
     final data = [...tableData];
 
     queryParameters.forEach((key, value) {
-      data.retainWhere((element) =>
-          element[key].toString().toLowerCase().contains(value.toLowerCase()));
+      data.retainWhere((element) {
+        var valueFilter = value;
+        if (valueFilter == '#userAuthRef') {
+          valueFilter = headers['user'] ?? '0';
+        }
+        return element[key]
+            .toString()
+            .toLowerCase()
+            .contains(valueFilter.toLowerCase());
+      });
     });
 
     return data;

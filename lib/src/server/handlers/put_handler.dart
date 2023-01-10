@@ -19,7 +19,10 @@ class PutHandler {
     final String id = segments[1];
 
     if (_databaseRepository.tableExists(table)) {
-      final body = await request.readAsString();
+      var body = await request.readAsString();
+      if (body.contains('#userAuthRef')) {
+        body = body.replaceAll('#userAuthRef', request.headers['user'] ?? '0');
+      }
       final dataUpdate = jsonDecode(body);
       dataUpdate['id'] = int.parse(id);
       _databaseRepository.save(table, dataUpdate);

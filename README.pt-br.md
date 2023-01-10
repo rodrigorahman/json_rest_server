@@ -252,3 +252,26 @@ Você receberá a resposta com um novo token e um novo refresh_token:
 Basta agora enviar novamente a requisição passando o novo token.
 
 ## ATENÇÃO: Lembre que agora você recebeu um novo token de acesso e o antigo DEVE ser descartado!
+
+# Criando referencia ao usuário logado no seu json
+Você pode querer adicionar uma coluna com o dado do usuário que está logado.
+
+Para fazer essa associação, basta enviar no value do field o valor #userAuthRef ex:
+
+```json
+{
+    "title": "Academia do flutter",
+    "user_id": "#userAuthRef"
+}
+```
+
+O Json Rest Server vai substituir o valor de #userAuthRef pelo id do usuário logado, lembrando que essa tag só poderá ser usada para serviços que utilizem autenticação pois o valor será substituido pelo id do usuário enviado no tokenJWT.
+
+
+# Buscando dados com filtro por usuário logado.
+
+Para fazer a busca por um campo com o ID do usuário logado, você precisa enviar no filtro a tag #userAuthRef, o Json Rest Server vai substituir o valor pelo id do usuário logado ex:
+
+`http://localhost:8080/products?user_id=#userAuthRef` 
+
+O JRS vai substituir a tag #userAuthRef pelo o id do usuário logado e realizar o filtro no campo user_id
