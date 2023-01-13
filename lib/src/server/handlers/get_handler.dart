@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
+import 'package:json_rest_server/src/core/helper/json_helper.dart';
 import 'package:json_rest_server/src/models/config_model.dart';
 import 'package:shelf/shelf.dart';
 
@@ -8,6 +9,7 @@ import '../../repositories/database_repository.dart';
 
 class GetHandler {
   final _databaseRepository = GetIt.I.get<DatabaseRepository>();
+  final _jsonHelper = GetIt.I.get<JsonHelper>();
   final _config = GetIt.I.get<ConfigModel>();
   Future<Response> execute(Request request) async {
     final segments = request.url.pathSegments;
@@ -38,9 +40,11 @@ class GetHandler {
 
     final result = _databaseRepository.getById(table, int.parse(id));
 
-    return Response(200, body: jsonEncode(result), headers: {
-      'content-type': 'application/json',
-    });
+    return Response(
+      200,
+      body: jsonEncode(result),
+      headers: _jsonHelper.jsonReturn,
+    );
   }
 
   Future<Response> _processMe(Request request) async {
@@ -64,9 +68,8 @@ class GetHandler {
     final result = _databaseRepository.getById('users', int.parse(id));
     result.remove('password');
 
-    return Response(200, body: jsonEncode(result), headers: {
-      'content-type': 'application/json',
-    });
+    return Response(200,
+        body: jsonEncode(result), headers: _jsonHelper.jsonReturn);
   }
 
   Future<Response> _processGetAll(String table,
@@ -81,10 +84,11 @@ class GetHandler {
         tableData = _filterData(tableData, queryParameters, headers);
       }
     }
-
-    return Response(200, body: jsonEncode(tableData), headers: {
-      'content-type': 'application/json',
-    });
+    return Response(
+      200,
+      body: jsonEncode(tableData),
+      headers: _jsonHelper.jsonReturn,
+    );
   }
 
   List<Map<String, dynamic>> _processPagination(

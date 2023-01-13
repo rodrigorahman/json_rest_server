@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:json_rest_server/src/server/handlers/option_handler.dart';
 import 'package:shelf/shelf.dart';
 
 import 'handlers/delete_handler.dart';
@@ -25,6 +26,9 @@ class HandlerRequest {
           return PatchHandler().execute(request);
         case 'DELETE':
           return DeleteHandler().execute(request);
+
+        case 'OPTIONS':
+          return OptionHandler().execute(request);
         default:
           final body = jsonEncode({
             'error': 'Unsupported request: ${request.method}.',
