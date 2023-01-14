@@ -1,3 +1,6 @@
+## 1.3.2
+- patch method correction and added options method with cors support
+
 ## 1.3.0
 - new feature, now we can associate user_id of user logged in any json field
 
