@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:get_it/get_it.dart';
+import 'package:json_rest_server/src/core/helper/json_helper.dart';
 import 'package:json_rest_server/src/core/middlewares/default_content_type.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
@@ -14,12 +15,15 @@ import 'handler_request.dart';
 class JsonRestServer {
   late final ConfigModel _config;
   late final DatabaseRepository _databaseRepository;
+  late final JsonHelper _jsonHelper;
 
   void startServer() {
     _config = ConfigRepository().load();
     _databaseRepository = DatabaseRepository()..load();
+    _jsonHelper = JsonHelper().load();
     GetIt.I.registerSingleton(_databaseRepository);
     GetIt.I.registerSingleton(_config);
+    GetIt.I.registerSingleton(_jsonHelper);
     _startShelfServer();
   }
 
