@@ -1,18 +1,20 @@
 name: Json Rest Server
 port: 8080
 host: 0.0.0.0
+enableSocket: true
+socketPort: 8081
 database: database.json
 
 # storage:
 #   folder: storage/
 #   name: "file"
 
-auth:
-  jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl
-  jwtExpire: 3600
-  unauthorizedStatusCode: 401
-  urlSkip:
-    - /users:
-        method: post
-    - /products/{*}:
-        method: get
+# auth:
+#   jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl
+#   jwtExpire: 3600
+#   unauthorizedStatusCode: 401
+#   urlSkip:
+#     - /users:
+#         method: post
+#     - /products/{*}:
+#         method: get
