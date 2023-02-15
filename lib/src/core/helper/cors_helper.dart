@@ -1,18 +1,15 @@
 import 'dart:core';
 
-class JsonHelper {
-  static JsonHelper? _instance;
+class CorsHelper {
+  static CorsHelper? _instance;
 
   final List<String> _origins = [];
   final List<String> _methods = [];
   final List<String> _headers = [];
   // Avoid self instance
 
-  JsonHelper load(
-      {List<String>? allowOrigins,
-      List<String>? allowMethods,
-      List<String>? allowHeaders}) {
-    _instance ??= JsonHelper();
+  CorsHelper load({List<String>? allowOrigins, List<String>? allowMethods, List<String>? allowHeaders}) {
+    _instance ??= CorsHelper();
     _instance?._origins.addAll(allowOrigins ?? []);
     _instance?._methods.addAll(allowMethods ?? []);
     _instance?._headers.addAll(allowHeaders ?? []);

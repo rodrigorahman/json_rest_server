@@ -1,14 +1,15 @@
 import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
-import 'package:json_rest_server/src/core/helper/json_helper.dart';
+import 'package:json_rest_server/src/core/helper/cors_helper.dart';
+import 'package:json_rest_server/src/server/socket/socket_emiter.dart';
 import 'package:shelf/shelf.dart';
 
 import '../../repositories/database_repository.dart';
 
-class PatchHandler {
+class PatchHandler extends SocketEmiter {
   final _databaseRepository = GetIt.I.get<DatabaseRepository>();
-  final _jsonHelper = GetIt.I.get<JsonHelper>();
+  final _jsonHelper = GetIt.I.get<CorsHelper>();
 
   Future<Response> execute(Request request) async {
     final segments = request.url.pathSegments;
@@ -28,6 +29,8 @@ class PatchHandler {
       final dataUpdate = jsonDecode(body);
       dataUpdate['id'] = int.parse(id);
       _databaseRepository.save(table, dataUpdate);
+      sendToSocket(method: 'PATCH', table: table, data: dataUpdate);
+
       return Response(
         200,
         headers: _jsonHelper.jsonReturn,
