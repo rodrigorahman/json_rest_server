@@ -8,7 +8,10 @@ class CorsHelper {
   final List<String> _headers = [];
   // Avoid self instance
 
-  CorsHelper load({List<String>? allowOrigins, List<String>? allowMethods, List<String>? allowHeaders}) {
+  CorsHelper load(
+      {List<String>? allowOrigins,
+      List<String>? allowMethods,
+      List<String>? allowHeaders}) {
     _instance ??= CorsHelper();
     _instance?._origins.addAll(allowOrigins ?? []);
     _instance?._methods.addAll(allowMethods ?? []);

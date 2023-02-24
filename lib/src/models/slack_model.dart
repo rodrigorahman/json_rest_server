@@ -25,5 +25,6 @@ class SlackModel {
 
   String toJson() => json.encode(toMap());
 
-  factory SlackModel.fromJson(String source) => SlackModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory SlackModel.fromJson(String source) =>
+      SlackModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

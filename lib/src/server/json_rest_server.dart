@@ -37,14 +37,21 @@ class JsonRestServer {
     // Use any available host or container IP (usually `0.0.0.0`).
     final ip = _config.host ?? InternetAddress.anyIPv4;
     // Configure a pipeline that logs requests.
-    final handler = Pipeline().addMiddleware(logRequests()).addMiddleware(DefaultContentType('application/json').handler).addMiddleware(AuthMiddleware().handler).addHandler(HandlerRequest().execute);
+    final handler = Pipeline()
+        .addMiddleware(logRequests())
+        .addMiddleware(DefaultContentType('application/json').handler)
+        .addMiddleware(AuthMiddleware().handler)
+        .addHandler(HandlerRequest().execute);
 
     // For running in containers, we respect the PORT environment variable.
     final port = _config.port;
     await serve(handler, ip, port);
     if (ip == '0.0.0.0') {
       final networks = await NetworkInterface.list();
-      final networksMap = {for (var element in networks) element.name.toLowerCase(): element.addresses.first.address};
+      final networksMap = {
+        for (var element in networks)
+          element.name.toLowerCase(): element.addresses.first.address
+      };
       final ethernet = networksMap['ethernet'];
 
       final wifi = networksMap['wi-fi'];
@@ -58,11 +65,13 @@ class JsonRestServer {
 
     if (_config.enableSocket && _config.socketPort != null) {
       if (_config.socketPort == _config.port) {
-        print('Socket port ${_config.socketPort} cannot be the same of the server port $port');
+        print(
+            'Socket port ${_config.socketPort} cannot be the same of the server port $port');
 
         exit(0);
       }
-      _socketHandler = await SocketHandler().load(socketPort: _config.socketPort!, socketIp: ip.toString());
+      _socketHandler = await SocketHandler()
+          .load(socketPort: _config.socketPort!, socketIp: ip.toString());
       print('Socket is started on port ${_config.socketPort}');
       GetIt.I.registerSingleton(_socketHandler);
     }

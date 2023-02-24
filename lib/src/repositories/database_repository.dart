@@ -17,9 +17,12 @@ class DatabaseRepository {
 
   bool tableExists(String table) => _database.containsKey(table);
 
-  List<Map<String, dynamic>> getAll(String table) => _database[table]?.cast<Map<String, dynamic>>() ?? <Map<String, dynamic>>[];
+  List<Map<String, dynamic>> getAll(String table) =>
+      _database[table]?.cast<Map<String, dynamic>>() ??
+      <Map<String, dynamic>>[];
 
-  Map<String, dynamic> getById(String table, int id) => getAll(table).firstWhere((element) => element['id'] == id, orElse: () => {});
+  Map<String, dynamic> getById(String table, int id) => getAll(table)
+      .firstWhere((element) => element['id'] == id, orElse: () => {});
 
   Map<String, dynamic>? save(String table, Map<String, dynamic> data) {
     final id = data['id'];
@@ -47,7 +50,8 @@ class DatabaseRepository {
     return saveData;
   }
 
-  void _databaseSave() => File('database.json').writeAsStringSync(jsonEncode(_database));
+  void _databaseSave() =>
+      File('database.json').writeAsStringSync(jsonEncode(_database));
 
   void delete(String table, int id) {
     final databaseData = getAll(table);

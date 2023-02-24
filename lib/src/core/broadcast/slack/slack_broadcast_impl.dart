@@ -24,7 +24,8 @@ class SlackBroadCastImpl implements BroadcastBase {
         payload['channel'] = _config.slack?.channel ?? '';
       }
       payload['text'] = broadcast.toJson();
-      final response = await http.post(Uri.parse(_config.slack!.url), body: json.encode(payload));
+      final response = await http.post(Uri.parse(_config.slack!.url),
+          body: json.encode(payload));
       if (response.statusCode == 200) {
         log('Send to Slack', time: DateTime.now());
       }

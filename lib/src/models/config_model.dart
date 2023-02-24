@@ -16,10 +16,28 @@ class ConfigModel {
   final List<String>? broadcastProvider;
   final SlackModel? slack;
 
-  ConfigModel({required this.name, required this.port, this.host, required this.database, this.auth, this.enableSocket = false, this.socketPort, this.broadcastProvider = const [], this.slack});
+  ConfigModel(
+      {required this.name,
+      required this.port,
+      this.host,
+      required this.database,
+      this.auth,
+      this.enableSocket = false,
+      this.socketPort,
+      this.broadcastProvider = const [],
+      this.slack});
 
   Map<String, dynamic> toMap() {
-    return {'name': name, 'port': port, 'host': host, 'database': database, 'auth': auth?.toMap(), 'enableSocket': enableSocket, 'socketPort': socketPort, 'broadcastProvider': broadcastProvider};
+    return {
+      'name': name,
+      'port': port,
+      'host': host,
+      'database': database,
+      'auth': auth?.toMap(),
+      'enableSocket': enableSocket,
+      'socketPort': socketPort,
+      'broadcastProvider': broadcastProvider
+    };
   }
 
   factory ConfigModel.fromMap(Map<String, dynamic> map) {
@@ -33,7 +51,12 @@ class ConfigModel {
         auth: auth != null ? ConfigAuthModel.fromMap(auth.value.cast()) : null,
         enableSocket: map['enableSocket'] ?? false,
         socketPort: map['socketPort'] ?? 0,
-        broadcastProvider: map['broadcastProvider'] == null ? null : (map['broadcastProvider'] as String).split(',').map<String>((e) => e).toList(),
+        broadcastProvider: map['broadcastProvider'] == null
+            ? null
+            : (map['broadcastProvider'] as String)
+                .split(',')
+                .map<String>((e) => e)
+                .toList(),
         slack: map['slack'] == null
             ? null
             : SlackModel.fromJson(
@@ -45,5 +68,6 @@ class ConfigModel {
 
   String toJson() => json.encode(toMap());
 
-  factory ConfigModel.fromJson(String source) => ConfigModel.fromMap(json.decode(source));
+  factory ConfigModel.fromJson(String source) =>
+      ConfigModel.fromMap(json.decode(source));
 }

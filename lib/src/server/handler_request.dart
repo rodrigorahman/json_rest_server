@@ -55,10 +55,13 @@ class HandlerRequest {
       if (mapResponse == null) {
         return Response(404);
       } else {
+        final segments = request.url.pathSegments;
+        final String table = segments.first;
         broadcast.execute(
           providers: config.broadcastProvider,
           broadcast: BroadcastModel.fromResponse(
-            request: request,
+            method: request.method,
+            table: table,
             data: mapResponse,
           ),
         );
@@ -70,7 +73,8 @@ class HandlerRequest {
       }
     } catch (e, s) {
       log('Erro interno', error: e, stackTrace: s);
-      return Response.internalServerError(body: jsonEncode({'erro': e.toString()}));
+      return Response.internalServerError(
+          body: jsonEncode({'erro': e.toString()}));
     }
   }
 }

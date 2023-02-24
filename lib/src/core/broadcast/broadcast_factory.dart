@@ -12,7 +12,9 @@ class BroadcastFactory {
     switch (broadcast.broadCastType) {
       case BroadCastType.socket:
         return SocketBroadCastImpl(
-          socket: GetIt.I.isRegistered<SocketHandler>() ? GetIt.I.get<SocketHandler>() : null,
+          socket: GetIt.I.isRegistered<SocketHandler>()
+              ? GetIt.I.get<SocketHandler>()
+              : null,
         );
       case BroadCastType.slack:
         return SlackBroadCastImpl(config: GetIt.I.get<ConfigModel>());

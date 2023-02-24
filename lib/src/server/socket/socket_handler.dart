@@ -5,12 +5,14 @@ class SocketHandler {
   late final ServerSocket server;
   List<Socket> clients = [];
   // Avoid self isntance
-  Future<SocketHandler> load({required int socketPort, required String socketIp}) async {
+  Future<SocketHandler> load(
+      {required int socketPort, required String socketIp}) async {
     await _init(socketPort: socketPort, socketIp: socketIp);
     return this;
   }
 
-  Future<void> _init({required int socketPort, required String socketIp}) async {
+  Future<void> _init(
+      {required int socketPort, required String socketIp}) async {
     server = await ServerSocket.bind(socketIp, socketPort);
     server.listen((client) {
       _listenConnection(client);
@@ -29,7 +31,8 @@ class SocketHandler {
   }
 
   void _listenConnection(Socket client) {
-    print('Connection from  ${client.remoteAddress.address}:${client.remotePort}');
+    print(
+        'Connection from  ${client.remoteAddress.address}:${client.remotePort}');
     _addFromServer(client);
 
     client.listen(

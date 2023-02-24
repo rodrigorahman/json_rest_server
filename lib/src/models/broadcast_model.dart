@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:json_rest_server/src/core/enum/broadcast_type.dart';
-import 'package:shelf/shelf.dart';
 
 class BroadcastModel {
   final String method;
@@ -9,7 +8,12 @@ class BroadcastModel {
   final Map<String, dynamic> payload;
   final BroadCastType broadCastType;
   DateTime? sentAt;
-  BroadcastModel({required this.method, required this.table, required this.payload, required this.broadCastType, this.sentAt});
+  BroadcastModel(
+      {required this.method,
+      required this.table,
+      required this.payload,
+      required this.broadCastType,
+      this.sentAt});
 
   BroadcastModel copyWith({
     String? method,
@@ -39,7 +43,8 @@ class BroadcastModel {
     return BroadcastModel(
       method: map['method'] as String,
       table: map['table'] as String,
-      payload: Map<String, dynamic>.from(map['payload'] as Map<String, dynamic>),
+      payload:
+          Map<String, dynamic>.from(map['payload'] as Map<String, dynamic>),
       broadCastType: BroadCastType.fromString(
         map['broadCastType'],
       ),
@@ -49,19 +54,20 @@ class BroadcastModel {
 
   String toJson() => json.encode(toMap());
 
-  factory BroadcastModel.fromJson(String source) => BroadcastModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory BroadcastModel.fromJson(String source) =>
+      BroadcastModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
     return 'BroadcastModel(method: $method, table: $table, payload: $payload, broadCastType: $broadCastType)';
   }
 
-  factory BroadcastModel.fromResponse({required Request request, required Map<String, dynamic> data}) {
-    final segments = request.url.pathSegments;
-    final String table = segments.first;
-
+  factory BroadcastModel.fromRequest(
+      {required String method,
+      required String table,
+      required Map<String, dynamic> data}) {
     return BroadcastModel(
-      method: request.method,
+      method: method,
       table: table,
       payload: data,
       broadCastType: BroadCastType.socket,

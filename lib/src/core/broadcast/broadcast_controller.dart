@@ -9,14 +9,16 @@ class BroadCastController {
 
   BroadCastController() {
     _eventBus.on<BroadcastModel>().listen((BroadcastModel broadCast) {
-      BroadcastBase broadcastBase = BroadcastFactory.create(broadcast: broadCast);
+      BroadcastBase broadcastBase =
+          BroadcastFactory.create(broadcast: broadCast);
       broadcastBase.execute(broadcast: broadCast);
     });
   }
   void execute({List<String>? providers, required BroadcastModel broadcast}) {
     if (providers != null) {
       for (var provider in providers) {
-        _eventBus.fire(broadcast.copyWith(broadCastType: BroadCastType.fromString(provider)));
+        _eventBus.fire(broadcast.copyWith(
+            broadCastType: BroadCastType.fromString(provider)));
       }
     }
   }

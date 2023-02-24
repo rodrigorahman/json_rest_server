@@ -25,7 +25,8 @@ class GetHandler {
       if (segments.length > 1) {
         return _processById(table, segments[1]);
       } else {
-        return _processGetAll(table, request.url.queryParameters, request.headers);
+        return _processGetAll(
+            table, request.url.queryParameters, request.headers);
       }
     }
     return Response(404);
@@ -33,7 +34,8 @@ class GetHandler {
 
   Future<Response> _processById(String table, String id) async {
     if (id.isEmpty) {
-      return Response.badRequest(body: jsonEncode({'error': 'param id required'}));
+      return Response.badRequest(
+          body: jsonEncode({'error': 'param id required'}));
     }
 
     final result = _databaseRepository.getById(table, int.parse(id));
@@ -49,22 +51,29 @@ class GetHandler {
     String? id;
 
     if (_config.auth == null) {
-      return Response(404, body: jsonEncode({'message': 'authentication not configured, please check documentation'}));
+      return Response(404,
+          body: jsonEncode({
+            'message':
+                'authentication not configured, please check documentation'
+          }));
     } else {
       id = request.headers['user'];
     }
 
     if (id == null || id.isEmpty) {
-      return Response.badRequest(body: jsonEncode({'error': 'param id required'}));
+      return Response.badRequest(
+          body: jsonEncode({'error': 'param id required'}));
     }
 
     final result = _databaseRepository.getById('users', int.parse(id));
     result.remove('password');
 
-    return Response(200, body: jsonEncode(result), headers: _jsonHelper.jsonReturn);
+    return Response(200,
+        body: jsonEncode(result), headers: _jsonHelper.jsonReturn);
   }
 
-  Future<Response> _processGetAll(String table, Map<String, String> queryParameters, Map<String, String> headers) async {
+  Future<Response> _processGetAll(String table,
+      Map<String, String> queryParameters, Map<String, String> headers) async {
     var tableData = _databaseRepository.getAll(table);
     var params = {...queryParameters};
 
@@ -82,7 +91,10 @@ class GetHandler {
     );
   }
 
-  List<Map<String, dynamic>> _processPagination(List<Map<String, dynamic>> tableData, Map<String, String> queryParameters, Map<String, String> headers) {
+  List<Map<String, dynamic>> _processPagination(
+      List<Map<String, dynamic>> tableData,
+      Map<String, String> queryParameters,
+      Map<String, String> headers) {
     final params = {...queryParameters};
     params.remove('page');
     params.remove('limit');
@@ -114,7 +126,8 @@ class GetHandler {
     return tableData.sublist(start, end);
   }
 
-  List<Map<String, dynamic>> _filterData(List<Map<String, dynamic>> tableData, Map<String, String> queryParameters, Map<String, String> headers) {
+  List<Map<String, dynamic>> _filterData(List<Map<String, dynamic>> tableData,
+      Map<String, String> queryParameters, Map<String, String> headers) {
     final data = [...tableData];
 
     queryParameters.forEach((key, value) {
@@ -123,7 +136,10 @@ class GetHandler {
         if (valueFilter == '#userAuthRef') {
           valueFilter = headers['user'] ?? '0';
         }
-        return element[key].toString().toLowerCase().contains(valueFilter.toLowerCase());
+        return element[key]
+            .toString()
+            .toLowerCase()
+            .contains(valueFilter.toLowerCase());
       });
     });
 
