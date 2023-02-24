@@ -4,6 +4,10 @@ host: 0.0.0.0
 enableSocket: true
 socketPort: 8081
 database: database.json
+broadcastProvider: socket,slack
+slack: 
+  slackUrl: ''
+  slackChannel: ''
 
 # storage:
 #   folder: storage/

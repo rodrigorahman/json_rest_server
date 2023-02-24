@@ -4,8 +4,7 @@ import 'package:shelf/shelf.dart';
 
 class OptionHandler {
   Future<Response> execute(Request request) async {
-    final _jsonHelper = GetIt.I.get<CorsHelper>();
-
-    return Response(200, headers: _jsonHelper.jsonReturn);
+    final jsonHelper = GetIt.I.get<CorsHelper>();
+    return Response(200, headers: jsonHelper.jsonReturn);
   }
 }

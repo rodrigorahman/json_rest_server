@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:get_it/get_it.dart';
+import 'package:json_rest_server/src/core/broadcast/broadcast_controller.dart';
 import 'package:json_rest_server/src/core/helper/cors_helper.dart';
 import 'package:json_rest_server/src/core/middlewares/default_content_type.dart';
 import 'package:shelf/shelf.dart';
@@ -18,14 +19,17 @@ class JsonRestServer {
   late final DatabaseRepository _databaseRepository;
   late final CorsHelper _corsHelper;
   late final SocketHandler _socketHandler;
+  late final BroadCastController _broadcast;
 
   void startServer() {
     _config = ConfigRepository().load();
     _databaseRepository = DatabaseRepository()..load();
     _corsHelper = CorsHelper().load();
+    _broadcast = BroadCastController();
     GetIt.I.registerSingleton(_databaseRepository);
     GetIt.I.registerSingleton(_config);
     GetIt.I.registerSingleton(_corsHelper);
+    GetIt.I.registerSingleton(_broadcast);
     _startShelfServer();
   }
 
@@ -34,6 +38,7 @@ class JsonRestServer {
     final ip = _config.host ?? InternetAddress.anyIPv4;
     // Configure a pipeline that logs requests.
     final handler = Pipeline().addMiddleware(logRequests()).addMiddleware(DefaultContentType('application/json').handler).addMiddleware(AuthMiddleware().handler).addHandler(HandlerRequest().execute);
+
     // For running in containers, we respect the PORT environment variable.
     final port = _config.port;
     await serve(handler, ip, port);

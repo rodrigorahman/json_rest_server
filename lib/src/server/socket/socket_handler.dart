@@ -46,7 +46,7 @@ class SocketHandler {
     );
   }
 
-  Future<void> sendMessage(dynamic data) async {
+  void sendMessage(dynamic data) {
     if (clients.isNotEmpty) {
       for (var client in clients) {
         client.write(data);
