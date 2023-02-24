@@ -46,12 +46,14 @@ class SocketHandler {
     );
   }
 
-  void sendMessage(dynamic data) {
+  bool sendMessage(dynamic data) {
     if (clients.isNotEmpty) {
       for (var client in clients) {
         client.write(data);
       }
+      return true;
     }
+    return false;
   }
 
   void _listenEvents(Uint8List event) async {

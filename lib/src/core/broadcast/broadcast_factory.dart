@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:json_rest_server/src/core/broadcast/broadcast_base.dart';
-import 'package:json_rest_server/src/core/broadcast/socket/slack_broadcast_impl.dart';
+import 'package:json_rest_server/src/core/broadcast/slack/slack_broadcast_impl.dart';
 import 'package:json_rest_server/src/core/broadcast/socket/socket_broadcast_impl.dart';
 import 'package:json_rest_server/src/core/enum/broadcast_type.dart';
 import 'package:json_rest_server/src/models/broadcast_model.dart';

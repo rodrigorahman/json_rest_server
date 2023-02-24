@@ -16,6 +16,9 @@ class SlackBroadCastImpl implements BroadcastBase {
   @override
   Future<bool> execute({required BroadcastModel broadcast}) async {
     if (_config.slack != null) {
+      if (_config.slack!.url.isEmpty) {
+        return false;
+      }
       Map payload = {};
       if (_config.slack?.channel != null) {
         payload['channel'] = _config.slack?.channel ?? '';

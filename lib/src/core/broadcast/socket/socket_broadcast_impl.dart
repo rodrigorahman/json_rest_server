@@ -16,8 +16,10 @@ class SocketBroadCastImpl implements BroadcastBase {
     if (_socket == null) {
       return false;
     }
-    _socket!.sendMessage(broadcast.toJson());
-    log('Send to socket', time: DateTime.now());
+    final sent = _socket!.sendMessage(broadcast.toJson());
+    if (sent) {
+      log('Send to socket', time: DateTime.now());
+    }
 
     return true;
   }

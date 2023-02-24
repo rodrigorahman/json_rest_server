@@ -1,1 +1,59 @@
-{"users":[{"id":25,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":26,"name":"OUTRO DDDD","email":"OIOIasdasdsO","password":"MINHA SENHA"},{"id":27,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":28,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":29,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":30,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":31,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":32,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":33,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":34,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":35,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":36,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":37,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":38,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":39,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":40,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":41,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":42,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":43,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":44,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":45,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":46,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":47,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":48,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":49,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":50,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":51,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":52,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":53,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":54,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":55,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":56,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":57,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":58,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":59,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":60,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":61,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":62,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":63,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":64,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":65,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":66,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":67,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":68,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":69,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":70,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":71,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":72,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":73,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":74,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":75,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":76,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":77,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":78,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":79,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":80,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":81,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":82,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":83,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"},{"id":84,"name":"MARCUS AAAAA","email":"OIOIO","password":"TESTE"}],"products":[{"id":0,"title":"Academia do flutter"},{"id":1,"title":"Jornada Dart"},{"id":2,"title":"Jornada GetX"},{"id":3,"title":"Academia do flutter alterado"},{"id":4,"title":"Academia do flutter 2"},{"id":5,"title":"Academia do flutter","user_id":"#userAuthRef"},{"id":6,"title":"Academia do flutter","user_id":"1"},{"id":7,"title":"Academia do flutter","user_id":"1"}],"students":[{"id":1,"name":"Academia do flutter 2"}]}
+{
+    "users": [
+        {
+            "id": 0,
+            "name": "Rodrigo Rahman",
+            "email": "rodrigorahman@academiadoflutter.com.br",
+            "password": "123"
+        },
+        {
+            "id": 1,
+            "name": "Guilherme",
+            "email": "Guilherme@gmail.com",
+            "password": "1234"
+        }
+    ],
+    "products": [
+        {
+            "id": 0,
+            "title": "Academia do flutter"
+        },
+        {
+            "id": 1,
+            "title": "Jornada Dart"
+        },
+        {
+            "id": 2,
+            "title": "Jornada GetX"
+        },
+        {
+            "id": 3,
+            "title": "Academia do flutter alterado"
+        },
+        {
+            "id": 4,
+            "title": "Academia do flutter 2"
+        },
+        {
+            "id": 5,
+            "title": "Academia do flutter",
+            "user_id": "#userAuthRef"
+        },
+        {
+            "id": 6,
+            "title": "Academia do flutter",
+            "user_id": "1"
+        },
+        {
+            "id": 7,
+            "title": "Academia do flutter",
+            "user_id": "1"
+        }
+    ],
+    "students": [
+        {
+            "id": 1,
+            "name": "Academia do flutter 2"
+        }
+    ]
+}
