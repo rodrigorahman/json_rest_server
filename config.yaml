@@ -1,14 +1,13 @@
 name: Json Rest Server
 port: 8080
 host: 0.0.0.0
-enableSocket: true
-socketPort: 8081
 database: database.json
-broadcastProvider: socket,slack
+enableSocket: false
+socketPort: 8081
+broadcastProvider:  #socket,slack  or only socket or only slack
 slack: 
-  slackUrl: ''
-  slackChannel: ''
-
+  slackUrl: '' #your webhook url from slack
+  slackChannel: '' #your channel starting with #
 # storage:
 #   folder: storage/
 #   name: "file"

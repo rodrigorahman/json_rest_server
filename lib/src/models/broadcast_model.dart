@@ -6,7 +6,7 @@ class BroadcastModel {
   final String method;
   final String table;
   final Map<String, dynamic> payload;
-  final BroadCastType broadCastType;
+  final BroadCastType? broadCastType;
   DateTime? sentAt;
   BroadcastModel(
       {required this.method,
@@ -34,7 +34,7 @@ class BroadcastModel {
       'method': method,
       'table': table,
       'payload': payload,
-      'broadCastType': broadCastType.name,
+      'broadCastType': broadCastType?.name,
       'sentAt': DateTime.now().toIso8601String(),
     };
   }
@@ -45,9 +45,11 @@ class BroadcastModel {
       table: map['table'] as String,
       payload:
           Map<String, dynamic>.from(map['payload'] as Map<String, dynamic>),
-      broadCastType: BroadCastType.fromString(
-        map['broadCastType'],
-      ),
+      broadCastType: (map['broadCastType'] == null)
+          ? null
+          : BroadCastType.fromString(
+              map['broadCastType'],
+            ),
     );
     // );
   }
@@ -70,7 +72,7 @@ class BroadcastModel {
       method: method,
       table: table,
       payload: data,
-      broadCastType: BroadCastType.socket,
+      broadCastType: null,
     );
   }
 }

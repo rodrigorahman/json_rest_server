@@ -8,7 +8,7 @@ import 'package:json_rest_server/src/models/config_model.dart';
 import 'package:json_rest_server/src/server/socket/socket_handler.dart';
 
 class BroadcastFactory {
-  static BroadcastBase create({required BroadcastModel broadcast}) {
+  static BroadcastBase? create({required BroadcastModel broadcast}) {
     switch (broadcast.broadCastType) {
       case BroadCastType.socket:
         return SocketBroadCastImpl(
@@ -18,6 +18,9 @@ class BroadcastFactory {
         );
       case BroadCastType.slack:
         return SlackBroadCastImpl(config: GetIt.I.get<ConfigModel>());
+
+      default:
+        return null;
     }
   }
 }

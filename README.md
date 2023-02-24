@@ -276,3 +276,27 @@ Para fazer a busca por um campo com o ID do usuário logado, você precisa envia
 `http://localhost:8080/products?user_id=#userAuthRef` 
 
 O JRS vai substituir a tag #userAuthRef pelo o id do usuário logado e realizar o filtro no campo user_id
+
+
+
+# Sistema de broadcast event
+Foi desenvolvido um sistema de broadcast para enviar dados para outras aplicações com uma configuração inicial simples no seu config.yaml
+Inicialmente o sistema está compatível com o envio para ***socket e slack***
+
+```yaml
+
+enableSocket: true 
+#Indica se você quer que inicie um servidor de socket junto com o servidor rest (true/false)
+socketPort: 8081
+#Indica a porta de acesso do socket padrão:  8081
+broadcastProvider: socket
+#Indica pra qual tipo de broadcast ele quer enviar por padrão : ex  socket,slack  ou só socket ou só slack
+slack: 
+  slackUrl:
+  #Indica a url do webhook do slack 
+  slackChannel:
+  #Indica o canal do slack para ser enviado sempre começando com #
+  ```
+
+  ## Para emitir os eventos, os providers precisam estar configurados , e no caso do socket somente se existir clientes conectados o envio é efetuado, assim garantindo que não seja disparado nenhum serviço sem necessidade
+  

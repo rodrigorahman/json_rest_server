@@ -2,7 +2,7 @@ enum BroadCastType {
   socket,
   slack;
 
-  static BroadCastType fromString(String type) {
+  static BroadCastType? fromString(String type) {
     switch (type.toUpperCase()) {
       case 'SOCKET':
         return BroadCastType.socket;
@@ -11,7 +11,7 @@ enum BroadCastType {
         return BroadCastType.slack;
 
       default:
-        return BroadCastType.socket;
+        return null;
     }
   }
 }

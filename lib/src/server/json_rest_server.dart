@@ -70,8 +70,8 @@ class JsonRestServer {
 
         exit(0);
       }
-      _socketHandler = await SocketHandler()
-          .load(socketPort: _config.socketPort!, socketIp: ip.toString());
+      _socketHandler = await SocketHandler().load(
+          socketPort: _config.socketPort ?? 8081, socketIp: ip.toString());
       print('Socket is started on port ${_config.socketPort}');
       GetIt.I.registerSingleton(_socketHandler);
     }

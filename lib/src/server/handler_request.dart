@@ -59,12 +59,13 @@ class HandlerRequest {
         final String table = segments.first;
         broadcast.execute(
           providers: config.broadcastProvider,
-          broadcast: BroadcastModel.fromResponse(
+          broadcast: BroadcastModel.fromRequest(
             method: request.method,
             table: table,
             data: mapResponse,
           ),
         );
+
         return Response(
           body: json.encode(mapResponse),
           200,

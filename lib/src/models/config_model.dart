@@ -56,6 +56,7 @@ class ConfigModel {
             : (map['broadcastProvider'] as String)
                 .split(',')
                 .map<String>((e) => e)
+                .toSet()
                 .toList(),
         slack: map['slack'] == null
             ? null
