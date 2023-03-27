@@ -234,3 +234,23 @@ You will get the response with a new token and a new refresh_token:
 Now just send the request again, passing the new token.
 
 ## ATTENTION: Remember that you have now received a new access token and the old one MUST be discarded!
+
+# Broadcast event system
+A broadcast system was developed to send data to other applications with a simple initial configuration in your config.yaml
+Initially, the system is compatible with sending to ***socket and slack***
+
+```yaml
+
+enableSocket: true 
+#Indicates whether you want to start a socket server along with the rest server (true/false)
+socketPort: 8081
+#Indicates the default socket access port: 8081
+broadcastProvider: socket
+#Indicates which type of broadcast it wants to send by default: eg socket, slack or just socket or just slack
+slack: 
+  slackUrl:
+  #Indicates the url of the slack webhook
+  slackChannel:
+  #Indicates the slack channel to send always starting with #
+  ```
+   To send the events, the providers need to be configured, and in the case of the socket, only if there are connected clients are they sent, thus guaranteeing that no unnecessary service is triggered.

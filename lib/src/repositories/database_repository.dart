@@ -24,8 +24,9 @@ class DatabaseRepository {
   Map<String, dynamic> getById(String table, int id) => getAll(table)
       .firstWhere((element) => element['id'] == id, orElse: () => {});
 
-  void save(String table, Map<String, dynamic> data) {
+  Map<String, dynamic>? save(String table, Map<String, dynamic> data) {
     final id = data['id'];
+    var saveData = <String, dynamic>{};
     var lineData = <String, dynamic>{};
     if (id != null) {
       lineData = getById(table, id);
@@ -42,12 +43,11 @@ class DatabaseRepository {
       if (tableData.isNotEmpty) {
         lastId = tableData.last['id'] ?? 0;
       }
-
-      final saveData = {'id': (lastId + 1), ...bodyData};
+      saveData = {'id': (lastId + 1), ...bodyData};
       tableData.add(saveData);
     }
-
     _databaseSave();
+    return saveData;
   }
 
   void _databaseSave() =>

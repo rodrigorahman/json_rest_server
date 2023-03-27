@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
-import 'package:json_rest_server/src/core/helper/json_helper.dart';
+import 'package:json_rest_server/src/core/helper/cors_helper.dart';
 import 'package:json_rest_server/src/models/config_model.dart';
 import 'package:shelf/shelf.dart';
 
@@ -9,7 +9,7 @@ import '../../repositories/database_repository.dart';
 
 class GetHandler {
   final _databaseRepository = GetIt.I.get<DatabaseRepository>();
-  final _jsonHelper = GetIt.I.get<JsonHelper>();
+  final _jsonHelper = GetIt.I.get<CorsHelper>();
   final _config = GetIt.I.get<ConfigModel>();
   Future<Response> execute(Request request) async {
     final segments = request.url.pathSegments;

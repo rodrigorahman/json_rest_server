@@ -8,12 +8,12 @@ import '../../repositories/database_repository.dart';
 class PutHandler {
   final _databaseRepository = GetIt.I.get<DatabaseRepository>();
 
-  Future<Response> execute(Request request) async {
+  Future<Map<String, dynamic>?> execute(Request request) async {
     final segments = request.url.pathSegments;
     final String table = segments.first;
 
     if (segments.length < 2) {
-      return Response(404);
+      return null;
     }
 
     final String id = segments[1];
@@ -26,11 +26,9 @@ class PutHandler {
       final dataUpdate = jsonDecode(body);
       dataUpdate['id'] = int.parse(id);
       _databaseRepository.save(table, dataUpdate);
-      return Response(200, headers: {
-        'content-type': 'application/json',
-      });
+      return dataUpdate;
     }
 
-    return Response(404);
+    return null;
   }
 }

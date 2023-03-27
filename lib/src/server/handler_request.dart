@@ -2,6 +2,11 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:get_it/get_it.dart';
+import 'package:json_rest_server/src/core/broadcast/broadcast_controller.dart';
+import 'package:json_rest_server/src/core/helper/cors_helper.dart';
+import 'package:json_rest_server/src/models/broadcast_model.dart';
+import 'package:json_rest_server/src/models/config_model.dart';
 import 'package:json_rest_server/src/server/handlers/option_handler.dart';
 import 'package:shelf/shelf.dart';
 
@@ -14,26 +19,58 @@ import 'handlers/put_handler.dart';
 class HandlerRequest {
   Future<Response> execute(Request request) async {
     final method = request.method;
+    final config = GetIt.I.get<ConfigModel>();
+    final broadcast = GetIt.I.get<BroadCastController>();
+
+    final jsonHelper = GetIt.I.get<CorsHelper>();
+
+    late final Map<String, dynamic>? mapResponse;
+
     try {
       switch (method) {
         case 'GET':
           return GetHandler().execute(request);
         case 'POST':
-          return PostHandler().execute(request);
+          mapResponse = await PostHandler().execute(request);
+          break;
         case 'PUT':
-          return PutHandler().execute(request);
+          mapResponse = await PutHandler().execute(request);
+          break;
         case 'PATCH':
-          return PatchHandler().execute(request);
+          mapResponse = await PatchHandler().execute(request);
+          break;
         case 'DELETE':
-          return DeleteHandler().execute(request);
+          mapResponse = await DeleteHandler().execute(request);
+          break;
 
         case 'OPTIONS':
-          return OptionHandler().execute(request);
+          return await OptionHandler().execute(request);
         default:
           final body = jsonEncode({
             'error': 'Unsupported request: ${request.method}.',
           });
           return Response(HttpStatus.methodNotAllowed, body: body);
+      }
+
+      if (mapResponse == null) {
+        return Response(404);
+      } else {
+        final segments = request.url.pathSegments;
+        final String table = segments.first;
+        broadcast.execute(
+          providers: config.broadcastProvider,
+          broadcast: BroadcastModel.fromRequest(
+            method: request.method,
+            table: table,
+            data: mapResponse,
+          ),
+        );
+
+        return Response(
+          body: json.encode(mapResponse),
+          200,
+          headers: jsonHelper.jsonReturn,
+        );
       }
     } catch (e, s) {
       log('Erro interno', error: e, stackTrace: s);
