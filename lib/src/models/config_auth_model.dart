@@ -57,4 +57,22 @@ class UrlSkip {
     required this.path,
     required this.method,
   });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'path': path,
+      'method': method,
+    };
+  }
+
+  factory UrlSkip.fromMap(Map<String, dynamic> map) {
+    return UrlSkip(
+      path: (map['path'] ?? '') as String,
+      method: (map['method'] ?? '') as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory UrlSkip.fromJson(String source) => UrlSkip.fromMap(json.decode(source) as Map<String, dynamic>);
 }

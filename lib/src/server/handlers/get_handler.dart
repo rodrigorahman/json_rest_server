@@ -4,8 +4,11 @@ import 'package:get_it/get_it.dart';
 import 'package:json_rest_server/src/core/helper/cors_helper.dart';
 import 'package:json_rest_server/src/models/config_model.dart';
 import 'package:shelf/shelf.dart';
+import 'package:shelf_static/shelf_static.dart';
 
 import '../../repositories/database_repository.dart';
+
+final staticFiles = createStaticHandler('assets/', listDirectories: true);
 
 class GetHandler {
   final _databaseRepository = GetIt.I.get<DatabaseRepository>();
@@ -19,15 +22,25 @@ class GetHandler {
     }
     final String table = segments.first;
 
-    if (table == 'me') {
-      return _processMe(request);
-    } else if (_databaseRepository.tableExists(table)) {
-      if (segments.length > 1) {
-        return _processById(table, segments[1]);
-      } else {
-        return _processGetAll(
-            table, request.url.queryParameters, request.headers);
-      }
+    switch (table) {
+      case 'flutter_service_worker.js':
+        return Response.ok(jsonEncode({}));
+      case 'me':
+        return _processMe(request);
+      case 'images':
+        final response = await staticFiles(request);
+        return response.change(headers: {
+          'keepContentType': 'false',
+        });
+      default:
+        if (_databaseRepository.tableExists(table)) {
+          if (segments.length > 1) {
+            return _processById(table, segments[1]);
+          } else {
+            return _processGetAll(
+                table, request.url.queryParameters, request.headers);
+          }
+        }
     }
     return Response(404);
   }

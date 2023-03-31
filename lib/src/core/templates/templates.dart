@@ -67,6 +67,8 @@ database: database.json
 #   jwtExpire: 3600
 #   unauthorizedStatusCode: 403
 #   urlSkip:
+#     - /images/:
+#        method: get
 #     - /users:
 #        method: post
 #      - /products/{*}:

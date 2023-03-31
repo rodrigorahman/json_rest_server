@@ -298,4 +298,37 @@ slack:
   ```
 
    Para emitir os eventos, os providers precisam estar configurados , e no caso do socket somente se existir clientes conectados o envio é efetuado, assim garantindo que não seja disparado nenhum serviço sem necessidade
-  
+
+
+# Suporte a conteúdos estáticos (Imagens)
+
+Json Rest Server agora da suporte a url de conteúdo (Imagens) estáticas.
+
+Para habilitar o suporte a esse recurso em projetos existentes siga os passos abaixo: 
+
+1 - Na raiz do seu projeto, crie uma pasta assets e dentro de assets uma pasta images
+2 - Coloque as imagens dentro dessa pasta e agora você terá acesso a url `http://localhost:8080/images`
+
+## Caso esteja utilizando autenticação faça esse passo: 
+Caso esteja utilizando autenticação será necessário adicionar o path `/images/` no método `get` no urlSkip ex:
+
+```yaml
+name: Json Rest Server
+port: 8080
+host: 0.0.0.0
+database: database.json
+
+auth:
+   jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl
+   jwtExpire: 5
+   unauthorizedStatusCode: 401
+   urlSkip:
+      - /images/:
+         method: get
+      - /users:
+         method: post
+      - /products:
+         method: get
+      - /products/{*}:
+          method: get
+```

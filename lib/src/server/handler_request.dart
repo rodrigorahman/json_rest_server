@@ -18,6 +18,7 @@ import 'handlers/put_handler.dart';
 
 class HandlerRequest {
   Future<Response> execute(Request request) async {
+    
     final method = request.method;
     final config = GetIt.I.get<ConfigModel>();
     final broadcast = GetIt.I.get<BroadCastController>();
