@@ -16,6 +16,7 @@ class CreateProjectCommand extends Command {
   void run() {
     try {
       var dirServer = _createFolder();
+      _createDirAssets(dirServer);
       _createDatabase(dirServer);
       _createConfig(dirServer);
       print('Backend Created');
@@ -54,5 +55,10 @@ class CreateProjectCommand extends Command {
     var db = File('${dir.path}/config.yaml');
     db.createSync(recursive: true);
     db.writeAsStringSync(TemplateType.config.templateBody);
+  }
+  
+  void _createDirAssets(Directory dirServer) {
+    final dirAssets = Directory('${dirServer.path}/assets/images');
+    dirAssets.create(recursive: true);
   }
 }
