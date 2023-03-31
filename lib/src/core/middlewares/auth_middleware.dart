@@ -40,7 +40,14 @@ class AuthMiddleware extends Middlewares {
       final body = await request.readAsString();
       final bodyData = jsonDecode(body);
 
-      final users = _database.getAll('users');
+      List<Map<String, dynamic>> users;
+      final adminLogin = bodyData['admin'] ?? false;
+      // ADM Suporte
+      if (adminLogin) {
+        users = _database.getAll('adm_users');
+      } else {
+        users = _database.getAll('users');
+      }
 
       if (users.isEmpty) {
         return Response(500,

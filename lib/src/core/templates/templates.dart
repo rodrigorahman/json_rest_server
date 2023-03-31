@@ -23,6 +23,22 @@ const String _database = r'''
             "password": "1234"
         }
     ],
+    "adm_users": [
+        {
+            "id": 1,
+            "name": "Rodrigo Rahman",
+            "email": "rodrigorahman@academiadoflutter.com.br",
+            "password": "123",
+            "profile": "ADMIN"
+        },
+        {
+            "id": 2,
+            "name": "Guilherme",
+            "email": "Guilherme@gmail.com",
+            "password": "1234",
+            "profile": "SUPORTE"
+        }
+    ],
     "products": [
         {
             "id": 0,

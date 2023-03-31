@@ -13,6 +13,22 @@
             "password": "1234"
         }
     ],
+    "adm_users": [
+        {
+            "id": 0,
+            "name": "Rodrigo Rahman",
+            "email": "rodrigorahman@academiadoflutter.com.br",
+            "password": "123",
+            "profile": "ADMIN"
+        },
+        {
+            "id": 1,
+            "name": "Guilherme",
+            "email": "Guilherme@gmail.com",
+            "password": "1234",
+            "profile": "SUPORTE"
+        }
+    ],
     "products": [
         {
             "id": 0,

@@ -1,3 +1,9 @@
+## 1.4.1
+- Bugfix (issue https://github.com/rodrigorahman/json_rest_server/issues/7) json_rest_server status version error
+
+## 1.4.0
+- Support for WebSocket and adding login to another collection to support a possible administrator."
+
 ## 1.3.2
 - patch method correction and added options method with cors support
 
