@@ -1,3 +1,6 @@
+## 1.5.1
+- Fix: Readme format 
+
 ## 1.5.0
 - Added support for static files
 - Added support for administrator login for use in the Backoffice
