@@ -8,7 +8,7 @@ import 'package:shelf_static/shelf_static.dart';
 
 import '../../repositories/database_repository.dart';
 
-final staticFiles = createStaticHandler('assets/', listDirectories: true);
+
 
 class GetHandler {
   final _databaseRepository = GetIt.I.get<DatabaseRepository>();
@@ -27,8 +27,9 @@ class GetHandler {
         return Response.ok(jsonEncode({}));
       case 'me':
         return _processMe(request);
-      case 'images':
-        final response = await staticFiles(request);
+      case 'storage':
+        Response response = await createStaticHandler('./').call(request);
+        
         return response.change(headers: {
           'keepContentType': 'false',
         });
@@ -62,6 +63,7 @@ class GetHandler {
 
   Future<Response> _processMe(Request request) async {
     String? id;
+    bool adm = request.headers['adm'] == 'true';
 
     if (_config.auth == null) {
       return Response(404,
@@ -78,7 +80,7 @@ class GetHandler {
           body: jsonEncode({'error': 'param id required'}));
     }
 
-    final result = _databaseRepository.getById('users', int.parse(id));
+    final result = _databaseRepository.getById(adm ? 'adm_users' : 'users', int.parse(id));
     result.remove('password');
 
     return Response(200,

@@ -136,6 +136,8 @@ Descrição das tags:
 ```yaml
 jwtSecret -> Chave de autenticação do jwt (essa chave é importante para validação do token)
 jwtExpire -> Tempo de expiração do token em segundos
+enableAdm -> Se habilitado o json_rest_server vai permitir somente requisições de POST, PUT, DELETE para usuários administradores
+urlUserPermission -> Quando habilitado o enableADM você pode permitir que um usuário simples faça as requisições de POST, PUT, DELETE colocando a url aqui.
 unauthorizedStatusCode -> Status de retorno para acesso negado
 urlSkip -> Coloque aqui as urls e métodos http que você não que seja verificada a autenticação do usuário (paths não autenticados)
 ```
@@ -158,9 +160,6 @@ auth:
         method: get
 
 ```
-
-
-
 
 
 **Como realizar o login**
@@ -192,6 +191,19 @@ Response response = await http.get(
   headers: {'authorization': "$type $token"},
 );
 ```
+
+**Para um login como administrador você deve enviar no body o parametro admin como true**
+
+```json
+{
+    "email": "rodrigorahman@academiadoflutter.com.br",
+    "password": "123",
+    "admin": true
+}
+```
+
+Dessa forma o Json Rest Server fará a busca na collection `adm_users` podendo assim fazer um login de administrador retornando um json diferente quando recuperado pelo /me, além de permitir o acesso aos métodos POST, PUT, DELETE para todas as collections cadastradas
+
 
 **Recuperando dados do usuário logado**
 
@@ -253,6 +265,7 @@ Basta agora enviar novamente a requisição passando o novo token.
 
 ## ATENÇÃO: Lembre que agora você recebeu um novo token de acesso e o antigo DEVE ser descartado!
 
+
 # Criando referencia ao usuário logado no seu json
 Você pode querer adicionar uma coluna com o dado do usuário que está logado.
 
@@ -297,38 +310,13 @@ slack:
   #Indica o canal do slack para ser enviado sempre começando com #
   ```
 
-   Para emitir os eventos, os providers precisam estar configurados , e no caso do socket somente se existir clientes conectados o envio é efetuado, assim garantindo que não seja disparado nenhum serviço sem necessidade
-
-
+  ## Para emitir os eventos, os providers precisam estar configurados , e no caso do socket somente se existir clientes conectados o envio é efetuado, assim garantindo que não seja disparado nenhum serviço sem necessidade
+  
 # Suporte a conteúdos estáticos (Imagens)
 
 Json Rest Server agora da suporte a url de conteúdo (Imagens) estáticas.
 
 Para habilitar o suporte a esse recurso em projetos existentes siga os passos abaixo: 
 
-1 - Na raiz do seu projeto, crie uma pasta assets e dentro de assets uma pasta images
-2 - Coloque as imagens dentro dessa pasta e agora você terá acesso a url `http://localhost:8080/images`
-
-## Caso esteja utilizando autenticação faça esse passo: 
-Caso esteja utilizando autenticação será necessário adicionar o path `/images/` no método `get` no urlSkip ex:
-
-```yaml
-name: Json Rest Server
-port: 8080
-host: 0.0.0.0
-database: database.json
-
-auth:
-   jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl
-   jwtExpire: 5
-   unauthorizedStatusCode: 401
-   urlSkip:
-      - /images/:
-         method: get
-      - /users:
-         method: post
-      - /products:
-         method: get
-      - /products/{*}:
-          method: get
-```
+1 - Na raiz do seu projeto, crie uma pasta storage
+2 - Coloque as imagens dentro dessa pasta e agora você terá acesso a url `http://localhost:8080/storage`

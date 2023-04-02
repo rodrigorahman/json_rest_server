@@ -9,7 +9,8 @@ class PostHandler {
   final _databaseRepository = GetIt.I.get<DatabaseRepository>();
   Future<Map<String, dynamic>?> execute(Request request) async {
     final segments = request.url.pathSegments;
-    final String table = segments.first;
+
+    final table = segments.first;
 
     if (_databaseRepository.tableExists(table)) {
       var body = await request.readAsString();

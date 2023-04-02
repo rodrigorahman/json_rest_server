@@ -119,6 +119,8 @@ Tags description:
 ```yaml
 jwtSecret -> JWT's authentication key (this key is very important to validade the token)
 jwtExpire -> You token expiration in seconds
+enableAdm -> Se habilitado o json_rest_server vai permitir somente requisições de POST, PUT, DELETE para usuários administradores
+urlUserPermission -> Quando habilitado o enableADM você pode permitir que um usuário simples faça as requisições de POST, PUT, DELETE colocando a url aqui.
 unauthorizedStatusCode ->  The status to use in case of denied access
 urlSkip -> Urls that you don't want to be verified with JWT
 ```
@@ -171,6 +173,20 @@ Response response = await http.get(
   headers: {'authorization': "$type $token"},
 );
 ```
+
+
+**To login as an administrator, you must send the parameter "admin" as true in the body**
+
+```json
+{
+    "email": "rodrigorahman@academiadoflutter.com.br",
+    "password": "123",
+    "admin": true
+}
+```
+
+This way, the Json Rest Server will search the `adm_users` collection, enabling the login as an administrator and returning a different JSON when retrieved by `/me`, in addition to allowing access to the POST, PUT, and DELETE methods for all registered collections.
+
 
 
 **Get logged in user data**
@@ -252,5 +268,16 @@ slack:
   #Indicates the url of the slack webhook
   slackChannel:
   #Indicates the slack channel to send always starting with #
-  ```
-   To send the events, the providers need to be configured, and in the case of the socket, only if there are connected clients are they sent, thus guaranteeing that no unnecessary service is triggered.
+```
+   
+   ## To send the events, the providers need to be configured, and in the case of the socket, only if there are connected clients are they sent, thus guaranteeing that no unnecessary service is triggered.
+
+# Support for static content (images).
+
+Json Rest Server now supports static content (images) URL.
+
+To enable support for this feature in existing projects, follow the steps below:
+
+1 - In the root of your project, create a folder named storage.
+2 - Place the images inside that folder, and now you will have access to the URL `http://localhost:8080/storage`.
+

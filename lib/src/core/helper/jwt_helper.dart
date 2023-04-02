@@ -7,7 +7,7 @@ import '../exceptions/config_not_found_exception.dart';
 class JwtHelper {
   JwtHelper._();
 
-  static String generateJWT(int userId) {
+  static String generateJWT(int userId, bool adm) {
     final config = GetIt.I.get<ConfigModel>();
     final jwtExpire = config.auth?.jwtExpire;
     final jwtSecret = config.auth?.jwtSecret;
@@ -18,6 +18,9 @@ class JwtHelper {
 
     final claimSet = JwtClaim(
       issuer: 'json_rest_server',
+      otherClaims: {
+        'adm': adm
+      },
       subject: userId.toString(),
       expiry: DateTime.now().add(Duration(seconds: jwtExpire)),
       notBefore: DateTime.now(),
@@ -43,7 +46,7 @@ class JwtHelper {
       issuer: accessToken,
       subject: 'RefreshToken',
       expiry: DateTime.now().add(Duration(days: expiry)),
-      notBefore: DateTime.now().add(Duration(seconds: notBefore)),
+      notBefore: DateTime.now(),//.add(Duration(seconds: notBefore)),
       issuedAt: DateTime.now(),
       otherClaims: <String, dynamic>{},
     );

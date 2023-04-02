@@ -28,7 +28,7 @@ class AuthMiddleware extends Middlewares {
         segments[segments.length - 2] == 'auth' &&
         segments.last == 'refresh') {
       return _refreshToken(request);
-    } else if (_config.auth != null) {
+    } else if (_config.auth != null && segments.first != 'storage') {
       return _checkLogin(request);
     } else {
       return innerHandler(request);
@@ -40,15 +40,9 @@ class AuthMiddleware extends Middlewares {
       final body = await request.readAsString();
       final bodyData = jsonDecode(body);
 
-      List<Map<String, dynamic>> users;
       final adminLogin = bodyData['admin'] ?? false;
-      // ADM Suporte
-      if (adminLogin) {
-        users = _database.getAll('adm_users');
-      } else {
-        users = _database.getAll('users');
-      }
-
+      final users = _database.getAll(adminLogin ? 'adm_users' : 'users');
+      
       if (users.isEmpty) {
         return Response(500,
             body: jsonEncode({'erro': 'user table not exists'}));
@@ -66,7 +60,7 @@ class AuthMiddleware extends Middlewares {
         return Response.forbidden(jsonEncode({'error': 'Forbidden Access'}));
       }
 
-      final token = JwtHelper.generateJWT(user['id']);
+      final token = JwtHelper.generateJWT(user['id'], adminLogin);
       final refreshToken = JwtHelper.refreshToken(token);
 
       return Response.ok(
@@ -86,10 +80,13 @@ class AuthMiddleware extends Middlewares {
 
   Future<Response> _checkLogin(Request request) async {
     try {
-      final skipUrl = _config.auth!.urlSkip;
+      final authConfig = _config.auth!;
+      final skipUrl = authConfig.urlSkip;
       final pathUrl = '/${request.url.path}';
       final method = request.method;
+      final methodsCheck = ['post', 'put', 'delete'];
 
+     
       if (skipUrl != null &&
           skipUrl.any((element) {
             if (element.path.contains('{*}')) {
@@ -143,13 +140,23 @@ class AuthMiddleware extends Middlewares {
       final claimsMap = claims.toJson();
 
       final userId = claimsMap['sub'];
+      final adm = claims['adm'];
 
       if (userId == null) {
         throw JwtException.invalidToken;
       }
 
+       if(methodsCheck.contains(method.toLowerCase())){
+        if(authConfig.enableAdm) {
+          if(!adm && !authConfig.urlUserPermission.contains(pathUrl)){
+            throw JwtException.invalidToken;
+          }
+        }
+      }
+
       final securityHeaders = {
         'user': userId,
+        'adm': '$adm',
         'access_token': authorizationToken,
       };
 
@@ -174,11 +181,12 @@ class AuthMiddleware extends Middlewares {
       throw JwtException.invalidToken;
     }
     _validRefreshToken(authHeaderContent[1], body['refresh_token'] ?? '');
-    final claims = JwtHelper.getClaims(authHeaderContent[1]);
+    final claims = JwtHelper.getClaims(authHeaderContent[1]).toJson();
+    
+    final id = claims['sub'];
+    final adm = claims['adm'];
 
-    final id = claims.toJson()['sub'];
-
-    final token = JwtHelper.generateJWT(int.parse(id));
+    final token = JwtHelper.generateJWT(int.parse(id), adm);
     final refreshToken = JwtHelper.refreshToken(token);
 
     return Response.ok(

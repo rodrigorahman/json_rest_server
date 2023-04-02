@@ -13,6 +13,15 @@
             "password": "1234"
         }
     ],
+    "adm_users": [
+        {
+            "id": 0,
+            "name": "Rodrigo Rahman ADM",
+            "email": "rodrigorahman@academiadoflutter.com.br",
+            "password": "123",
+            "perfil": "ADM"
+        }
+    ],
     "products": [
         {
             "id": 0,
@@ -48,6 +57,34 @@
             "id": 7,
             "title": "Academia do flutter",
             "user_id": "1"
+        },
+        {
+            "id": 8,
+            "name": "Porção de 500g Calabresa acebolada",
+            "description": "",
+            "price": 19.0,
+            "image": "https://www.anamariabrogui.com.br/assets/uploads/receitas/fotos/usuario-1682-52acab79d88efd805e6a341697e6aecb.jpg"
+        },
+        {
+            "id": 9,
+            "name": "Porção de 500g Calabresa acebolada",
+            "description": "",
+            "price": 19.0,
+            "image": "https://www.anamariabrogui.com.br/assets/uploads/receitas/fotos/usuario-1682-52acab79d88efd805e6a341697e6aecb.jpg"
+        },
+        {
+            "id": 10,
+            "name": "Porção de 500g Calabresa acebolada",
+            "description": "",
+            "price": 19.0,
+            "image": "https://www.anamariabrogui.com.br/assets/uploads/receitas/fotos/usuario-1682-52acab79d88efd805e6a341697e6aecb.jpg"
+        },
+        {
+            "id": 11,
+            "name": "Porção de 500g Calabresa acebolada",
+            "description": "",
+            "price": 19.0,
+            "image": "https://www.anamariabrogui.com.br/assets/uploads/receitas/fotos/usuario-1682-52acab79d88efd805e6a341697e6aecb.jpg"
         }
     ],
     "students": [
@@ -55,5 +92,6 @@
             "id": 1,
             "name": "Academia do flutter 2"
         }
+  
     ]
 }
