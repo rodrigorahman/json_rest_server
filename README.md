@@ -320,3 +320,30 @@ Para habilitar o suporte a esse recurso em projetos existentes siga os passos ab
 
 1 - Na raiz do seu projeto, crie uma pasta storage
 2 - Coloque as imagens dentro dessa pasta e agora você terá acesso a url `http://localhost:8080/storage`
+
+# Upload de arquivos
+
+Para realizar upload de arquivos você deve fazer um post para a url `http://localhost:8080/uploads` e enviar o arquivo por formData.
+
+**Obs**: é muito importante que você envie o nome do arquivo dentro do multpartFile
+
+**Exemplo:**
+
+```dart
+ final formData = FormData.fromMap({
+    'file': await MultipartFile.fromFile(
+      './storage/nome_imagem.png',
+      filename: 'nome_imagem.png',
+    ),
+  });
+
+  final response = await Dio().post(
+    'http://localhost:8080/uploads',
+    data: formData,
+    options: Options(
+      headers: {
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG0iOnRydWUsImV4cCI6MTY4MDQ0Mjk1OCwiaWF0IjoxNjgwNDM5MzU4LCJpc3MiOiJqc29uX3Jlc3Rfc2VydmVyIiwibmJmIjoxNjgwNDM5MzU4LCJzdWIiOiIwIn0.TWhCCYnJABi1RYzKIKFVspRHZi2-5iqgxALTYTzSeQ0',
+      },
+    ),
+  );
+  ```

@@ -8,6 +8,7 @@ import 'package:json_rest_server/src/core/helper/cors_helper.dart';
 import 'package:json_rest_server/src/models/broadcast_model.dart';
 import 'package:json_rest_server/src/models/config_model.dart';
 import 'package:json_rest_server/src/server/handlers/option_handler.dart';
+import 'package:json_rest_server/src/server/handlers/upload_handler.dart';
 import 'package:shelf/shelf.dart';
 
 import 'handlers/delete_handler.dart';
@@ -18,7 +19,6 @@ import 'handlers/put_handler.dart';
 
 class HandlerRequest {
   Future<Response> execute(Request request) async {
-    
     final method = request.method;
     final config = GetIt.I.get<ConfigModel>();
     final broadcast = GetIt.I.get<BroadCastController>();
@@ -32,7 +32,12 @@ class HandlerRequest {
         case 'GET':
           return GetHandler().execute(request);
         case 'POST':
-          mapResponse = await PostHandler().execute(request);
+          if (request.url.path == 'uploads') {
+            mapResponse = await UploadHandler().execute(request);
+            return Response.ok(jsonEncode(mapResponse));
+          } else {
+            mapResponse = await PostHandler().execute(request);
+          }
           break;
         case 'PUT':
           mapResponse = await PutHandler().execute(request);
