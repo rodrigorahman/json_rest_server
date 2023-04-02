@@ -266,7 +266,7 @@ Basta agora enviar novamente a requisição passando o novo token.
 ## ATENÇÃO: Lembre que agora você recebeu um novo token de acesso e o antigo DEVE ser descartado!
 
 
-# Criando referencia ao usuário logado no seu json
+## Criando referencia ao usuário logado no seu json
 Você pode querer adicionar uma coluna com o dado do usuário que está logado.
 
 Para fazer essa associação, basta enviar no value do field o valor #userAuthRef ex:
@@ -281,7 +281,7 @@ Para fazer essa associação, basta enviar no value do field o valor #userAuthRe
 O Json Rest Server vai substituir o valor de #userAuthRef pelo id do usuário logado, lembrando que essa tag só poderá ser usada para serviços que utilizem autenticação pois o valor será substituido pelo id do usuário enviado no tokenJWT.
 
 
-# Buscando dados com filtro por usuário logado.
+## Buscando dados com filtro por usuário logado.
 
 Para fazer a busca por um campo com o ID do usuário logado, você precisa enviar no filtro a tag #userAuthRef, o Json Rest Server vai substituir o valor pelo id do usuário logado ex:
 
@@ -291,7 +291,7 @@ O JRS vai substituir a tag #userAuthRef pelo o id do usuário logado e realizar 
 
 
 
-# Sistema de broadcast event
+## Sistema de broadcast event
 Foi desenvolvido um sistema de broadcast para enviar dados para outras aplicações com uma configuração inicial simples no seu config.yaml
 Inicialmente o sistema está compatível com o envio para ***socket e slack***
 
@@ -312,7 +312,7 @@ slack:
 
   ## Para emitir os eventos, os providers precisam estar configurados , e no caso do socket somente se existir clientes conectados o envio é efetuado, assim garantindo que não seja disparado nenhum serviço sem necessidade
   
-# Suporte a conteúdos estáticos (Imagens)
+## Suporte a conteúdos estáticos (Imagens)
 
 Json Rest Server agora da suporte a url de conteúdo (Imagens) estáticas.
 
@@ -321,7 +321,7 @@ Para habilitar o suporte a esse recurso em projetos existentes siga os passos ab
 1 - Na raiz do seu projeto, crie uma pasta storage
 2 - Coloque as imagens dentro dessa pasta e agora você terá acesso a url `http://localhost:8080/storage`
 
-# Upload de arquivos
+## Upload de arquivos
 
 Para realizar upload de arquivos você deve fazer um post para a url `http://localhost:8080/uploads` e enviar o arquivo por formData.
 

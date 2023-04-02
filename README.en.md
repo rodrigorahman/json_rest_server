@@ -251,7 +251,7 @@ Now just send the request again, passing the new token.
 
 ## ATTENTION: Remember that you have now received a new access token and the old one MUST be discarded!
 
-# Broadcast event system
+## Broadcast event system
 A broadcast system was developed to send data to other applications with a simple initial configuration in your config.yaml
 Initially, the system is compatible with sending to ***socket and slack***
 
@@ -272,7 +272,7 @@ slack:
    
    ## To send the events, the providers need to be configured, and in the case of the socket, only if there are connected clients are they sent, thus guaranteeing that no unnecessary service is triggered.
 
-# Support for static content (images).
+## Support for static content (images).
 
 Json Rest Server now supports static content (images) URL.
 
@@ -281,7 +281,7 @@ To enable support for this feature in existing projects, follow the steps below:
 1 - In the root of your project, create a folder named storage.
 2 - Place the images inside that folder, and now you will have access to the URL `http://localhost:8080/storage`.
 
-# File upload
+## File upload
 
 To perform file upload, you must make a POST request to the URL `http://localhost:8080/uploads` and send the file using formData.
 
