@@ -10,14 +10,13 @@ class ConfigAuthModel {
   final List<String> urlUserPermission;
   final List<UrlSkip>? urlSkip;
 
-  ConfigAuthModel({
-    required this.jwtSecret,
-    required this.jwtExpire,
-    this.unauthorizedStatusCode = 403,
-    this.urlSkip,
-    this.urlUserPermission = const <String>[],
-    this.enableAdm = false
-  });
+  ConfigAuthModel(
+      {required this.jwtSecret,
+      required this.jwtExpire,
+      this.unauthorizedStatusCode = 403,
+      this.urlSkip,
+      this.urlUserPermission = const <String>[],
+      this.enableAdm = false});
 
   Map<String, dynamic> toMap() {
     return {
@@ -30,7 +29,7 @@ class ConfigAuthModel {
   factory ConfigAuthModel.fromMap(Map<String, dynamic> map) {
     YamlList? urlSkip = map['urlSkip'];
     YamlList? urlUserPermission = map['urlUserPermission'];
-    
+
     return ConfigAuthModel(
       jwtSecret: map['jwtSecret'] ?? '',
       jwtExpire: map['jwtExpire']?.toInt() ?? 0,
@@ -81,5 +80,6 @@ class UrlSkip {
 
   String toJson() => json.encode(toMap());
 
-  factory UrlSkip.fromJson(String source) => UrlSkip.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UrlSkip.fromJson(String source) =>
+      UrlSkip.fromMap(json.decode(source) as Map<String, dynamic>);
 }

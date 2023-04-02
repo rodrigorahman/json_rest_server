@@ -8,8 +8,6 @@ import 'package:shelf_static/shelf_static.dart';
 
 import '../../repositories/database_repository.dart';
 
-
-
 class GetHandler {
   final _databaseRepository = GetIt.I.get<DatabaseRepository>();
   final _jsonHelper = GetIt.I.get<CorsHelper>();
@@ -29,7 +27,7 @@ class GetHandler {
         return _processMe(request);
       case 'storage':
         Response response = await createStaticHandler('./').call(request);
-        
+
         return response.change(headers: {
           'keepContentType': 'false',
         });
@@ -80,7 +78,8 @@ class GetHandler {
           body: jsonEncode({'error': 'param id required'}));
     }
 
-    final result = _databaseRepository.getById(adm ? 'adm_users' : 'users', int.parse(id));
+    final result =
+        _databaseRepository.getById(adm ? 'adm_users' : 'users', int.parse(id));
     result.remove('password');
 
     return Response(200,

@@ -1,3 +1,9 @@
+## 1.5.0
+- Added support for static files
+- Added support for administrator login for use in the Backoffice
+- Added support for file upload
+
+
 ## 1.4.1
 - Bugfix (issue https://github.com/rodrigorahman/json_rest_server/issues/7) json_rest_server status version error
 

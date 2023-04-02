@@ -56,7 +56,7 @@ class CreateProjectCommand extends Command {
     db.createSync(recursive: true);
     db.writeAsStringSync(TemplateType.config.templateBody);
   }
-  
+
   void _createDirStorage(Directory dirServer) {
     final dirStorage = Directory('${dirServer.path}/storage');
     dirStorage.create(recursive: true);

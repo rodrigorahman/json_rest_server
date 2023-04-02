@@ -42,7 +42,7 @@ class AuthMiddleware extends Middlewares {
 
       final adminLogin = bodyData['admin'] ?? false;
       final users = _database.getAll(adminLogin ? 'adm_users' : 'users');
-      
+
       if (users.isEmpty) {
         return Response(500,
             body: jsonEncode({'erro': 'user table not exists'}));
@@ -86,7 +86,6 @@ class AuthMiddleware extends Middlewares {
       final method = request.method;
       final methodsCheck = ['post', 'put', 'delete'];
 
-     
       if (skipUrl != null &&
           skipUrl.any((element) {
             if (element.path.contains('{*}')) {
@@ -146,9 +145,9 @@ class AuthMiddleware extends Middlewares {
         throw JwtException.invalidToken;
       }
 
-       if(methodsCheck.contains(method.toLowerCase())){
-        if(authConfig.enableAdm) {
-          if(!adm && !authConfig.urlUserPermission.contains(pathUrl)){
+      if (methodsCheck.contains(method.toLowerCase())) {
+        if (authConfig.enableAdm) {
+          if (!adm && !authConfig.urlUserPermission.contains(pathUrl)) {
             throw JwtException.invalidToken;
           }
         }
@@ -182,7 +181,7 @@ class AuthMiddleware extends Middlewares {
     }
     _validRefreshToken(authHeaderContent[1], body['refresh_token'] ?? '');
     final claims = JwtHelper.getClaims(authHeaderContent[1]).toJson();
-    
+
     final id = claims['sub'];
     final adm = claims['adm'];
 

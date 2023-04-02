@@ -11,7 +11,7 @@ class DefaultContentType extends Middlewares {
   Future<Response> execute(Request request) async {
     final response = await innerHandler(request);
     final headers = {...response.headers};
-    if(headers.containsKey('keepContentType')){
+    if (headers.containsKey('keepContentType')) {
       headers.remove('keepContentType');
       return response.change(headers: headers);
     }

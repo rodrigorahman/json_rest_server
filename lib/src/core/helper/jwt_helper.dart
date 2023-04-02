@@ -18,9 +18,7 @@ class JwtHelper {
 
     final claimSet = JwtClaim(
       issuer: 'json_rest_server',
-      otherClaims: {
-        'adm': adm
-      },
+      otherClaims: {'adm': adm},
       subject: userId.toString(),
       expiry: DateTime.now().add(Duration(seconds: jwtExpire)),
       notBefore: DateTime.now(),
@@ -46,7 +44,7 @@ class JwtHelper {
       issuer: accessToken,
       subject: 'RefreshToken',
       expiry: DateTime.now().add(Duration(days: expiry)),
-      notBefore: DateTime.now(),//.add(Duration(seconds: notBefore)),
+      notBefore: DateTime.now().add(Duration(seconds: notBefore)),
       issuedAt: DateTime.now(),
       otherClaims: <String, dynamic>{},
     );

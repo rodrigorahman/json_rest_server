@@ -18,10 +18,7 @@ class UploadHandler {
       final extension = fileName.split('.').last;
       final file = await formData.part.readBytes();
       final finalFileName = _saveFile(file, extension);
-      response = {
-        'fileName': finalFileName,
-        'url': '/storage/$finalFileName'
-      };
+      response = {'fileName': finalFileName, 'url': '/storage/$finalFileName'};
     }
     return response;
   }
