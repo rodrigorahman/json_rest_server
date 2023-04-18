@@ -46,8 +46,11 @@ class AuthMiddleware extends Middlewares {
       final users = _database.getAll(adminLogin ? 'adm_users' : 'users');
 
       if (users.isEmpty) {
-        return Response(500,
-            body: jsonEncode({'erro': 'user table not exists'}));
+        return Response(
+          500,
+          body: jsonEncode({'erro': 'user table not exists'}),
+          headers: jsonHelper.jsonReturn,
+        );
       }
 
       var user = users.firstWhere(
@@ -59,7 +62,10 @@ class AuthMiddleware extends Middlewares {
       );
 
       if (user.isEmpty) {
-        return Response.forbidden(jsonEncode({'error': 'Forbidden Access'}));
+        return Response.forbidden(
+          jsonEncode({'error': 'Forbidden Access'}),
+          headers: jsonHelper.jsonReturn,
+        );
       }
 
       final token = JwtHelper.generateJWT(user['id'], adminLogin);
@@ -75,9 +81,11 @@ class AuthMiddleware extends Middlewares {
       );
     } on ConfigNotFoundException catch (e, s) {
       log('Auth config not found check config.yaml', error: e, stackTrace: s);
-      return Response(500,
-          body:
-              jsonEncode({'erro': 'Auth config not found check config.yaml'}));
+      return Response(
+        500,
+        body: jsonEncode({'erro': 'Auth config not found check config.yaml'}),
+        headers: jsonHelper.jsonReturn,
+      );
     }
   }
 

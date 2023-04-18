@@ -1,3 +1,6 @@
+## 1.5.4
+- Fix: Add cors on errors
+
 ## 1.5.3
 - Fix: Add cors on login 
 
