@@ -17,7 +17,7 @@ class AuthMiddleware extends Middlewares {
 
   @override
   Future<Response> execute(Request request) async {
-    if (request.url.path == '') {
+    if (request.url.path == '' || request.method == 'OPTIONS') {
       return innerHandler(request);
     }
     var segments = request.url.pathSegments;

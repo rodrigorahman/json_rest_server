@@ -1,3 +1,6 @@
+## 1.5.2
+- Fix: Options with authentication 
+
 ## 1.5.1
 - Fix: Readme format 
 
