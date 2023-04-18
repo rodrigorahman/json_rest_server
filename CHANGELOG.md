@@ -1,3 +1,7 @@
+## 1.5.3
+- Fix: Add cors on login 
+
+
 ## 1.5.2
 - Fix: Options with authentication 
 

@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:get_it/get_it.dart';
 import 'package:jaguar_jwt/jaguar_jwt.dart';
+import 'package:json_rest_server/src/core/helper/cors_helper.dart';
 import 'package:shelf/shelf.dart';
 
 import '../../models/config_model.dart';
@@ -14,6 +15,7 @@ import 'middlewares.dart';
 class AuthMiddleware extends Middlewares {
   final _config = GetIt.I.get<ConfigModel>();
   final _database = GetIt.I.get<DatabaseRepository>();
+  final jsonHelper = GetIt.I.get<CorsHelper>();
 
   @override
   Future<Response> execute(Request request) async {
@@ -69,6 +71,7 @@ class AuthMiddleware extends Middlewares {
           'refresh_token': refreshToken,
           'type': 'Bearer',
         }),
+        headers: jsonHelper.jsonReturn,
       );
     } on ConfigNotFoundException catch (e, s) {
       log('Auth config not found check config.yaml', error: e, stackTrace: s);
@@ -194,6 +197,7 @@ class AuthMiddleware extends Middlewares {
         'refresh_token': refreshToken,
         'type': 'Bearer',
       }),
+      headers: jsonHelper.jsonReturn,
     );
   }
 
