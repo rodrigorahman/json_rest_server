@@ -173,10 +173,16 @@ class AuthMiddleware extends Middlewares {
       return innerHandler(request.change(headers: securityHeaders));
     } on JwtException catch (e, s) {
       log('Erro ao validar token JWT', error: e, stackTrace: s);
-      return Response(_config.auth?.unauthorizedStatusCode ?? 403);
+      return Response(
+        _config.auth?.unauthorizedStatusCode ?? 403,
+        headers: jsonHelper.jsonReturn,
+      );
     } catch (e, s) {
       log('Internal Server Error', error: e, stackTrace: s);
-      return Response(_config.auth?.unauthorizedStatusCode ?? 403);
+      return Response(
+        _config.auth?.unauthorizedStatusCode ?? 403,
+        headers: jsonHelper.jsonReturn,
+      );
     }
   }
 

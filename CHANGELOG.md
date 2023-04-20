@@ -1,3 +1,6 @@
+## 1.5.5
+- Fix: Add cors on errors 401 inside middleware
+
 ## 1.5.4
 - Fix: Add cors on errors
 
