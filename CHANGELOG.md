@@ -1,3 +1,6 @@
+## 1.5.6
+- Fix: Add cors on get image storage
+
 ## 1.5.5
 - Fix: Add cors on errors 401 inside middleware
 
