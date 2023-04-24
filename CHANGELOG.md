@@ -1,4 +1,7 @@
 ## 1.5.6
+- Fix: Add cors on upload image storage
+
+## 1.5.6
 - Fix: Add cors on get image storage
 
 ## 1.5.5

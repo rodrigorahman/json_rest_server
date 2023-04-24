@@ -34,7 +34,10 @@ class HandlerRequest {
         case 'POST':
           if (request.url.path == 'uploads') {
             mapResponse = await UploadHandler().execute(request);
-            return Response.ok(jsonEncode(mapResponse));
+            return Response.ok(
+              jsonEncode(mapResponse),
+              headers: jsonHelper.jsonReturn,
+            );
           } else {
             mapResponse = await PostHandler().execute(request);
           }
@@ -55,11 +58,18 @@ class HandlerRequest {
           final body = jsonEncode({
             'error': 'Unsupported request: ${request.method}.',
           });
-          return Response(HttpStatus.methodNotAllowed, body: body);
+          return Response(
+            HttpStatus.methodNotAllowed,
+            body: body,
+            headers: jsonHelper.jsonReturn,
+          );
       }
 
       if (mapResponse == null) {
-        return Response(404);
+        return Response(
+          404,
+          headers: jsonHelper.jsonReturn,
+        );
       } else {
         final segments = request.url.pathSegments;
         final String table = segments.first;
@@ -81,7 +91,11 @@ class HandlerRequest {
     } catch (e, s) {
       log('Erro interno', error: e, stackTrace: s);
       return Response.internalServerError(
-          body: jsonEncode({'erro': e.toString()}));
+        body: jsonEncode(
+          {'erro': e.toString()},
+        ),
+        headers: jsonHelper.jsonReturn,
+      );
     }
   }
 }
