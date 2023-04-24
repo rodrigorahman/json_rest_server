@@ -1,4 +1,4 @@
-## 1.5.6
+## 1.5.7
 - Fix: Add cors on upload image storage
 
 ## 1.5.6
