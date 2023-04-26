@@ -1,3 +1,6 @@
+## 1.5.8
+- Bug: /me was removing the password field causing login to stop working
+
 ## 1.5.7
 - Fix: Add cors on upload image storage
 

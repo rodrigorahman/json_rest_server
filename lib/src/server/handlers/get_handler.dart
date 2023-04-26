@@ -77,8 +77,9 @@ class GetHandler {
           body: jsonEncode({'error': 'param id required'}));
     }
 
-    final result =
-        _databaseRepository.getById(adm ? 'adm_users' : 'users', int.parse(id));
+    final result = {
+      ..._databaseRepository.getById(adm ? 'adm_users' : 'users', int.parse(id))
+    };
     result.remove('password');
 
     return Response(200,
