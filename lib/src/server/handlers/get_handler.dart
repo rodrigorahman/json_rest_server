@@ -27,9 +27,12 @@ class GetHandler {
         return _processMe(request);
       case 'storage':
         Response response = await createStaticHandler('./').call(request);
-
-        return response.change(
-            headers: {'keepContentType': 'false', ..._jsonHelper.jsonReturn});
+        final headers = {
+          'keepContentType': 'false',
+          ..._jsonHelper.jsonReturn,
+        };
+        headers.remove('content-type');
+        return response.change(headers: headers);
       default:
         if (_databaseRepository.tableExists(table)) {
           if (segments.length > 1) {

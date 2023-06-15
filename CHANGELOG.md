@@ -1,4 +1,7 @@
 ## 1.5.8
+- Bug: content-type wrong when get storage 
+
+## 1.5.8
 - Bug: /me was removing the password field causing login to stop working
 
 ## 1.5.7
