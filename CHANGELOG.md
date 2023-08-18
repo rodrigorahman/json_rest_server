@@ -1,3 +1,6 @@
+## 1.5.10
+- Bug: verb put not working when key not exists
+
 ## 1.5.8
 - Bug: content-type wrong when get storage 
 

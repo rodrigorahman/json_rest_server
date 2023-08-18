@@ -33,7 +33,13 @@ class DatabaseRepository {
     }
 
     if (lineData.isNotEmpty) {
-      lineData.updateAll((key, value) => data[key] ?? value);
+      for (var entry in data.entries) {
+        lineData.update(
+          entry.key,
+          (value) => entry.value,
+          ifAbsent: () => entry.value,
+        );
+      }
     } else {
       final bodyData = {...data};
       bodyData.remove('id');
