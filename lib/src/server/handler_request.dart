@@ -72,11 +72,14 @@ class HandlerRequest {
         );
       } else {
         final segments = request.url.pathSegments;
+        final channel = (request.headers.containsKey('socket-channel'))
+            ? request.headers['socket-channel']
+            : request.method;
         final String table = segments.first;
         broadcast.execute(
           providers: config.broadcastProvider,
           broadcast: BroadcastModel.fromRequest(
-            method: request.method,
+            channel: channel ?? request.method,
             table: table,
             data: mapResponse,
           ),

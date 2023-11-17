@@ -3,26 +3,26 @@ import 'dart:convert';
 import 'package:json_rest_server/src/core/enum/broadcast_type.dart';
 
 class BroadcastModel {
-  final String method;
+  final String channel;
   final String table;
   final Map<String, dynamic> payload;
   final BroadCastType? broadCastType;
   DateTime? sentAt;
   BroadcastModel(
-      {required this.method,
+      {required this.channel,
       required this.table,
       required this.payload,
       required this.broadCastType,
       this.sentAt});
 
   BroadcastModel copyWith({
-    String? method,
+    String? channel,
     String? table,
     Map<String, dynamic>? payload,
     BroadCastType? broadCastType,
   }) {
     return BroadcastModel(
-      method: method ?? this.method,
+      channel: channel ?? this.channel,
       table: table ?? this.table,
       payload: payload ?? this.payload,
       broadCastType: broadCastType ?? this.broadCastType,
@@ -31,7 +31,7 @@ class BroadcastModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'method': method,
+      'channel': channel,
       'table': table,
       'payload': payload,
       'broadCastType': broadCastType?.name,
@@ -41,7 +41,7 @@ class BroadcastModel {
 
   factory BroadcastModel.fromMap(Map<String, dynamic> map) {
     return BroadcastModel(
-      method: map['method'] as String,
+      channel: map['channel'] as String,
       table: map['table'] as String,
       payload:
           Map<String, dynamic>.from(map['payload'] as Map<String, dynamic>),
@@ -61,15 +61,15 @@ class BroadcastModel {
 
   @override
   String toString() {
-    return 'BroadcastModel(method: $method, table: $table, payload: $payload, broadCastType: $broadCastType)';
+    return 'BroadcastModel(channel: $channel, table: $table, payload: $payload, broadCastType: $broadCastType)';
   }
 
   factory BroadcastModel.fromRequest(
-      {required String method,
+      {required String channel,
       required String table,
       required Map<String, dynamic> data}) {
     return BroadcastModel(
-      method: method,
+      channel: channel,
       table: table,
       payload: data,
       broadCastType: null,
