@@ -1,3 +1,6 @@
+## 1.6.0
+- Feat: Add socket-channel in header to execute websocket in a custom channel 
+
 ## 1.5.10
 - Bug: verb put not working when key not exists
 
