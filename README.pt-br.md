@@ -115,6 +115,42 @@ DELETE /products/1                                  -> Deletar um produto
 Na pasta exemplos existe um arquivo postman com todos os exemplos mencionados acima
 
 
+## Paginação
+
+A resposta pode ser paginada passando os parâmetros `page` e `limit` na URL.
+retorna um objeto com as seguintes caracteristicas. 
+
+
+**Parametros**
+
+- `current_page`: O número da página atual.
+- `items_per_page`: O número de itens por página.
+- `total_pages`: O total de páginas.
+- `total_items`: O total de itens.
+- `data`: Um array contendo os dados da página atual.
+
+
+**exemplo**
+
+`http://localhost:3000/users?page=1&limit=5`
+
+```
+{
+  "current_page": 1,
+  "items_per_page": 5,
+  "total_pages": 10,
+  "total_items": 50,
+  "data": [
+    {
+      id: 'any',
+      name: 'any name'
+    },
+    ...
+  ]
+}
+```
+
+
 ## Autenticação
 
 Json Rest Server já vem com todo o processo de autenticação por meio de JWT.
