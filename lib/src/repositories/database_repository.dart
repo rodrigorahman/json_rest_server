@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:json_rest_server/src/models/config_model.dart';
 import 'package:json_rest_server/src/core/enum/id_type_enum.dart';
+import 'package:json_rest_server/src/core/exceptions/conflict_id_exception.dart';
+import 'package:json_rest_server/src/models/config_model.dart';
 import 'package:uuid/uuid.dart';
 
 class DatabaseRepository {
@@ -74,11 +75,15 @@ class DatabaseRepository {
     if (_configModel.idType == IdTypeEnum.uuid) {
       return Uuid().v1();
     }
-
     var lastId = 0;
-
     if (tableData.isNotEmpty) {
-      lastId = tableData.last['id'] ?? 0;
+      if (int.tryParse(tableData.last['id']) == null) {
+        throw ConflictIdException(
+            message:
+                'Your last id is not integer value to increment. Please ensure that you didn\'t change idType in the middle of your operation');
+      } else {
+        lastId = tableData.last['id'] ?? 0;
+      }
     }
     return lastId + 1;
   }
