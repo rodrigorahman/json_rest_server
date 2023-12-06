@@ -22,6 +22,21 @@ With this package you can have a fully functional RESTful server with auth, pagi
 dart pub global activate json_rest_server
 ```
 
+
+## Settings
+
+The config.yaml file contains the server settings
+
+Below is a description of the parameters:
+
+```
+name -> Name of your server
+port -> access port
+host -> Access IP, if you want it to respond by ip and localhost, put 0.0.0.0
+database -> filename of your database
+idType( uuid | int ) -> Now json_rest_server supports ids to be either integer auto incremental or uuid
+```
+
 ## Commands
 
 ***IMPORTANT**: 
@@ -273,6 +288,8 @@ slack:
 ```
    
    ## To send the events, the providers need to be configured, and in the case of the socket, only if there are connected clients are they sent, thus guaranteeing that no unnecessary service is triggered.
+
+   You can include in the header a key called **socket-channel**, and as soon as the verb (POST,PUT,DELETE,PATCH) is issued, the socket will emit the response of that verb on the chosen channel, if nothing is chosen the channel name will be **VERB**
 
 ## Support for static content (images).
 

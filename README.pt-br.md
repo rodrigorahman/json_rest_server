@@ -313,6 +313,8 @@ slack:
   ```
 
   ## Para emitir os eventos, os providers precisam estar configurados , e no caso do socket somente se existir clientes conectados o envio é efetuado, assim garantindo que não seja disparado nenhum serviço sem necessidade
+
+    Voce pode incluir no header uma chave chamada  **socket-channel**, e assim que o verbo (POST,PUT,DELETE,PATCH) for emitido, o socket irá emitir a resposta desse verbo no channel escolhido, caso não seja escolhido nada o nome do channel sera **VERBO**
   
 ## Suporte a conteúdos estáticos (Imagens)
 
