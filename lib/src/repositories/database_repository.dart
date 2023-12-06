@@ -25,9 +25,12 @@ class DatabaseRepository {
 
   bool tableExists(String table) => _database.containsKey(table);
 
-  List<Map<String, dynamic>> getAll(String table) => _database[table]?.cast<Map<String, dynamic>>() ?? <Map<String, dynamic>>[];
+  List<Map<String, dynamic>> getAll(String table) =>
+      _database[table]?.cast<Map<String, dynamic>>() ??
+      <Map<String, dynamic>>[];
 
-  Map<String, dynamic> getById(String table, dynamic id) => getAll(table).firstWhere((element) => element['id'] == id, orElse: () => {});
+  Map<String, dynamic> getById(String table, dynamic id) => getAll(table)
+      .firstWhere((element) => element['id'] == id, orElse: () => {});
 
   Map<String, dynamic>? save(String table, Map<String, dynamic> data) {
     final id = data['id'];
@@ -59,7 +62,8 @@ class DatabaseRepository {
     return saveData;
   }
 
-  void _databaseSave() => File('database.json').writeAsStringSync(jsonEncode(_database));
+  void _databaseSave() =>
+      File('database.json').writeAsStringSync(jsonEncode(_database));
 
   void delete(String table, dynamic id) {
     final databaseData = getAll(table);
@@ -69,17 +73,23 @@ class DatabaseRepository {
 
   dynamic _generateId(List<Map<String, dynamic>> tableData) {
     if (_configModel.idType == IdTypeEnum.uuid) {
-      final hasIntegerValue = tableData.indexWhere((table) => table['id'] is int);
+      final hasIntegerValue =
+          tableData.indexWhere((table) => table['id'] is int);
       if (hasIntegerValue != -1) {
-        throw ConflictIdException(message: 'Your id pattern not UUID String value. Please ensure that you didn\'t change idType in the middle of your operation');
+        throw ConflictIdException(
+            message:
+                'Your id pattern not UUID String value. Please ensure that you didn\'t change idType in the middle of your operation');
       }
       return Uuid().v1();
     }
     var lastId = 0;
     if (tableData.isNotEmpty) {
-      final hasStringValue = tableData.indexWhere((table) => table['id'] is String);
+      final hasStringValue =
+          tableData.indexWhere((table) => table['id'] is String);
       if (hasStringValue != -1) {
-        throw ConflictIdException(message: 'Your id pattern not integer value. Please ensure that you didn\'t change idType in the middle of your operation');
+        throw ConflictIdException(
+            message:
+                'Your id pattern not integer value. Please ensure that you didn\'t change idType in the middle of your operation');
       }
       lastId = tableData.last['id'] ?? 0;
     }
