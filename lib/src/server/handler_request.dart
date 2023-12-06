@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:get_it/get_it.dart';
 import 'package:json_rest_server/src/core/broadcast/broadcast_controller.dart';
+import 'package:json_rest_server/src/core/exceptions/conflict_id_exception.dart';
 import 'package:json_rest_server/src/core/helper/cors_helper.dart';
 import 'package:json_rest_server/src/models/broadcast_model.dart';
 import 'package:json_rest_server/src/models/config_model.dart';
@@ -91,6 +92,16 @@ class HandlerRequest {
           headers: jsonHelper.jsonReturn,
         );
       }
+    } on ConflictIdException catch (e, s) {
+      log('Erro interno', error: e, stackTrace: s);
+
+      return Response(
+        415,
+        body: jsonEncode(
+          {'erro': e.message},
+        ),
+        headers: jsonHelper.jsonReturn,
+      );
     } catch (e, s) {
       log('Erro interno', error: e, stackTrace: s);
       return Response.internalServerError(

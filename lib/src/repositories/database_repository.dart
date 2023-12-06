@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:json_rest_server/src/models/config_model.dart';
 import 'package:json_rest_server/src/core/enum/id_type_enum.dart';
+import 'package:json_rest_server/src/core/exceptions/conflict_id_exception.dart';
+import 'package:json_rest_server/src/models/config_model.dart';
 import 'package:uuid/uuid.dart';
 
 class DatabaseRepository {
@@ -72,12 +73,24 @@ class DatabaseRepository {
 
   dynamic _generateId(List<Map<String, dynamic>> tableData) {
     if (_configModel.idType == IdTypeEnum.uuid) {
+      final hasIntegerValue =
+          tableData.indexWhere((table) => table['id'] is int);
+      if (hasIntegerValue != -1) {
+        throw ConflictIdException(
+            message:
+                'Your id pattern not UUID String value. Please ensure that you didn\'t change idType in the middle of your operation');
+      }
       return Uuid().v1();
     }
-
     var lastId = 0;
-
     if (tableData.isNotEmpty) {
+      final hasStringValue =
+          tableData.indexWhere((table) => table['id'] is String);
+      if (hasStringValue != -1) {
+        throw ConflictIdException(
+            message:
+                'Your id pattern not integer value. Please ensure that you didn\'t change idType in the middle of your operation');
+      }
       lastId = tableData.last['id'] ?? 0;
     }
     return lastId + 1;
