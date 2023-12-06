@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:get_it/get_it.dart';
 import 'package:json_rest_server/src/core/helper/cors_helper.dart';
 import 'package:json_rest_server/src/models/config_model.dart';
-import 'package:json_rest_server/src/core/enum/id_type_enum.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_static/shelf_static.dart';
 
