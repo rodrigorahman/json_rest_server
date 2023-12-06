@@ -1,3 +1,10 @@
+## 1.7.0
+- Feat: Add pageable parameters on pagination
+- break change: format json from list to object with pagination
+
+## 1.6.0
+- Feat: Add socket-channel in header to execute websocket in a custom channel 
+  
 ## 1.6.0
 - Feat: Add socket-channel in header to execute websocket in a custom channel 
 

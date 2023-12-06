@@ -95,7 +95,24 @@ class GetHandler {
     var params = {...queryParameters};
 
     if (params.containsKey('page')) {
+      final currentPage = params['page'];
+      final perPage = params['limit'];
+      final totalItems = tableData.length;
+      final totalPages =
+          (totalItems / (num.tryParse(perPage ?? '') ?? 0)).toDouble().ceil();
+
       tableData = _processPagination(tableData, queryParameters, headers);
+      return Response(
+        200,
+        body: jsonEncode({
+          'current_page': currentPage ?? '',
+          'items_per_page': perPage ?? '',
+          'total_pages': totalPages,
+          'total_items': totalItems,
+          'data': (tableData),
+        }),
+        headers: _jsonHelper.jsonReturn,
+      );
     } else {
       if (params.isNotEmpty) {
         tableData = _filterData(tableData, queryParameters, headers);
