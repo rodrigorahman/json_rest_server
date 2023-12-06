@@ -21,7 +21,7 @@ class JsonRestServer {
   late final SocketHandler _socketHandler;
   late final BroadCastController _broadcast;
 
-  void startServer() {
+  Future<void> startServer() async {
     _config = ConfigRepository().load();
     _databaseRepository = DatabaseRepository()..load();
     _corsHelper = CorsHelper().load();
@@ -30,7 +30,7 @@ class JsonRestServer {
     GetIt.I.registerSingleton(_config);
     GetIt.I.registerSingleton(_corsHelper);
     GetIt.I.registerSingleton(_broadcast);
-    _startShelfServer();
+    await _startShelfServer();
   }
 
   Future<void> _startShelfServer() async {
