@@ -28,5 +28,17 @@ void main() {
       expect(data.length, greaterThan(1));
       expect(data.length, lessThan(11));
     });
+
+     test('should find users when sending any character that is not a number', () async {
+      final response =
+          await Dio().get('http://localhost:8080/users?page=A&limit=Q');
+
+      final data = response.data as List;
+
+      
+      expect(data.isNotEmpty, isTrue);
+      expect(data.length, greaterThan(1));
+      expect(data.length, lessThan(11));
+    });
   });
 }

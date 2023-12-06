@@ -120,8 +120,10 @@ class GetHandler {
       tableData = _filterData(tableData, params, headers);
     }
 
-    final page = int.parse(queryParameters['page'] ?? '1') - 1;
-    final limit = int.parse(queryParameters['limit'] ?? '10');
+    final pageParam = int.tryParse(queryParameters['page'] ?? '1') ?? 1;
+
+    final page = pageParam - 1;
+    final limit = int.tryParse(queryParameters['limit'] ?? '10') ?? 10;
     final totalList = tableData.length;
 
     var start = 0;
