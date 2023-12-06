@@ -16,10 +16,10 @@ class DeleteHandler {
     final String id = segments[1];
 
     if (_databaseRepository.tableExists(table)) {
-      final deletedData = _databaseRepository.getById(table, int.parse(id));
-      _databaseRepository.delete(table, int.parse(id));
+      final deletedData = _databaseRepository.getById(table, int.tryParse(id) ?? id);
+      _databaseRepository.delete(table, int.tryParse(id) ?? id);
       if (deletedData.isNotEmpty) {
-        deletedData['id'] = int.parse(id);
+        deletedData['id'] = int.tryParse(id) ?? id;
       }
       return deletedData;
     }

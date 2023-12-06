@@ -24,7 +24,7 @@ class PutHandler {
         body = body.replaceAll('#userAuthRef', request.headers['user'] ?? '0');
       }
       final dataUpdate = jsonDecode(body);
-      dataUpdate['id'] = int.parse(id);
+      dataUpdate['id'] = int.tryParse(id) ?? id;
       _databaseRepository.save(table, dataUpdate);
       return dataUpdate;
     }

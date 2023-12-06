@@ -23,7 +23,7 @@ class JsonRestServer {
 
   Future<void> startServer() async {
     _config = ConfigRepository().load();
-    _databaseRepository = DatabaseRepository()..load();
+    _databaseRepository = DatabaseRepository(_config)..load();
     _corsHelper = CorsHelper().load();
     _broadcast = BroadCastController();
     GetIt.I.registerSingleton(_databaseRepository);

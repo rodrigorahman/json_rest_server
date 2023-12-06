@@ -5,6 +5,7 @@ database: database.json
 enableSocket: false
 socketPort: 8081
 broadcastProvider:  #socket,slack  or only socket or only slack
+idType: uuid
 slack: 
   slackUrl: '' #your webhook url from slack
   slackChannel: '' #your channel starting with #
@@ -12,17 +13,17 @@ slack:
 #   folder: storage/
 #   name: "file"
 
-# auth:
-#   jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl
-#   jwtExpire: 3600
-#   unauthorizedStatusCode: 401
-#   # enableAdm: true
-#   # urlUserPermission:
-#   #   - /students
-#   urlSkip:
-#     - /users:
-#         method: post
-#     - /products:
-#         method: get
-#     - /products/{*}:
-#         method: get
+auth:
+  jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl
+  jwtExpire: 3600
+  unauthorizedStatusCode: 401
+  # enableAdm: true
+  # urlUserPermission:
+  #   - /students
+  urlSkip:
+    - /users:
+        method: post
+    - /products:
+        method: get
+    - /products/{*}:
+        method: get

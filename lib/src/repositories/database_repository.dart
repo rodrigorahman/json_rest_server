@@ -1,8 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:json_rest_server/src/models/config_model.dart';
+import 'package:json_rest_server/src/core/enum/id_type_enum.dart';
+import 'package:uuid/uuid.dart';
+
 class DatabaseRepository {
+  final ConfigModel _configModel;
   late Map<String, dynamic> _database;
+
+  DatabaseRepository(this._configModel);
 
   void load() {
     final databaseFile = File('database.json');
@@ -21,7 +28,7 @@ class DatabaseRepository {
       _database[table]?.cast<Map<String, dynamic>>() ??
       <Map<String, dynamic>>[];
 
-  Map<String, dynamic> getById(String table, int id) => getAll(table)
+  Map<String, dynamic> getById(String table, dynamic id) => getAll(table)
       .firstWhere((element) => element['id'] == id, orElse: () => {});
 
   Map<String, dynamic>? save(String table, Map<String, dynamic> data) {
@@ -44,12 +51,10 @@ class DatabaseRepository {
       final bodyData = {...data};
       bodyData.remove('id');
       final tableData = getAll(table);
-      var lastId = 0;
 
-      if (tableData.isNotEmpty) {
-        lastId = tableData.last['id'] ?? 0;
-      }
-      saveData = {'id': (lastId + 1), ...bodyData};
+      final lastId = _generateId(tableData);
+
+      saveData = {'id': (lastId), ...bodyData};
       tableData.add(saveData);
     }
     _databaseSave();
@@ -59,9 +64,22 @@ class DatabaseRepository {
   void _databaseSave() =>
       File('database.json').writeAsStringSync(jsonEncode(_database));
 
-  void delete(String table, int id) {
+  void delete(String table, dynamic id) {
     final databaseData = getAll(table);
     databaseData.removeWhere((element) => element['id'] == id);
     _databaseSave();
+  }
+
+  dynamic _generateId(List<Map<String, dynamic>> tableData) {
+    if (_configModel.idType == IdTypeEnum.uuid) {
+      return Uuid().v1();
+    }
+
+    var lastId = 0;
+
+    if (tableData.isNotEmpty) {
+      lastId = tableData.last['id'] ?? 0;
+    }
+    return lastId + 1;
   }
 }

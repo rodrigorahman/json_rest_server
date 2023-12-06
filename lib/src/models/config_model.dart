@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:json_rest_server/src/models/id_type_enum.dart';
+import 'package:json_rest_server/src/core/enum/id_type_enum.dart';
 import 'package:json_rest_server/src/models/slack_model.dart';
 import 'package:yaml/yaml.dart';
 
