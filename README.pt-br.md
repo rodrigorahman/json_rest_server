@@ -35,6 +35,8 @@ name -> Nome do seu servidor
 port -> porta de acesso
 host -> Ip de acesso, caso queira que responda por ip e localhost coloque 0.0.0.0
 database -> nome do arquivo do seu banco de dados
+idType( uuid | int ) -> Agora o json_rest_server suporta que os ids sejam ou integer auto incremental ou uuid
+
 ```
 
 ## Comandos
