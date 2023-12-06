@@ -7,6 +7,8 @@ Json Rest Server is a RESTful server based on JSON
 [![English](https://img.shields.io/badge/Language-English-red?style=for-the-badge)](README.en.md)
 </div>
 
+[![Json Rest Server](https://github.com/rodrigorahman/json_rest_server/actions/workflows/dart.yml/badge.svg)](https://github.com/rodrigorahman/json_rest_server/actions/workflows/dart.yml)
+
 # Json Rest Server 
 A RESTful server based on JSON
 
