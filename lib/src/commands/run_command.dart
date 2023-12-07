@@ -9,7 +9,5 @@ class RunCommand extends Command {
   String get name => 'run';
 
   @override
-  void run() {
-    JsonRestServer().startServer();
-  }
+  void run() => JsonRestServer().startServer();
 }

@@ -27,12 +27,10 @@ class CreateProjectCommand extends Command {
   }
 
   Directory _createFolder() {
-    final args = argResults?.arguments;
-    var path = './';
-
-    if (args != null && args.isNotEmpty) {
-      path = args[0];
-    }
+    final path = switch (argResults?.arguments) {
+      List(isNotEmpty: true, :var first) => first,
+      _ => './'
+    };
 
     var dir = Directory(path);
     if (!dir.existsSync()) {
