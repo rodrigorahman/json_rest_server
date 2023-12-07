@@ -1,3 +1,6 @@
+## 1.7.0
+- Feat: Added support for UUID instead of int for primary key.
+
 ## 1.6.0
 - Feat: Add socket-channel in header to execute websocket in a custom channel 
 
