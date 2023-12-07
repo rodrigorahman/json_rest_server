@@ -3,7 +3,8 @@ import 'package:json_rest_server/src/server/json_rest_server.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('Getter Testss', () {
+  group('Getter Tests', () {
+
     setUpAll(() async {
       await JsonRestServer().startServer();
     });
