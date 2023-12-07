@@ -26,7 +26,7 @@ class HandlerRequest {
 
     final jsonHelper = GetIt.I.get<CorsHelper>();
 
-    late final Map<String, dynamic>? mapResponse;
+    final Map<String, dynamic>? mapResponse;
 
     try {
       switch (method) {
@@ -52,12 +52,11 @@ class HandlerRequest {
         case 'DELETE':
           mapResponse = await DeleteHandler().execute(request);
           break;
-
         case 'OPTIONS':
           return await OptionHandler().execute(request);
         default:
           final body = jsonEncode({
-            'error': 'Unsupported request: ${request.method}.',
+            'error': 'Unsupported request: $method.',
           });
           return Response(
             HttpStatus.methodNotAllowed,
@@ -72,15 +71,16 @@ class HandlerRequest {
           headers: jsonHelper.jsonReturn,
         );
       } else {
-        final segments = request.url.pathSegments;
-        final channel = (request.headers.containsKey('socket-channel'))
-            ? request.headers['socket-channel']
-            : request.method;
-        final String table = segments.first;
+        final [table] = request.url.pathSegments;
+        final channel = switch (request.headers) {
+          {'socket-channel': final socketChannel} => socketChannel,
+          _ => method
+        };
+
         broadcast.execute(
           providers: config.broadcastProvider,
           broadcast: BroadcastModel.fromRequest(
-            channel: channel ?? request.method,
+            channel: channel,
             table: table,
             data: mapResponse,
           ),

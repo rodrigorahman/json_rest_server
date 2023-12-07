@@ -13,52 +13,54 @@ class GetHandler {
   final _jsonHelper = GetIt.I.get<CorsHelper>();
   final _config = GetIt.I.get<ConfigModel>();
   Future<Response> execute(Request request) async {
-    final segments = request.url.pathSegments;
+    final Uri(pathSegments: segments) = request.url;
 
-    if (segments.isEmpty) {
-      return Response(404);
-    }
-    final String table = segments.first;
-
-    switch (table) {
-      case 'flutter_service_worker.js':
+    switch (segments) {
+      case List(isEmpty: true):
+        return Response(404);
+      case List(isEmpty: false, first: 'flutter_service_worker.js'):
         return Response.ok(jsonEncode({}));
-      case 'me':
+      case List(isEmpty: false, first: 'me'):
         return _processMe(request);
-      case 'storage':
-        Response response = await createStaticHandler('./').call(request);
-        final headers = {
-          'keepContentType': 'false',
-          ..._jsonHelper.jsonReturn,
+      case List(isEmpty: false, first: 'storage'):
+        return _storageProcess(request);
+      case List(isEmpty: false, first: final table, length: final totalSegments)
+          when _databaseRepository.tableExists(table):
+        return switch (totalSegments) {
+          > 1 => _processById(table, segments[1]),
+          _ =>
+            _processGetAll(table, request.url.queryParameters, request.headers)
         };
-        headers.remove('content-type');
-        return response.change(headers: headers);
-      default:
-        if (_databaseRepository.tableExists(table)) {
-          if (segments.length > 1) {
-            return _processById(table, segments[1]);
-          } else {
-            return _processGetAll(
-                table, request.url.queryParameters, request.headers);
-          }
-        }
+      case _:
+        return Response(404);
     }
-    return Response(404);
+  }
+
+  Future<Response> _storageProcess(Request request) async {
+    Response response = await createStaticHandler('./').call(request);
+    final headers = {
+      'keepContentType': 'false',
+      ..._jsonHelper.jsonReturn,
+    };
+    headers.remove('content-type');
+    return response.change(headers: headers);
   }
 
   Future<Response> _processById(String table, String id) async {
-    if (id.isEmpty) {
-      return Response.badRequest(
-          body: jsonEncode({'error': 'param id required'}));
+    switch (id) {
+      case String(isEmpty: true):
+        return Response.badRequest(
+            body: jsonEncode({'error': 'param id required'}));
+      case _:
+        final result =
+            _databaseRepository.getById(table, int.tryParse(id) ?? id);
+
+        return Response(
+          200,
+          body: jsonEncode(result),
+          headers: _jsonHelper.jsonReturn,
+        );
     }
-
-    final result = _databaseRepository.getById(table, int.tryParse(id) ?? id);
-
-    return Response(
-      200,
-      body: jsonEncode(result),
-      headers: _jsonHelper.jsonReturn,
-    );
   }
 
   Future<Response> _processMe(Request request) async {
@@ -89,17 +91,17 @@ class GetHandler {
         body: jsonEncode(result), headers: _jsonHelper.jsonReturn);
   }
 
-  Future<Response> _processGetAll(String table,
-      Map<String, String> queryParameters, Map<String, String> headers) async {
+  Future<Response> _processGetAll(
+      String table,
+      final Map<String, String> queryParameters,
+      Map<String, String> headers) async {
     var tableData = _databaseRepository.getAll(table);
-    var params = {...queryParameters};
 
-    if (params.containsKey('page')) {
-      tableData = _processPagination(tableData, queryParameters, headers);
-    } else {
-      if (params.isNotEmpty) {
+    switch (queryParameters) {
+      case {'page': _}:
+        tableData = _processPagination(tableData, queryParameters, headers);
+      case Map(isNotEmpty: true):
         tableData = _filterData(tableData, queryParameters, headers);
-      }
     }
     return Response(
       200,
@@ -112,6 +114,7 @@ class GetHandler {
       List<Map<String, dynamic>> tableData,
       Map<String, String> queryParameters,
       Map<String, String> headers) {
+
     final params = {...queryParameters};
     params.remove('page');
     params.remove('limit');
@@ -126,19 +129,18 @@ class GetHandler {
     final limit = int.tryParse(queryParameters['limit'] ?? '10') ?? 10;
     final totalList = tableData.length;
 
-    var start = 0;
-
-    if (page == 1) {
-      start = limit;
-    } else if (page > 1) {
-      start = limit * page;
-    }
+    var start = switch(page) {
+      ==1 => limit,
+      >1 => limit * page,
+      _ => 0
+    };
 
     if (start > totalList) {
       start = totalList;
     }
 
     var end = start + limit;
+    
     if (end > totalList) {
       end = totalList;
     }
