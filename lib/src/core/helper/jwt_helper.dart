@@ -7,7 +7,7 @@ import '../exceptions/config_not_found_exception.dart';
 class JwtHelper {
   JwtHelper._();
 
-  static String generateJWT(int userId, bool adm) {
+  static String generateJWT(dynamic userId, bool adm) {
     final config = GetIt.I.get<ConfigModel>();
     final jwtExpire = config.auth?.jwtExpire;
     final jwtSecret = config.auth?.jwtSecret;

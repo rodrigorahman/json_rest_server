@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:json_rest_server/src/core/enum/id_type_enum.dart';
 import 'package:json_rest_server/src/models/slack_model.dart';
 import 'package:yaml/yaml.dart';
 
@@ -15,6 +16,7 @@ class ConfigModel {
   final int? socketPort;
   final List<String>? broadcastProvider;
   final SlackModel? slack;
+  final IdTypeEnum idType;
 
   ConfigModel(
       {required this.name,
@@ -25,7 +27,8 @@ class ConfigModel {
       this.enableSocket = false,
       this.socketPort,
       this.broadcastProvider = const [],
-      this.slack});
+      this.slack,
+      this.idType = IdTypeEnum.int});
 
   Map<String, dynamic> toMap() {
     return {
@@ -36,7 +39,8 @@ class ConfigModel {
       'auth': auth?.toMap(),
       'enableSocket': enableSocket,
       'socketPort': socketPort,
-      'broadcastProvider': broadcastProvider
+      'broadcastProvider': broadcastProvider,
+      'slack': slack?.toMap()
     };
   }
 
@@ -44,27 +48,29 @@ class ConfigModel {
     final YamlMap? auth = map['auth'];
     // print(json.encode(map['slack']));
     return ConfigModel(
-        name: map['name'] ?? '',
-        port: map['port'] ?? 8080,
-        host: map['host'] ?? '',
-        database: map['database'] ?? '',
-        auth: auth != null ? ConfigAuthModel.fromMap(auth.value.cast()) : null,
-        enableSocket: map['enableSocket'] ?? false,
-        socketPort: map['socketPort'] ?? 0,
-        broadcastProvider: map['broadcastProvider'] == null
-            ? null
-            : (map['broadcastProvider'] as String)
-                .split(',')
-                .map<String>((e) => e)
-                .toSet()
-                .toList(),
-        slack: map['slack'] == null
-            ? null
-            : SlackModel.fromJson(
-                json.encode(
-                  map['slack'],
-                ),
-              ));
+      name: map['name'] ?? '',
+      port: map['port'] ?? 8080,
+      host: map['host'] ?? '',
+      database: map['database'] ?? '',
+      auth: auth != null ? ConfigAuthModel.fromMap(auth.value.cast()) : null,
+      enableSocket: map['enableSocket'] ?? false,
+      socketPort: map['socketPort'] ?? 0,
+      broadcastProvider: map['broadcastProvider'] == null
+          ? null
+          : (map['broadcastProvider'] as String)
+              .split(',')
+              .map<String>((e) => e)
+              .toSet()
+              .toList(),
+      slack: map['slack'] == null
+          ? null
+          : SlackModel.fromJson(
+              json.encode(
+                map['slack'],
+              ),
+            ),
+      idType: IdTypeEnum.parse(map['idType']),
+    );
   }
 
   String toJson() => json.encode(toMap());

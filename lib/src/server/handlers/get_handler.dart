@@ -52,7 +52,7 @@ class GetHandler {
           body: jsonEncode({'error': 'param id required'}));
     }
 
-    final result = _databaseRepository.getById(table, int.parse(id));
+    final result = _databaseRepository.getById(table, int.tryParse(id) ?? id);
 
     return Response(
       200,
