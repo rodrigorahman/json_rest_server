@@ -47,6 +47,7 @@ class DatabaseRepository {
           ifAbsent: () => entry.value,
         );
       }
+      saveData = {...lineData};
     } else {
       final bodyData = {...data};
       bodyData.remove('id');
