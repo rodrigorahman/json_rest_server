@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:json_rest_server/src/core/broadcast/broadcast_controller.dart';
 import 'package:json_rest_server/src/core/helper/cors_helper.dart';
 import 'package:json_rest_server/src/core/middlewares/default_content_type.dart';
+import 'package:json_rest_server/src/server/socket/websocket_handler.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 
@@ -45,8 +46,23 @@ class JsonRestServer {
         .addHandler(HandlerRequest().execute);
 
     // For running in containers, we respect the PORT environment variable.
+
     final ConfigModel(:port, :name, :enableSocket, :socketPort) = _config;
-    await serve(handler, ip, port);
+
+    var webSocketHandler = WebSocketHandler();
+    GetIt.I.registerSingleton(webSocketHandler);
+
+    var cascadeServer = Cascade().add(handler);
+
+    if (enableSocket) {
+      cascadeServer = cascadeServer
+          .add((Request request) => webSocketHandler.load(request));
+      print('Websocket loaded in port 8080');
+    }
+
+    final serverHandler = cascadeServer.handler;
+
+    await serve(serverHandler, ip, port);
     if (ip == '0.0.0.0') {
       final networks = await NetworkInterface.list();
       final networksMap = {
@@ -59,7 +75,6 @@ class JsonRestServer {
           name.toLowerCase(): address
       };
 
-      
       final ethernet = networksMap['ethernet'];
       final wifi = networksMap['wi-fi'];
 
@@ -78,8 +93,8 @@ class JsonRestServer {
 
         exit(0);
       }
-      _socketHandler = await SocketHandler()
-          .load(socketPort: socketPort, socketIp: '$ip');
+      _socketHandler =
+          await SocketHandler().load(socketPort: socketPort, socketIp: '$ip');
       print('Socket is started on port $socketPort');
       GetIt.I.registerSingleton(_socketHandler);
     }

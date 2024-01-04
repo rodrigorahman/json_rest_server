@@ -4,7 +4,6 @@ import 'package:test/test.dart';
 
 void main() {
   group('Getter Tests', () {
-
     setUpAll(() async {
       await JsonRestServer().startServer();
     });

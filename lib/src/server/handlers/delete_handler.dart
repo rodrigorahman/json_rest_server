@@ -18,10 +18,10 @@ class DeleteHandler {
       final deletedData =
           _databaseRepository.getById(table, int.tryParse(id) ?? id);
       _databaseRepository.delete(table, int.tryParse(id) ?? id);
-      
+
       return deletedData;
     }
-    
+
     return null;
   }
 }

@@ -114,7 +114,6 @@ class GetHandler {
       List<Map<String, dynamic>> tableData,
       Map<String, String> queryParameters,
       Map<String, String> headers) {
-
     final params = {...queryParameters};
     params.remove('page');
     params.remove('limit');
@@ -129,18 +128,14 @@ class GetHandler {
     final limit = int.tryParse(queryParameters['limit'] ?? '10') ?? 10;
     final totalList = tableData.length;
 
-    var start = switch(page) {
-      ==1 => limit,
-      >1 => limit * page,
-      _ => 0
-    };
+    var start = switch (page) { == 1 => limit, > 1 => limit * page, _ => 0 };
 
     if (start > totalList) {
       start = totalList;
     }
 
     var end = start + limit;
-    
+
     if (end > totalList) {
       end = totalList;
     }

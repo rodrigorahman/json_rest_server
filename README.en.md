@@ -277,7 +277,7 @@ Initially, the system is compatible with sending to ***socket and slack***
 enableSocket: true 
 #Indicates whether you want to start a socket server along with the rest server (true/false)
 socketPort: 8081
-#Indicates the default socket access port: 8081
+#Indicates the default socket access port (Websocket does not use this port): 8081
 broadcastProvider: socket
 #Indicates which type of broadcast it wants to send by default: eg socket, slack or just socket or just slack
 slack: 
@@ -290,6 +290,127 @@ slack:
    ## To send the events, the providers need to be configured, and in the case of the socket, only if there are connected clients are they sent, thus guaranteeing that no unnecessary service is triggered.
 
    You can include in the header a key called **socket-channel**, and as soon as the verb (POST,PUT,DELETE,PATCH) is issued, the socket will emit the response of that verb on the chosen channel, if nothing is chosen the channel name will be **VERB**
+
+
+## Broadcast Event with WebSocket
+
+The Json Rest server also supports socket communication for the web using WebSocket. When you enable the `enableSocket: true` parameter in the configuration, you automatically enable WebSocket, allowing you to receive sockets via IO or WebSocket.
+
+In WebSocket, the connection port will always be the same as that of the server.
+
+Here is an example of a connection using Flutter Web:
+
+```dart
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  
+  final WebSocketChannel channel = WebSocketChannel.connect(
+    Uri.parse('ws://localhost:8080'),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'WebSocket Demo',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('WebSocket Demo'),
+        ),
+        body: Center(
+          child: StreamBuilder(
+            stream: channel.stream,
+            builder: (context, snapshot) {
+              return Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: switch (snapshot) {
+                  AsyncSnapshot(hasData: true, :final data) => Text('$data'),
+                  _ => const Text(''),
+                },
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    channel.sink.close();
+    super.dispose();
+  }
+}
+```
+The example above shows a standard WebSocket connection where any changes in the backend will be sent and read through WebSocket.
+
+## WebSocket Notification Filter
+
+In some situations, we may not want to listen to changes in all tables of the system. Therefore, in WebSocket, it is possible to add a filter for the table you would like to listen to.
+
+**For example:**
+
+Let's suppose you only want to receive changes in the tables (user and products) on the socket. In that case, during the WebSocket connection, you can send the tables parameter with the tables you would like to listen to.
+
+For example:
+
+```dart
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  
+  final WebSocketChannel channel = WebSocketChannel.connect(
+    Uri.parse('ws://localhost:8080?tables=users,products'),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'WebSocket Demo',
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('WebSocket Demo'),
+        ),
+        body: Center(
+          child: StreamBuilder(
+            stream: channel.stream,
+            builder: (context, snapshot) {
+              return Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: switch (snapshot) {
+                  AsyncSnapshot(hasData: true, :final data) => Text('$data'),
+                  _ => const Text(''),
+                },
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    channel.sink.close();
+    super.dispose();
+  }
+}
+```
+Now your WebSocket will only receive changes from the tables users and products.
+
+>**Note:** If you connect to the socket with a filter, you will ONLY receive changes from the specified tables.
+
+
 
 ## Support for static content (images).
 

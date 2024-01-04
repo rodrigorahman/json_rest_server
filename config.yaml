@@ -2,9 +2,9 @@ name: Json Rest Server
 port: 8080
 host: 0.0.0.0
 database: database.json
-enableSocket: false
+enableSocket: true
 socketPort: 8081
-broadcastProvider:  #socket,slack  or only socket or only slack
+broadcastProvider: socket #socket,slack  or only socket or only slack
 idType: int
 slack: 
   slackUrl: '' #your webhook url from slack

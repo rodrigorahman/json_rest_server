@@ -9,7 +9,7 @@ class PutHandler {
   final _databaseRepository = GetIt.I.get<DatabaseRepository>();
 
   Future<Map<String, dynamic>?> execute(Request request) async {
-     final segments = request.url.pathSegments;
+    final segments = request.url.pathSegments;
 
     if (segments.length < 2) {
       return null;
