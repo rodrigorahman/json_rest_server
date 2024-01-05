@@ -376,7 +376,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 O exemplo acima mostra uma conexão websocket padrão onde qualquer alteração no backend será enviada e lida pelo websocket.
 
-### Filtro de notificação websocket
+## Filtro de notificação websocket
 
 Em algumas situações não queremos escutar as alterações em todas as tabelas do sistema, sendo assim no websocket é possível adicionar um filtro por tabela que você gostaria de escutar.
 

@@ -1,3 +1,6 @@
+## 2.0.1
+- FIX websocket documentation
+
 ## 2.0.0
 - **BREAK CHANGE**: added support for dart 3
 - Added Websocket for broadcast
