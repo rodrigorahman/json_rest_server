@@ -1,3 +1,7 @@
+## 2.0.0
+- **BREAK CHANGE**: added support for dart 3
+- Added Websocket for broadcast
+
 ## 1.7.0
 - Feat: Added support for UUID instead of int for primary key.
 
