@@ -5,59 +5,55 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:uuid/uuid.dart';
 
-class WebSocketHandler {
-  final sockets = [];
-  final List<Map<String, dynamic>> socketsTableListener = [];
+typedef WebSocketRegister = ({
+  String id,
+  List<String>? tables,
+  dynamic socket,
+});
+
+final class WebSocketHandler {
+  final sockets = <WebSocketRegister>[];
 
   FutureOr<Response> load(Request request) {
-    final websocketHandler = webSocketHandler((webSocket) {
-      if (request.url.queryParameters case {'tables': final tables}) {
-        socketsTableListener.add({
-          'id': Uuid().v1(),
-          'tables': tables.split(','),
-          'socket': webSocket,
-        });
-      } else {
-        sockets.add(webSocket);
-      }
+    final handler = webSocketHandler((webSocket) {
+      final tables = request.url.queryParameters['tables'];
 
-      (webSocket.stream as Stream).listen(
+      sockets.add(
+        (
+          id: Uuid().v1(),
+          tables: tables?.split(','),
+          socket: webSocket,
+        ),
+      );
+
+      webSocket.stream.listen(
         (message) {},
         onDone: () {
-          sockets.remove(webSocket);
-          socketsTableListener
-              .removeWhere((element) => element['socket'] == webSocket);
+          sockets.removeWhere((element) => element.socket == webSocket);
           print('closed socket: ${webSocket.hashCode}');
         },
         onError: (error) {
-          sockets.remove(webSocket);
-          socketsTableListener
-              .removeWhere((element) => element['socket'] == webSocket);
+          sockets.removeWhere((element) => element.socket == webSocket);
           print('Closed socket (Error: $error) ${webSocket.hashCode}');
         },
       );
     });
 
-    return websocketHandler(request);
+    return handler(request);
   }
 
   bool sendMessage(dynamic data) {
     final {'table': table} = jsonDecode(data);
+    for (final notifications in sockets) {
+      final (id: _, :tables, :socket) = notifications;
 
-    for (final socket in sockets) {
-      socket.sink.add(data);
-    }
-
-    for (final socketListener in socketsTableListener) {
-      if (socketListener
-          case {
-            'tables': final List<String> tableSocket,
-            'socket': final socket
-          } when tableSocket.contains(table)) {
-        socket.sink.add(data);
+      switch (tables) {
+        case List(isEmpty: false) when tables.contains(table):
+          socket.sink.add(data);
+        case List(isEmpty: true) || null:
+          socket.sink.add(data);
       }
     }
-
     return true;
   }
 }
