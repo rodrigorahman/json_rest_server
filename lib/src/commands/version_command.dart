@@ -12,9 +12,9 @@ class VersionCommand extends Command<dynamic> {
 
   @override
   void run() {
-    final result = Process.runSync('dart', ['pub', 'global', 'list']);
-    final packages = _parsePackagesVersion(result.stdout.toString());
-    final version = packages['json_rest_server'];
+    final ProcessResult(:String stdout) =
+        Process.runSync('dart', ['pub', 'global', 'list']);
+    final {'json_rest_server': String version} = _parsePackagesVersion(stdout);
 
     print('');
     print('''
@@ -36,8 +36,7 @@ class VersionCommand extends Command<dynamic> {
     for (final line in lines) {
       final parts = line.split(' ');
       if (parts.length >= 2) {
-        final packageName = parts[0];
-        final packageVersion = parts[1];
+        final [packageName, packageVersion] = parts;
         packages[packageName] = packageVersion;
       }
     }

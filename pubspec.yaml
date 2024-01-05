@@ -1,35 +1,31 @@
 name: json_rest_server
 description: A RESTful server based on JSON With this package you can have a fully functional RESTful server with auth, pagination and all the necessaries services do build an application
-version: 1.7.0
+version: 2.0.0-dev.1
 repository: https://github.com/rodrigorahman/json_rest_server
 issue_tracker: https://github.com/rodrigorahman/json_rest_server/issues
 
 environment:
-  sdk: '>=2.17.6 <4.0.0'
+  sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
-  args: ^2.3.1
+  args: ^2.4.2
   event_bus: ^2.0.0
-  get_it: ^7.2.0
-  http: ^0.13.5
+  get_it: ^7.6.4
+  http: ^1.1.2
   jaguar_jwt: ^3.0.0
-  logger: ^1.1.0
-  path: ^1.8.2
-  shelf: ^1.3.2
+  logger: ^2.0.2+1
+  path: ^1.9.0
+  shelf: ^1.4.1
   shelf_multipart: ^1.0.0
-  shelf_static: ^1.1.1
-  uuid: ^4.2.1  
-  yaml: ^3.1.1
+  shelf_static: ^1.1.2
+  shelf_web_socket: ^1.0.4
+  uuid: ^4.3.1  
+  yaml: ^3.1.2
 
 dev_dependencies:
-  dio: ^5.1.1
-  lints: ^2.0.0
-  test: ^1.24.3
-
-dependency_overrides: 
-  analyzer: 5.13.0
-  watcher: 1.1.0
-  pub_semver: 2.1.4
+  dio: ^5.4.0
+  lints: ^3.0.0
+  test: ^1.25.0
 
 executables:
   json_rest_server: json_rest_server

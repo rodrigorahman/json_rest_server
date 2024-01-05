@@ -10,13 +10,12 @@ class PutHandler {
 
   Future<Map<String, dynamic>?> execute(Request request) async {
     final segments = request.url.pathSegments;
-    final String table = segments.first;
 
     if (segments.length < 2) {
       return null;
     }
 
-    final String id = segments[1];
+    final [table, id] = segments;
 
     if (_databaseRepository.tableExists(table)) {
       var body = await request.readAsString();

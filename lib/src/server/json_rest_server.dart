@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:json_rest_server/src/core/broadcast/broadcast_controller.dart';
 import 'package:json_rest_server/src/core/helper/cors_helper.dart';
 import 'package:json_rest_server/src/core/middlewares/default_content_type.dart';
+import 'package:json_rest_server/src/server/socket/websocket_handler.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 
@@ -22,14 +23,15 @@ class JsonRestServer {
   late final BroadCastController _broadcast;
 
   Future<void> startServer() async {
+    final getIt = GetIt.I;
     _config = ConfigRepository().load();
     _databaseRepository = DatabaseRepository(_config)..load();
     _corsHelper = CorsHelper().load();
     _broadcast = BroadCastController();
-    GetIt.I.registerSingleton(_databaseRepository);
-    GetIt.I.registerSingleton(_config);
-    GetIt.I.registerSingleton(_corsHelper);
-    GetIt.I.registerSingleton(_broadcast);
+    getIt.registerSingleton(_databaseRepository);
+    getIt.registerSingleton(_config);
+    getIt.registerSingleton(_corsHelper);
+    getIt.registerSingleton(_broadcast);
     await _startShelfServer();
   }
 
@@ -44,35 +46,56 @@ class JsonRestServer {
         .addHandler(HandlerRequest().execute);
 
     // For running in containers, we respect the PORT environment variable.
-    final port = _config.port;
-    await serve(handler, ip, port);
+
+    final ConfigModel(:port, :name, :enableSocket, :socketPort) = _config;
+
+    var webSocketHandler = WebSocketHandler();
+    GetIt.I.registerSingleton(webSocketHandler);
+
+    var cascadeServer = Cascade().add(handler);
+
+    if (enableSocket) {
+      cascadeServer = cascadeServer
+          .add((Request request) => webSocketHandler.load(request));
+      print('Websocket loaded in port 8080');
+    }
+
+    final serverHandler = cascadeServer.handler;
+
+    await serve(serverHandler, ip, port);
     if (ip == '0.0.0.0') {
       final networks = await NetworkInterface.list();
       final networksMap = {
-        for (var element in networks)
-          element.name.toLowerCase(): element.addresses.first.address
+        for (final NetworkInterface(
+              :name,
+              addresses: List(
+                first: InternetAddress(:address),
+              )
+            ) in networks)
+          name.toLowerCase(): address
       };
-      final ethernet = networksMap['ethernet'];
 
+      final ethernet = networksMap['ethernet'];
       final wifi = networksMap['wi-fi'];
-      print('${_config.name} Server started, responding on:');
+
+      print('$name Server started, responding on:');
       print('http://localhost:$port/');
       if (ethernet != null) print('http://$ethernet:$port/');
       if (wifi != null) print('http://$wifi:$port/');
     } else {
-      print('${_config.name} Server started on http://$ip:$port');
+      print('$name Server started on http://$ip:$port');
     }
 
-    if (_config.enableSocket && _config.socketPort != null) {
-      if (_config.socketPort == _config.port) {
+    if (enableSocket && socketPort != null) {
+      if (socketPort == port) {
         print(
-            'Socket port ${_config.socketPort} cannot be the same of the server port $port');
+            'Socket port $socketPort cannot be the same of the server port $port');
 
         exit(0);
       }
-      _socketHandler = await SocketHandler().load(
-          socketPort: _config.socketPort ?? 8081, socketIp: ip.toString());
-      print('Socket is started on port ${_config.socketPort}');
+      _socketHandler =
+          await SocketHandler().load(socketPort: socketPort, socketIp: '$ip');
+      print('Socket is started on port $socketPort');
       GetIt.I.registerSingleton(_socketHandler);
     }
   }

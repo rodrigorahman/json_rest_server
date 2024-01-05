@@ -4,7 +4,7 @@ host: 0.0.0.0
 enableSocket: false
 socketPort: 8081
 database: database.json
-idType: uuid
+idType: int
 
 # storage:
 #   folder: storage/
