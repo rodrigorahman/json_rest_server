@@ -13,7 +13,9 @@ class DatabaseRepository {
   DatabaseRepository(this._configModel);
 
   void load() {
-    final databaseFile = File('database.json');
+    final basePath = String.fromEnvironment('debugPath', defaultValue: '');
+
+    final databaseFile = File('${basePath}database.json');
 
     if (!databaseFile.existsSync()) {
       databaseFile.createSync();

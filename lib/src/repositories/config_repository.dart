@@ -6,7 +6,8 @@ import 'package:yaml/yaml.dart';
 
 class ConfigRepository {
   ConfigModel load() {
-    final configFile = File('config.yaml');
+    final basePath = String.fromEnvironment('debugPath', defaultValue: '');
+    final configFile = File('${basePath}config.yaml');
 
     if (!configFile.existsSync()) {
       throw ConfigNotFoundException();

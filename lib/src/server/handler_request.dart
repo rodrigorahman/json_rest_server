@@ -71,7 +71,7 @@ class HandlerRequest {
           headers: jsonHelper.jsonReturn,
         );
       } else {
-        final [table] = request.url.pathSegments;
+        final [table, ...] = request.url.pathSegments;
         final channel = switch (request.headers) {
           {'socket-channel': final socketChannel} => socketChannel,
           _ => method
