@@ -1,3 +1,7 @@
+## 2.0.2
+  fix: Bug fix pattern matching in put handler
+  feat: new debug in externals project with  DART DEFINE (define=debugPath)
+
 ## 2.0.1
 - FIX websocket documentation
 
