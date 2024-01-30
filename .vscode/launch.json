@@ -39,7 +39,7 @@
             "program": "${workspaceFolder}/bin/json_rest_server.dart",
             "args": ["run"],
             "toolArgs": [
-                "--define=debugPath=F:/dart_week/dw11/projetos/dw_barbershop_api/"
+                "--define=debugPath=F:/flutter_experience/2024_01/projeto/projeto_gravacao/fe_lab_clinicas_api/"
             ]
         },
         
