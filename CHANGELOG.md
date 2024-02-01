@@ -1,3 +1,6 @@
+## 2.0.4
+  :bug: fix: Get local ip address
+
 ## 2.0.3
   fix: Bug fix pattern matching in post handler
 
