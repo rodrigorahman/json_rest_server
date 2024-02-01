@@ -69,7 +69,7 @@ class JsonRestServer {
         for (final NetworkInterface(
               :name,
               addresses: List(
-                first: InternetAddress(:address),
+                last: InternetAddress(:address),
               )
             ) in networks)
           name.toLowerCase(): address
