@@ -55,8 +55,7 @@ class JsonRestServer {
     var cascadeServer = Cascade().add(handler);
 
     if (enableSocket) {
-      cascadeServer = cascadeServer
-          .add((Request request) => webSocketHandler.load(request));
+      cascadeServer = cascadeServer.add((Request request) => webSocketHandler.load(request));
       print('Websocket loaded in port 8080');
     }
 
@@ -64,7 +63,7 @@ class JsonRestServer {
 
     await serve(serverHandler, ip, port);
     if (ip == '0.0.0.0') {
-      final networks = await NetworkInterface.list();
+      final networks = await NetworkInterface.list(type: InternetAddressType.IPv4);
       final networksMap = {
         for (final NetworkInterface(
               :name,
@@ -88,13 +87,11 @@ class JsonRestServer {
 
     if (enableSocket && socketPort != null) {
       if (socketPort == port) {
-        print(
-            'Socket port $socketPort cannot be the same of the server port $port');
+        print('Socket port $socketPort cannot be the same of the server port $port');
 
         exit(0);
       }
-      _socketHandler =
-          await SocketHandler().load(socketPort: socketPort, socketIp: '$ip');
+      _socketHandler = await SocketHandler().load(socketPort: socketPort, socketIp: '$ip');
       print('Socket is started on port $socketPort');
       GetIt.I.registerSingleton(_socketHandler);
     }
