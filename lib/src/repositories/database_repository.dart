@@ -12,8 +12,7 @@ class DatabaseRepository {
 
   DatabaseRepository(this._configModel);
 
-  void load() {
-    final basePath = String.fromEnvironment('debugPath', defaultValue: '');
+  void load(String basePath) {
 
     final databaseFile = File('${basePath}database.json');
 

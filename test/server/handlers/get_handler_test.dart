@@ -1,24 +1,33 @@
 import 'package:dio/dio.dart';
+import 'package:json_rest_server/src/server/core/env.dart';
 import 'package:json_rest_server/src/server/json_rest_server.dart';
 import 'package:test/test.dart';
+import 'package:path/path.dart' as path;
+
+
+class EnvMock extends Env {
+  @override
+  String get debugPath {
+    return '${path.join(path.current,'test','server','server_config')}${path.separator}';
+  }
+}
 
 void main() {
   group('Getter Tests', () {
     setUpAll(() async {
-      await JsonRestServer().startServer();
+      await JsonRestServer(EnvMock()).startServer();
     });
 
     test('should find user for page 1 and limit 5', () async {
       final response =
-          await Dio().get('http://localhost:8080/users?page=1&limit=5');
+          await Dio().get('http://localhost:8080/users?page=1&limit=2');
 
       final data = response.data as List;
 
-      expect(data.length, equals(5));
+      expect(data.length, equals(2));
     });
 
     test('should find user pagination without limit', () async {
-      // await JsonRestServer().startServer();
 
       final response = await Dio().get('http://localhost:8080/users?page=1');
 

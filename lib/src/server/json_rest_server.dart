@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:json_rest_server/src/core/broadcast/broadcast_controller.dart';
 import 'package:json_rest_server/src/core/helper/cors_helper.dart';
 import 'package:json_rest_server/src/core/middlewares/default_content_type.dart';
+import 'package:json_rest_server/src/server/core/env.dart';
 import 'package:json_rest_server/src/server/socket/websocket_handler.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
@@ -21,11 +22,15 @@ class JsonRestServer {
   late final CorsHelper _corsHelper;
   late final SocketHandler _socketHandler;
   late final BroadCastController _broadcast;
+  final Env env;
+
+  JsonRestServer(this.env);
 
   Future<void> startServer() async {
     final getIt = GetIt.I;
-    _config = ConfigRepository().load();
-    _databaseRepository = DatabaseRepository(_config)..load();
+    getIt.registerSingleton(env);
+    _config = ConfigRepository().load(env.debugPath);
+    _databaseRepository = DatabaseRepository(_config)..load(env.debugPath);
     _corsHelper = CorsHelper().load();
     _broadcast = BroadCastController();
     getIt.registerSingleton(_databaseRepository);

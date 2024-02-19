@@ -5,8 +5,7 @@ import 'package:json_rest_server/src/models/config_model.dart';
 import 'package:yaml/yaml.dart';
 
 class ConfigRepository {
-  ConfigModel load() {
-    final basePath = String.fromEnvironment('debugPath', defaultValue: '');
+  ConfigModel load(String basePath) {
     final configFile = File('${basePath}config.yaml');
 
     if (!configFile.existsSync()) {
