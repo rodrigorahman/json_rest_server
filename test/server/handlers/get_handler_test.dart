@@ -4,11 +4,10 @@ import 'package:json_rest_server/src/server/json_rest_server.dart';
 import 'package:test/test.dart';
 import 'package:path/path.dart' as path;
 
-
 class EnvMock extends Env {
   @override
   String get debugPath {
-    return '${path.join(path.current,'test','server','server_config')}${path.separator}';
+    return '${path.join(path.current, 'test', 'server', 'server_config')}${path.separator}';
   }
 }
 
@@ -28,7 +27,6 @@ void main() {
     });
 
     test('should find user pagination without limit', () async {
-
       final response = await Dio().get('http://localhost:8080/users?page=1');
 
       final data = response.data as List;

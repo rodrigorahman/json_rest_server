@@ -13,7 +13,6 @@ class DatabaseRepository {
   DatabaseRepository(this._configModel);
 
   void load(String basePath) {
-
     final databaseFile = File('${basePath}database.json');
 
     if (!databaseFile.existsSync()) {
