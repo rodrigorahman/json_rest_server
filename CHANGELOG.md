@@ -1,3 +1,6 @@
+## 2.0.5
+  fix: Change form that get local ip address
+
 ## 2.0.4
   :bug: fix: Get local ip address
 
