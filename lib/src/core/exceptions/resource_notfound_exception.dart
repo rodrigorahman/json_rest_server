@@ -1,3 +1,1 @@
-final class ResourceNotfoundException implements Exception {
-
-}
+final class ResourceNotfoundException implements Exception {}

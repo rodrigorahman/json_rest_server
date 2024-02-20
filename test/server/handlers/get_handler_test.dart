@@ -5,8 +5,6 @@ import 'package:test/test.dart';
 import '../mock/env_mock.dart';
 
 void main() {
-  
-
   group('Getter Tests', () {
     JsonRestServer? server;
     setUpAll(() async {
