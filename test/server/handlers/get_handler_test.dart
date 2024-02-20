@@ -4,14 +4,17 @@ import 'package:test/test.dart';
 
 import '../mock/env_mock.dart';
 
-
-
 void main() {
+  
+
   group('Getter Tests', () {
+    JsonRestServer? server;
     setUpAll(() async {
-      await JsonRestServer(EnvMock()).startServer();
+      server = JsonRestServer(EnvMock());
+      await server!.startServer();
     });
 
+    tearDownAll(() => server?.closeServer());
     test('should find user for page 1 and limit 5', () async {
       final response =
           await Dio().get('http://localhost:8080/users?page=1&limit=2');

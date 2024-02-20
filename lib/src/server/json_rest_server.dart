@@ -22,6 +22,7 @@ class JsonRestServer {
   late final CorsHelper _corsHelper;
   late final SocketHandler _socketHandler;
   late final BroadCastController _broadcast;
+  late final HttpServer _httpServer;
   final Env env;
 
   JsonRestServer(this.env);
@@ -67,7 +68,7 @@ class JsonRestServer {
 
     final serverHandler = cascadeServer.handler;
 
-    await serve(serverHandler, ip, port);
+    _httpServer = await serve(serverHandler, ip, port);
     if (ip == '0.0.0.0') {
       final networks =
           await NetworkInterface.list(type: InternetAddressType.IPv4);
@@ -104,5 +105,10 @@ class JsonRestServer {
       print('Socket is started on port $socketPort');
       GetIt.I.registerSingleton(_socketHandler);
     }
+  }
+
+  Future<void> closeServer() async {
+    print('servidor fechado');
+    await _httpServer.close();
   }
 }

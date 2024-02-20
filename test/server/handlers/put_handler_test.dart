@@ -3,11 +3,16 @@ import 'package:json_rest_server/src/server/json_rest_server.dart';
 import 'package:test/test.dart';
 
 import '../mock/env_mock.dart';
-import 'get_handler_test.dart';
 
 void main() {
   group('Put Tests group', () {
-    setUpAll(() async => await JsonRestServer(EnvMock()).startServer());
+    JsonRestServer? server;
+    setUpAll(() async {
+      server = JsonRestServer(EnvMock());
+      await server!.startServer();
+    });
+
+    tearDownAll(() => server?.closeServer());
 
     test('Should update data', () async {
       final Response(data: {'id': testID}, statusCode: insertStatusCode) =
@@ -45,8 +50,6 @@ void main() {
       } on DioException catch (e) {
         expect(e.response?.statusCode, equals(404));
       }
-
-      
     });
   });
 }
