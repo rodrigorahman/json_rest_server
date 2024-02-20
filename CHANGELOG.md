@@ -1,8 +1,7 @@
-## 2.0.6
-  fix: change PUT behavior to return 404 when resource not found
+## 3.0.0
+  fix: BREAK Change: change PUT behavior to return 404 when resource not found
   
   Modified the behavior of the PUT verb in the REST service to return an HTTP 404 (Not Found) status when a resource with the specified ID is not found. Previously, if a resource with the specified ID was not found, the system would create a new resource and return an HTTP 200 (OK) status. This change aligns the service with REST best practices, ensuring that API consumers receive clear feedback when attempting to update a non-existent resource.
-
 
 ## 2.0.5
   fix: Change form that get local ip address
