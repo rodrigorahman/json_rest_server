@@ -24,7 +24,7 @@ class PutHandler {
       }
       final dataUpdate = jsonDecode(body);
       dataUpdate['id'] = int.tryParse(id) ?? id;
-      return _databaseRepository.save(table, dataUpdate);
+      return _databaseRepository.update(table, dataUpdate);
     }
 
     return null;

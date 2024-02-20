@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:get_it/get_it.dart';
 import 'package:json_rest_server/src/core/broadcast/broadcast_controller.dart';
 import 'package:json_rest_server/src/core/exceptions/conflict_id_exception.dart';
+import 'package:json_rest_server/src/core/exceptions/resource_notfound_exception.dart';
 import 'package:json_rest_server/src/core/helper/cors_helper.dart';
 import 'package:json_rest_server/src/models/broadcast_model.dart';
 import 'package:json_rest_server/src/models/config_model.dart';
@@ -99,6 +100,14 @@ class HandlerRequest {
         415,
         body: jsonEncode(
           {'erro': e.message},
+        ),
+        headers: jsonHelper.jsonReturn,
+      );
+    } on ResourceNotfoundException catch (e, s) {
+      log('Resource not found', error: e, stackTrace: s);
+      return Response.notFound(
+        jsonEncode(
+          {'erro': 'resource not found'},
         ),
         headers: jsonHelper.jsonReturn,
       );

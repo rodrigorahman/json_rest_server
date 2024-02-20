@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:json_rest_server/src/core/enum/id_type_enum.dart';
 import 'package:json_rest_server/src/core/exceptions/conflict_id_exception.dart';
+import 'package:json_rest_server/src/core/exceptions/resource_notfound_exception.dart';
 import 'package:json_rest_server/src/models/config_model.dart';
 import 'package:uuid/uuid.dart';
 
@@ -31,6 +32,21 @@ class DatabaseRepository {
 
   Map<String, dynamic> getById(String table, dynamic id) => getAll(table)
       .firstWhere((element) => element['id'] == id, orElse: () => {});
+
+  Map<String, dynamic>? update(String table, Map<String, dynamic> data) {
+    final {'id': id} = data;
+
+    if (id == null) {
+      throw ResourceNotfoundException();
+    }
+    final lineData = getById(table, id);
+
+    if (lineData.isEmpty) {
+      throw ResourceNotfoundException();
+    }
+
+    return save(table, data);
+  }
 
   Map<String, dynamic>? save(String table, Map<String, dynamic> data) {
     final id = data['id'];

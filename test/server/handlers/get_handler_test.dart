@@ -1,15 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:json_rest_server/src/server/core/env.dart';
 import 'package:json_rest_server/src/server/json_rest_server.dart';
 import 'package:test/test.dart';
-import 'package:path/path.dart' as path;
 
-class EnvMock extends Env {
-  @override
-  String get debugPath {
-    return '${path.join(path.current, 'test', 'server', 'server_config')}${path.separator}';
-  }
-}
+import '../mock/env_mock.dart';
+
+
 
 void main() {
   group('Getter Tests', () {

@@ -1,1 +1,144 @@
-{"users":[{"id":"67256120-0258-1e7b-8d18-87b1c7869e63","email":"at1@gmail.com","password":"123123"},{"id":"d51a7d90-4296-1e8a-877a-b36fd069fb19","email":"at1@gmail.com","password":"123123"}],"adm_users":[{"id":"024fb8e0-02fd-1e7b-8d18-87b1c7869e63","email":"terminal1@gmail.com","password":"123123"}],"attendantDeskAssignment":[],"patients":[{"id":"93b3fd10-9dd7-1e82-bfae-fb5426cd6532","name":"Rodrigo Rahman 2","email":"rodrigorahman@academiadoflutter.com.br","phone_number":"(11) 1231212312","document":"123.123.123-12","address":{"cep":"09190390","street_address":"Rua X","number":"51","address_complement":"","state":"SP","city":"Santo André","district":"Jardins"},"guardian":"","guardian_identification_number":""},{"id":"64a62430-4df9-1e83-bfae-fb5426cd6532","name":"teste","email":"teste@teste.com.br","phone_number":"(12) 3123-1231","document":"321.321.321-32","address":{"cep":"11.111-111","street_address":"teste","number":"12","address_complement":"teste","state":"teste","city":"teste","district":"teste"},"guardian":"teste","guardian_identification_number":"123.123.123-13"}],"patientInformationForm":[],"painelCheckin":[],"tests":[{"id":"3b2526a7-96ad-4884-8d89-aac3a8f8d1e1","name":"Endoscopia"},{"id":"89b5ecf8-dcdd-42fd-b1ec-335537b661cc","name":"Exame de Sangue"},{"id":"4c7c2c0e-84fa-4b91-aff1-f8f9a99b4925","name":"Ressonância Magnética"},{"id":"49d4cb2e-afd5-4345-ac03-92ec451c0601","name":"Tomografia Computadorizada"},{"id":"0c4f178f-8b57-4f03-bbd5-5463e228d810","name":"Ultrassonografia"},{"id":"56ec8065-417f-4082-bcb5-1900b504c78d","name":"Eletrocardiograma"},{"id":"fb685fbd-853e-49f2-8a55-1086d08db53e","name":"Raio-X"},{"id":"93d3d43a-2f14-4d00-984b-d46f35c76142","name":"Colonoscopia"},{"id":"957a344b-ec07-4023-8e51-1adfa4e62a05","name":"Teste de Esforço"},{"id":"98b881bc-67cf-4e10-adca-17a1f59d798e","name":"Biopsia"},{"id":"9a4a3733-50cf-47ca-a671-2fbadd319d5b","name":"Eletroencefalograma"},{"id":"222fd2b7-af4e-42e2-8f08-069cbcd0f728","name":"Exame de Urina"},{"id":"590f8160-7920-40f7-9f44-cc6d42dff46d","name":"Holter 24 Horas"},{"id":"c71c2048-0cb8-49a2-a4f2-3b0dcdee6dd6","name":"Mamografia"},{"id":"05a0f0fb-6202-420a-8644-a1c1772c9da6","name":"Densitometria Óssea"},{"id":"2b029e96-eb37-43ad-8475-2d5cd273ef7e","name":"Teste de Gravidez"},{"id":"c0537924-ef52-43f9-8819-1f2a730eb5b7","name":"Teste de Glicemia"},{"id":"0fb498bd-2a27-4c23-9cf4-87b8a633d218","name":"Esprometria"},{"id":"67397c75-6ec4-4699-b52c-dadeb44b4734","name":"Audiometria"},{"id":"09835021-acc2-4792-a167-46d067de7406","name":"Exame de Vista"}]}
+{
+    "users": [
+        {
+            "id": "67256120-0258-1e7b-8d18-87b1c7869e63",
+            "email": "at1@gmail.com",
+            "password": "123123"
+        },
+        {
+            "id": "d51a7d90-4296-1e8a-877a-b36fd069fb19",
+            "email": "at1@gmail.com",
+            "password": "123123"
+        }
+    ],
+    "adm_users": [
+        {
+            "id": "024fb8e0-02fd-1e7b-8d18-87b1c7869e63",
+            "email": "terminal1@gmail.com",
+            "password": "123123"
+        }
+    ],
+    "attendantDeskAssignment": [],
+    "patients": [
+        {
+            "id": "93b3fd10-9dd7-1e82-bfae-fb5426cd6532",
+            "name": "Rodrigo Rahman 2",
+            "email": "rodrigorahman@academiadoflutter.com.br",
+            "phone_number": "(11) 1231212312",
+            "document": "123.123.123-12",
+            "address": {
+                "cep": "09190390",
+                "street_address": "Rua X",
+                "number": "51",
+                "address_complement": "",
+                "state": "SP",
+                "city": "Santo André",
+                "district": "Jardins"
+            },
+            "guardian": "",
+            "guardian_identification_number": ""
+        },
+        {
+            "id": "64a62430-4df9-1e83-bfae-fb5426cd6532",
+            "name": "teste",
+            "email": "teste@teste.com.br",
+            "phone_number": "(12) 3123-1231",
+            "document": "321.321.321-32",
+            "address": {
+                "cep": "11.111-111",
+                "street_address": "teste",
+                "number": "12",
+                "address_complement": "teste",
+                "state": "teste",
+                "city": "teste",
+                "district": "teste"
+            },
+            "guardian": "teste",
+            "guardian_identification_number": "123.123.123-13"
+        }
+    ],
+    "patientInformationForm": [],
+    "painelCheckin": [],
+    "tests": [
+        {
+            "id": "3b2526a7-96ad-4884-8d89-aac3a8f8d1e1",
+            "name": "Endoscopia"
+        },
+        {
+            "id": "89b5ecf8-dcdd-42fd-b1ec-335537b661cc",
+            "name": "Exame de Sangue"
+        },
+        {
+            "id": "4c7c2c0e-84fa-4b91-aff1-f8f9a99b4925",
+            "name": "Ressonância Magnética"
+        },
+        {
+            "id": "49d4cb2e-afd5-4345-ac03-92ec451c0601",
+            "name": "Tomografia Computadorizada"
+        },
+        {
+            "id": "0c4f178f-8b57-4f03-bbd5-5463e228d810",
+            "name": "Ultrassonografia"
+        },
+        {
+            "id": "56ec8065-417f-4082-bcb5-1900b504c78d",
+            "name": "Eletrocardiograma"
+        },
+        {
+            "id": "fb685fbd-853e-49f2-8a55-1086d08db53e",
+            "name": "Raio-X"
+        },
+        {
+            "id": "93d3d43a-2f14-4d00-984b-d46f35c76142",
+            "name": "Colonoscopia"
+        },
+        {
+            "id": "957a344b-ec07-4023-8e51-1adfa4e62a05",
+            "name": "Teste de Esforço"
+        },
+        {
+            "id": "98b881bc-67cf-4e10-adca-17a1f59d798e",
+            "name": "Biopsia"
+        },
+        {
+            "id": "9a4a3733-50cf-47ca-a671-2fbadd319d5b",
+            "name": "Eletroencefalograma"
+        },
+        {
+            "id": "222fd2b7-af4e-42e2-8f08-069cbcd0f728",
+            "name": "Exame de Urina"
+        },
+        {
+            "id": "590f8160-7920-40f7-9f44-cc6d42dff46d",
+            "name": "Holter 24 Horas"
+        },
+        {
+            "id": "c71c2048-0cb8-49a2-a4f2-3b0dcdee6dd6",
+            "name": "Mamografia"
+        },
+        {
+            "id": "05a0f0fb-6202-420a-8644-a1c1772c9da6",
+            "name": "Densitometria Óssea"
+        },
+        {
+            "id": "2b029e96-eb37-43ad-8475-2d5cd273ef7e",
+            "name": "Teste de Gravidez"
+        },
+        {
+            "id": "c0537924-ef52-43f9-8819-1f2a730eb5b7",
+            "name": "Teste de Glicemia"
+        },
+        {
+            "id": "0fb498bd-2a27-4c23-9cf4-87b8a633d218",
+            "name": "Esprometria"
+        },
+        {
+            "id": "67397c75-6ec4-4699-b52c-dadeb44b4734",
+            "name": "Audiometria"
+        },
+        {
+            "id": "09835021-acc2-4792-a167-46d067de7406",
+            "name": "Exame de Vista"
+        }
+    ]
+}

@@ -5,7 +5,7 @@ database: database.json
 enableSocket: true
 socketPort: 8081
 broadcastProvider: socket #socket,slack  or only socket or only slack
-idType: int
+idType: uuid
 slack: 
   slackUrl: '' #your webhook url from slack
   slackChannel: '' #your channel starting with #
