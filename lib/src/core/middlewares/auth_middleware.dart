@@ -54,15 +54,13 @@ class AuthMiddleware extends Middlewares {
       var user = {};
 
       if (authConfig?.authFields.isEmpty ?? true) {
-        users.firstWhere(
+        user = users.firstWhere(
           (user) {
             return (user['email'] == bodyData['email'] && user['password'] == bodyData['password']);
           },
           orElse: () => {},
         );
-      }
-
-      if (authConfig?.authFields.isNotEmpty ?? false) {
+      } else {
         int numberOfFields = authConfig!.authFields.length;
         int validatedFields = 0;
 
