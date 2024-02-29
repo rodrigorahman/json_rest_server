@@ -66,6 +66,15 @@ class AuthMiddleware extends Middlewares {
 
         for (var u in users) {
           for (var field in authConfig.authFields) {
+            if (!(bodyData as Map).containsKey(field.name)) {
+              return Response(
+                500,
+                body: jsonEncode(
+                    {'error': 'field ${field.name} not found in validation. Please check if you put this validation in config.yaml  then remove it or send the correct fields to authenticate'}),
+                headers: jsonHelper.jsonReturn,
+              );
+            }
+
             dynamic dataAsType;
 
             switch (field.type.toLowerCase()) {
