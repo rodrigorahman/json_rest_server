@@ -39,9 +39,9 @@
             "program": "${workspaceFolder}/bin/json_rest_server.dart",
             "args": ["run"],
             "toolArgs": [
-                "--define=debugPath=F:/flutter_experience/2024_01/projeto/projeto_gravacao/fe_lab_clinicas_api/"
+                "--define=debugPath=/Users/adilsonjunior/w2o/apps/pbs/pbs_api/"
             ]
         },
-        
+
     ]
 }
