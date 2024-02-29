@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:yaml/yaml.dart';
 
 class ConfigAuthModel {
@@ -8,6 +7,7 @@ class ConfigAuthModel {
   final int unauthorizedStatusCode;
   final bool enableAdm;
   final List<String> urlUserPermission;
+  final List<AuthField> authFields;
   final List<UrlSkip>? urlSkip;
 
   ConfigAuthModel(
@@ -16,6 +16,7 @@ class ConfigAuthModel {
       this.unauthorizedStatusCode = 403,
       this.urlSkip,
       this.urlUserPermission = const <String>[],
+      this.authFields = const <AuthField>[],
       this.enableAdm = false});
 
   Map<String, dynamic> toMap() {
@@ -29,6 +30,7 @@ class ConfigAuthModel {
   factory ConfigAuthModel.fromMap(Map<String, dynamic> map) {
     YamlList? urlSkip = map['urlSkip'];
     YamlList? urlUserPermission = map['urlUserPermission'];
+    YamlList? authFields = map['authFields'];
 
     return ConfigAuthModel(
       jwtSecret: map['jwtSecret'] ?? '',
@@ -36,6 +38,14 @@ class ConfigAuthModel {
       unauthorizedStatusCode: map['unauthorizedStatusCode']?.toInt() ?? 403,
       enableAdm: map['enableAdm'] ?? false,
       urlUserPermission: urlUserPermission?.toList().cast() ?? <String>[],
+      authFields: authFields?.map<AuthField>((element) {
+            var key = element.keys.first;
+            return AuthField(
+              name: key,
+              type: element.value[key]['type'],
+            );
+          }).toList() ??
+          [],
       urlSkip: urlSkip?.map<UrlSkip>(
             (element) {
               var key = element.keys.first;
@@ -51,8 +61,7 @@ class ConfigAuthModel {
 
   String toJson() => json.encode(toMap());
 
-  factory ConfigAuthModel.fromJson(String source) =>
-      ConfigAuthModel.fromMap(json.decode(source));
+  factory ConfigAuthModel.fromJson(String source) => ConfigAuthModel.fromMap(json.decode(source));
 }
 
 class UrlSkip {
@@ -80,6 +89,33 @@ class UrlSkip {
 
   String toJson() => json.encode(toMap());
 
-  factory UrlSkip.fromJson(String source) =>
-      UrlSkip.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UrlSkip.fromJson(String source) => UrlSkip.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+class AuthField {
+  final String name;
+  final String type;
+
+  AuthField({
+    required this.name,
+    required this.type,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'name': name,
+      'type': type,
+    };
+  }
+
+  factory AuthField.fromMap(Map<String, dynamic> map) {
+    return AuthField(
+      name: (map['name'] ?? '') as String,
+      type: (map['type'] ?? '') as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory AuthField.fromJson(String source) => AuthField.fromMap(json.decode(source) as Map<String, dynamic>);
 }

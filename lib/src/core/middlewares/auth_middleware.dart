@@ -25,10 +25,7 @@ class AuthMiddleware extends Middlewares {
     var segments = request.url.pathSegments;
     if (segments.last == 'auth') {
       return _login(request);
-    } else if (request.method == 'PUT' &&
-        segments.length > 1 &&
-        segments[segments.length - 2] == 'auth' &&
-        segments.last == 'refresh') {
+    } else if (request.method == 'PUT' && segments.length > 1 && segments[segments.length - 2] == 'auth' && segments.last == 'refresh') {
       return _refreshToken(request);
     } else if (_config.auth != null && segments.first != 'storage') {
       return _checkLogin(request);
@@ -39,6 +36,7 @@ class AuthMiddleware extends Middlewares {
 
   Future<Response> _login(Request request) async {
     try {
+      final authConfig = _config.auth;
       final body = await request.readAsString();
       final bodyData = jsonDecode(body);
 
@@ -53,13 +51,53 @@ class AuthMiddleware extends Middlewares {
         );
       }
 
-      var user = users.firstWhere(
-        (user) {
-          return (user['email'] == bodyData['email'] &&
-              user['password'] == bodyData['password']);
-        },
-        orElse: () => {},
-      );
+      var user = {};
+
+      if (authConfig?.authFields.isEmpty ?? true) {
+        users.firstWhere(
+          (user) {
+            return (user['email'] == bodyData['email'] && user['password'] == bodyData['password']);
+          },
+          orElse: () => {},
+        );
+      }
+
+      if (authConfig?.authFields.isNotEmpty ?? false) {
+        int numberOfFields = authConfig!.authFields.length;
+        int validatedFields = 0;
+
+        for (var u in users) {
+          for (var field in authConfig.authFields) {
+            dynamic dataAsType;
+
+            switch (field.type.toLowerCase()) {
+              case 'string':
+                dataAsType = bodyData[field.name] as String;
+                break;
+
+              case 'int':
+                dataAsType = bodyData[field.name] as int;
+                break;
+
+              case 'double':
+                dataAsType = bodyData[field.name] as double;
+                break;
+            }
+
+            if (u[field.name] == dataAsType) {
+              validatedFields++;
+            } else {
+              validatedFields = 0;
+              break;
+            }
+          }
+
+          if (validatedFields == numberOfFields) {
+            user = u;
+            break;
+          }
+        }
+      }
 
       if (user.isEmpty) {
         return Response.forbidden(
@@ -108,8 +146,7 @@ class AuthMiddleware extends Middlewares {
                 valid = false;
               } else {
                 for (int i = 0; i < pathSegments.length; i++) {
-                  if (segments[i] == '{*}' &&
-                      int.tryParse(pathSegments[i]) != null) {
+                  if (segments[i] == '{*}' && int.tryParse(pathSegments[i]) != null) {
                     continue;
                   }
 
@@ -123,8 +160,7 @@ class AuthMiddleware extends Middlewares {
 
               return valid;
             } else {
-              return (element.path == pathUrl &&
-                  element.method.toLowerCase() == method.toLowerCase());
+              return (element.path == pathUrl && element.method.toLowerCase() == method.toLowerCase());
             }
           })) {
         return innerHandler(request);

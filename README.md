@@ -12,7 +12,7 @@ Json Rest Server is a RESTful server based on JSON
 
 [![Json Rest Server](https://github.com/rodrigorahman/json_rest_server/actions/workflows/dart.yml/badge.svg)](https://github.com/rodrigorahman/json_rest_server/actions/workflows/dart.yml)
 
-# Json Rest Server 
+# Json Rest Server
 
 Um RESTful server baseado em JSON
 
@@ -43,7 +43,7 @@ idType( uuid | int ) -> Agora o json_rest_server suporta que os ids sejam ou int
 
 ## Comandos
 
-**ATENÇÃO**: 
+**ATENÇÃO**:
 O executável padrão do projeto é json_rest_server porém você também pode utilizar **jsonRestServer** ou somente **jrs** facilitando assim a digitação ;-)
 
 **Atualizando**:
@@ -135,17 +135,29 @@ auth:
   urlSkip:
     - path_sem_autenticacao:
         method: metodo http (post,get,put,patch ou delete)
+  authFields:
+    - matricula:
+        type: int
+    - celular:
+        type: string
 ```
 
 Descrição das tags:
 
 ```yaml
-jwtSecret -> Chave de autenticação do jwt (essa chave é importante para validação do token)
-jwtExpire -> Tempo de expiração do token em segundos
-enableAdm -> Se habilitado o json_rest_server vai permitir somente requisições de POST, PUT, DELETE para usuários administradores
+jwtSecret -> Chave de autenticação do jwt (essa chave é importante para validação do token).
+
+jwtExpire -> Tempo de expiração do token em segundos.
+
+enableAdm -> Se habilitado o json_rest_server vai permitir somente requisições de POST, PUT, DELETE para usuários administradores.
+
 urlUserPermission -> Quando habilitado o enableADM você pode permitir que um usuário simples faça as requisições de POST, PUT, DELETE colocando a url aqui.
-unauthorizedStatusCode -> Status de retorno para acesso negado
-urlSkip -> Coloque aqui as urls e métodos http que você não que seja verificada a autenticação do usuário (paths não autenticados)
+
+unauthorizedStatusCode -> Status de retorno para acesso negado.
+
+urlSkip -> Coloque aqui as urls e métodos http que você não que seja verificada a autenticação do usuário (paths não autenticados).
+
+authFields -> Coloque aqui os campos que serão usados na autenticação e seus respectivos tipos para customizar o login.
 ```
 
 **Exemplo**
@@ -153,6 +165,12 @@ urlSkip -> Coloque aqui as urls e métodos http que você não que seja verifica
 No exemplo abaixo, não será verificada a autenticação para o path /users no método post (Cadastro de um novo usuário).
 
 Agora o segundo path **/products/{\*}** você deve ter achado estranho o parâmetro **{\*}**, mas ele é um coringa de acesso, pois, todos os paths configurados no database.json respondem a busca de dados por id, na url ex: **/producs/1** e precisavamos ignorar o id para identificar a url, sendo assim criamos o coringa **{\*}** deixando esse pedaço da url dinâmico permitindo que uma url **/products/1** possa ser acessada sem autenticação.
+
+O parâmetro authFields é **opcional**, e nele deve ser passado os campos que serão usados para fazer a autenticação. É necessário inserir **nome** do campo e o **tipo de dado** como no exemplo abaixo.
+
+Tipos permitidos no authFields -> "**string**", "**int**" ou "**double**"
+
+**Obs:** Caso o parâmetro authFields não seja definido no *config.yaml*, o Json Rest Server manterá a autenticação padrão, que utiliza **"email"** e **"password"**, ambos como string.
 
 ```json
 auth:
@@ -164,6 +182,13 @@ auth:
         method: post
     - /products/{*}:
         method: get
+  authFields:
+    - matricula:
+        type: int
+    - celular:
+        type: string
+    - peso:
+        type: double
 
 ```
 
@@ -291,7 +316,7 @@ O Json Rest Server vai substituir o valor de #userAuthRef pelo id do usuário lo
 
 Para fazer a busca por um campo com o ID do usuário logado, você precisa enviar no filtro a tag #userAuthRef, o Json Rest Server vai substituir o valor pelo id do usuário logado ex:
 
-`http://localhost:8080/products?user_id=#userAuthRef` 
+`http://localhost:8080/products?user_id=#userAuthRef`
 
 O JRS vai substituir a tag #userAuthRef pelo o id do usuário logado e realizar o filtro no campo user_id
 
@@ -303,15 +328,15 @@ Inicialmente o sistema está compatível com o envio para ***socket e slack***
 
 ```yaml
 
-enableSocket: true 
+enableSocket: true
 #Indica se você quer que inicie um servidor de socket junto com o servidor rest (true/false)
 socketPort: 8081
 #Indica a porta de acesso do socket padrão (Websocket não utiliza essa porta):  8081
 broadcastProvider: socket
 #Indica pra qual tipo de broadcast ele quer enviar por padrão : ex  socket,slack  ou só socket ou só slack
-slack: 
+slack:
   slackUrl:
-  #Indica a url do webhook do slack 
+  #Indica a url do webhook do slack
   slackChannel:
   #Indica o canal do slack para ser enviado sempre começando com #
   ```
@@ -322,7 +347,7 @@ slack:
 
 ## Broadcast event com Websocket
 
-O Json Rest server suporta também a comunicação socket para web utilizando websocket, quando você habilita o parâmetro `enableSocket: true` no config você automaticamente está habilitando também o websocket podendo receber socket pelo IO ou Websocket. 
+O Json Rest server suporta também a comunicação socket para web utilizando websocket, quando você habilita o parâmetro `enableSocket: true` no config você automaticamente está habilitando também o websocket podendo receber socket pelo IO ou Websocket.
 
 No websocket a porta de conexão sempre será a mesma do servidor.
 
@@ -337,7 +362,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
+
   final WebSocketChannel channel = WebSocketChannel.connect(
     Uri.parse('ws://localhost:8080'),
   );
@@ -397,7 +422,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  
+
   final WebSocketChannel channel = WebSocketChannel.connect(
     Uri.parse('ws://localhost:8080?tables=users,products'),
   );
@@ -445,7 +470,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 Json Rest Server agora da suporte a url de conteúdo (Imagens) estáticas.
 
-Para habilitar o suporte a esse recurso em projetos existentes siga os passos abaixo: 
+Para habilitar o suporte a esse recurso em projetos existentes siga os passos abaixo:
 
 1 - Na raiz do seu projeto, crie uma pasta storage
 2 - Coloque as imagens dentro dessa pasta e agora você terá acesso a url `http://localhost:8080/storage`
