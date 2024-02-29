@@ -187,7 +187,7 @@ auth:
         type: int
     - celular:
         type: string
-    - peso:
+    - nota:
         type: double
 
 ```
@@ -198,9 +198,21 @@ auth:
 Para realizar o login você precisa fazer um post para a url ex: http://localhost:8080/auth com o body:
 
 ```json
+// Exemplo de request padrão.
 {
     "email": "rodrigorahman@academiadoflutter.com.br",
     "password": "123"
+}
+```
+
+Caso você tenha configurado o authFields para personalizar os campos de login, devem ser enviados os campos da forma como foram definidos no config.yaml.
+
+```json
+// Exemplo de request customizada com authFields.
+{
+    "matricula": 102030,
+    "celular": "+5535988881234",
+    "nota": 8.5
 }
 ```
 
