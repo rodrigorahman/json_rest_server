@@ -61,7 +61,8 @@ class ConfigAuthModel {
 
   String toJson() => json.encode(toMap());
 
-  factory ConfigAuthModel.fromJson(String source) => ConfigAuthModel.fromMap(json.decode(source));
+  factory ConfigAuthModel.fromJson(String source) =>
+      ConfigAuthModel.fromMap(json.decode(source));
 }
 
 class UrlSkip {
@@ -89,7 +90,8 @@ class UrlSkip {
 
   String toJson() => json.encode(toMap());
 
-  factory UrlSkip.fromJson(String source) => UrlSkip.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory UrlSkip.fromJson(String source) =>
+      UrlSkip.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 class AuthField {
@@ -117,5 +119,6 @@ class AuthField {
 
   String toJson() => json.encode(toMap());
 
-  factory AuthField.fromJson(String source) => AuthField.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory AuthField.fromJson(String source) =>
+      AuthField.fromMap(json.decode(source) as Map<String, dynamic>);
 }
