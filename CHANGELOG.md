@@ -1,3 +1,7 @@
+## 3.1.0
+  feat:
+    Support for customizing the login validation fields
+
 ## 3.0.0
   fix: BREAK Change: change PUT behavior to return 404 when resource not found
   

@@ -1,6 +1,6 @@
 name: json_rest_server
 description: A RESTful server based on JSON With this package you can have a fully functional RESTful server with auth, pagination and all the necessaries services do build an application
-version: 3.0.0
+version: 3.1.0
 repository: https://github.com/rodrigorahman/json_rest_server
 issue_tracker: https://github.com/rodrigorahman/json_rest_server/issues
 
@@ -26,6 +26,7 @@ dev_dependencies:
   dio: ^5.4.0
   lints: ^3.0.0
   test: ^1.25.0
+  yaml_writer: ^2.0.0
 
 executables:
   json_rest_server: json_rest_server

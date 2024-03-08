@@ -25,7 +25,10 @@ class AuthMiddleware extends Middlewares {
     var segments = request.url.pathSegments;
     if (segments.last == 'auth') {
       return _login(request);
-    } else if (request.method == 'PUT' && segments.length > 1 && segments[segments.length - 2] == 'auth' && segments.last == 'refresh') {
+    } else if (request.method == 'PUT' &&
+        segments.length > 1 &&
+        segments[segments.length - 2] == 'auth' &&
+        segments.last == 'refresh') {
       return _refreshToken(request);
     } else if (_config.auth != null && segments.first != 'storage') {
       return _checkLogin(request);
@@ -56,7 +59,8 @@ class AuthMiddleware extends Middlewares {
       if (authConfig?.authFields.isEmpty ?? true) {
         user = users.firstWhere(
           (user) {
-            return (user['email'] == bodyData['email'] && user['password'] == bodyData['password']);
+            return (user['email'] == bodyData['email'] &&
+                user['password'] == bodyData['password']);
           },
           orElse: () => {},
         );
@@ -69,8 +73,10 @@ class AuthMiddleware extends Middlewares {
             if (!(bodyData as Map).containsKey(field.name)) {
               return Response(
                 500,
-                body: jsonEncode(
-                    {'error': 'field ${field.name} not found in validation. Please check if you put this validation in config.yaml  then remove it or send the correct fields to authenticate'}),
+                body: jsonEncode({
+                  'error':
+                      'field ${field.name} not found in validation. Please check if you put this validation in config.yaml  then remove it or send the correct fields to authenticate'
+                }),
                 headers: jsonHelper.jsonReturn,
               );
             }
@@ -153,7 +159,8 @@ class AuthMiddleware extends Middlewares {
                 valid = false;
               } else {
                 for (int i = 0; i < pathSegments.length; i++) {
-                  if (segments[i] == '{*}' && int.tryParse(pathSegments[i]) != null) {
+                  if (segments[i] == '{*}' &&
+                      int.tryParse(pathSegments[i]) != null) {
                     continue;
                   }
 
@@ -167,7 +174,8 @@ class AuthMiddleware extends Middlewares {
 
               return valid;
             } else {
-              return (element.path == pathUrl && element.method.toLowerCase() == method.toLowerCase());
+              return (element.path == pathUrl &&
+                  element.method.toLowerCase() == method.toLowerCase());
             }
           })) {
         return innerHandler(request);

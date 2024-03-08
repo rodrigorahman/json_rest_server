@@ -129,6 +129,11 @@ auth:
   urlSkip:
     - path_without_authentication:
         method: http method (post,get,put,patch ou delete)
+  authFields:
+    - matricula:
+        type: int
+    - celular:
+        type: string
 ```
 
 Tags description:
@@ -140,6 +145,7 @@ enableAdm -> Se habilitado o json_rest_server vai permitir somente requisições
 urlUserPermission -> Quando habilitado o enableADM você pode permitir que um usuário simples faça as requisições de POST, PUT, DELETE colocando a url aqui.
 unauthorizedStatusCode ->  The status to use in case of denied access
 urlSkip -> Urls that you don't want to be verified with JWT
+authFields(optional) -> Please list the fields that will be used for authentication and their respective types to customize the login.
 ```
 
 **Example**
@@ -148,6 +154,12 @@ urlSkip -> Urls that you don't want to be verified with JWT
 In the example below the server will not verify the authentication to  /user in post method (To create a new user )
 
 Now in the second path **/products/{\*}** , this strange command **{\*}**, is a wilcard, because all the paths in the  database.json that use an ID in the url, like **/producs/1**, we need to ignore the url parameter to find the url. With this wilcard we allow to make some dynamc urls to be accessed without authentication
+
+The authFields parameter is **optional**, and it should contain the fields that will be used for authentication. It is necessary to include the **name** of the field and the **data type** as in the example below.
+
+Allowed types in authFields -> "**string**", "**int**", or "**double**"
+
+**Note:** If the authFields parameter is not defined in the *config.yaml*, the Json Rest Server will maintain the default authentication, which uses **"email"** and **"password"**, both as string.
 
 ```json
 auth:
@@ -159,6 +171,13 @@ auth:
         method: post
     - /products/{*}:
         method: get
+  authFields:
+    - registration:
+        type: int
+    - mobile:
+        type: string
+    - grade:
+        type: double
 
 ```
 
@@ -170,6 +189,17 @@ To login and authenticate you need to make a post request in the url ex: http://
 {
     "email": "rodrigorahman@academiadoflutter.com.br",
     "password": "123"
+}
+```
+
+If you have configured the authFields to customize the login fields, the fields should be sent as they were defined in the config.yaml.
+
+```json
+// Example of a custom request with authFields.
+{
+    "registration": 102030,
+    "mobile": "+5535988881234",
+    "grade": 8.5
 }
 ```
 

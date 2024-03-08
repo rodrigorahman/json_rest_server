@@ -1,0 +1,6 @@
+{
+    "dart.testAdditionalArgs": [
+        "--concurrency",
+        "1"
+    ],
+}

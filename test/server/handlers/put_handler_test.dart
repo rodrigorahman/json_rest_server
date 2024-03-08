@@ -3,11 +3,15 @@ import 'package:json_rest_server/src/server/json_rest_server.dart';
 import 'package:test/test.dart';
 
 import '../mock/env_mock.dart';
+import '../mock/generate_config.dart';
+import '../mock/generate_database.dart';
 
 void main() {
   group('Put Tests group', () {
     JsonRestServer? server;
     setUpAll(() async {
+      GenerateDatabase.uuid();
+      GenerateConfig.basic();
       server = JsonRestServer(EnvMock());
       await server!.startServer();
     });

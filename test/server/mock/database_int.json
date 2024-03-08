@@ -1,0 +1,84 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "email": "at1@gmail.com",
+            "password": "123123",
+            "document":"123.123.123-12",
+            "cellphone": 11999999999
+        },
+        {
+            "id": 2,
+            "email": "at1@gmail.com",
+            "password": "123123",
+            "document":"123.123.123-11",
+            "cellphone": 21999999999
+        }
+    ],
+    "adm_users": [
+        {
+            "id": 1,
+            "email": "terminal1@gmail.com",
+            "password": "123123"
+        }
+    ],
+    "attendantDeskAssignment": [],
+    "patients": [
+        {
+            "id": 1,
+            "name": "Rodrigo Rahman 2",
+            "email": "rodrigorahman@academiadoflutter.com.br",
+            "phone_number": "(11) 1231212312",
+            "document": "123.123.123-12",
+            "address": {
+                "cep": "09190390",
+                "street_address": "Rua X",
+                "number": "51",
+                "address_complement": "",
+                "state": "SP",
+                "city": "Santo André",
+                "district": "Jardins"
+            },
+            "guardian": "",
+            "guardian_identification_number": ""
+        },
+        {
+            "id": 2,
+            "name": "teste",
+            "email": "teste@teste.com.br",
+            "phone_number": "(12) 3123-1231",
+            "document": "321.321.321-32",
+            "address": {
+                "cep": "11.111-111",
+                "street_address": "teste",
+                "number": "12",
+                "address_complement": "teste",
+                "state": "teste",
+                "city": "teste",
+                "district": "teste"
+            },
+            "guardian": "teste",
+            "guardian_identification_number": "123.123.123-13"
+        }
+    ],
+    "patientInformationForm": [],
+    "painelCheckin": [],
+    "tests": [
+        {
+            "id": 1,
+            "name": "Endoscopia"
+        },
+        {
+            "id": 2,
+            "name": "Exame de Sangue"
+        },
+        {
+            "id": 3,
+            "name": "Ressonância Magnética"
+        },
+        {
+            "id": 4,
+            "name": "Tomografia Computadorizada"
+        }
+    ]
+}
