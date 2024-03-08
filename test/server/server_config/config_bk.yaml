@@ -13,16 +13,9 @@ slack:
 #   folder: storage/
 #   name: "file"
 
-auth:
-  jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl
-  jwtExpire: 3600
-  
-  authFields:
-    - document:
-        type: string
-    - cellphone:
-        type: int
-
+# auth:
+#   jwtSecret: cwsMXDtuP447WZQ63nM4dWZ3RppyMl
+#   jwtExpire: 3600
 #   unauthorizedStatusCode: 401
 #   # enableAdm: true
 #   # urlUserPermission:

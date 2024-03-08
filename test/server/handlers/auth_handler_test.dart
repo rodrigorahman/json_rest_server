@@ -3,19 +3,25 @@ import 'package:json_rest_server/src/server/json_rest_server.dart';
 import 'package:test/test.dart';
 
 import '../mock/env_mock.dart';
+import '../mock/generate_config.dart';
+import '../mock/generate_database.dart';
 
 void main() {
   group('Default Fields Auth Handler Test', () {
     JsonRestServer? server;
     setUpAll(() async {
       print('start server');
-      server = JsonRestServer(EnvMockAuth.defaultAuth());
+      GenerateDatabase.uuid();
+      GenerateConfig.defaultAuth();
+      server = JsonRestServer(EnvMock());
       await server!.startServer();
     });
 
     tearDownAll(() => server?.closeServer());
 
     test('Should login success', () async {
+
+
       final Response(
         data: {
           'access_token': accessToken,

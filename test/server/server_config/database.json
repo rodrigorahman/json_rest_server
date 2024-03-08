@@ -3,12 +3,16 @@
         {
             "id": "67256120-0258-1e7b-8d18-87b1c7869e63",
             "email": "at1@gmail.com",
-            "password": "123123"
+            "password": "123123",
+            "document":"123.123.123-12",
+            "cellphone": 11999999999
         },
         {
             "id": "d51a7d90-4296-1e8a-877a-b36fd069fb19",
             "email": "at1@gmail.com",
-            "password": "123123"
+            "password": "123123",
+            "document":"123.123.123-11",
+            "cellphone": 21999999999
         }
     ],
     "adm_users": [

@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:json_rest_server/src/server/core/env.dart';
 import 'package:path/path.dart' as path;
+import 'package:yaml_writer/yaml_writer.dart';
 
 class EnvMock extends Env {
   @override
@@ -15,11 +17,15 @@ class EnvMockAuth extends Env {
 
   factory EnvMockAuth.defaultAuth() {
     // Substituir o arquivo pelo template do config_defaults.yaml
-    final basePath =
-        path.joinAll([path.current, 'test', 'server', 'server_config_auth']);
-    final fileBase = File(path.joinAll([basePath, 'config_default.yaml']));
+    final basePath = path.joinAll([path.current, 'test', 'server', 'mock']);
+    
+    final jsonConfig =
+        File(path.joinAll([basePath, 'auth_default_config.json']));
+    var yamlWriter = YamlWriter(allowUnquotedStrings:true);
+    var yamlDoc = yamlWriter.write(jsonDecode(jsonConfig.readAsStringSync()));
+    print(yamlDoc);
     final finalFile = File(path.joinAll([basePath, 'config.yaml']));
-    finalFile.writeAsStringSync(fileBase.readAsStringSync());
+    finalFile.writeAsStringSync(yamlDoc);
     return EnvMockAuth._();
   }
 

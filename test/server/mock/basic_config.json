@@ -1,0 +1,10 @@
+{
+    "name": "Json Rest Server",
+    "port": 8080,
+    "host": "0.0.0.0",
+    "database": "database.json",
+    "enableSocket": true,
+    "socketPort": 8081,
+    "broadcastProvider": "socket",
+    "idType": "uuid"
+}
