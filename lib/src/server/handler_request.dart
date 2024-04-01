@@ -30,6 +30,11 @@ class HandlerRequest {
     final Map<String, dynamic>? mapResponse;
 
     try {
+      if (request.headers.keys.contains('mock-delay')) {
+        int delay = int.tryParse(request.headers['mock-delay'].toString()) ?? 0;
+        await Future.delayed(Duration(
+            seconds: delay)); // will wait here until the timeout finish
+      }
       switch (method) {
         case 'GET':
           return GetHandler().execute(request);

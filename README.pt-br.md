@@ -118,6 +118,12 @@ DELETE /products/1                                  -> Deletar um produto
 
 Na pasta exemplos existe um arquivo postman com todos os exemplos mencionados acima
 
+## Teste de timeout
+Em todas as suas requisições HTTP agora é possível interferir no request do http para que possa testar um timeout de conexão, como se fosse um delay do servidor.
+*Para o funcionamento é necessário que seja colocado no header da sua reqiusição um campo chamado mock-delay onde o seu valor é um inteiro em segundos*
+Exemplo:
+
+```mock-delay:10```
 
 ## Autenticação
 
