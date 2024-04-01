@@ -18,10 +18,10 @@ class EnvMockAuth extends Env {
   factory EnvMockAuth.defaultAuth() {
     // Substituir o arquivo pelo template do config_defaults.yaml
     final basePath = path.joinAll([path.current, 'test', 'server', 'mock']);
-    
+
     final jsonConfig =
         File(path.joinAll([basePath, 'auth_default_config.json']));
-    var yamlWriter = YamlWriter(allowUnquotedStrings:true);
+    var yamlWriter = YamlWriter(allowUnquotedStrings: true);
     var yamlDoc = yamlWriter.write(jsonDecode(jsonConfig.readAsStringSync()));
     print(yamlDoc);
     final finalFile = File(path.joinAll([basePath, 'config.yaml']));

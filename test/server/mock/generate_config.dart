@@ -10,16 +10,14 @@ class GenerateConfig {
 
   static void basic() => _generateConfig('basic_config.json');
   static void defaultAuth() => _generateConfig('auth_default_config.json');
-  static void defaultAuthIntId() => _generateConfig('auth_default_id_int_config.json');
+  static void defaultAuthIntId() =>
+      _generateConfig('auth_default_id_int_config.json');
 
   static void customFieldsAuth() =>
       _generateConfig('auth_custom_fields_config.json');
 
-
   static void defaultAuthIdInt() =>
       _generateConfig('auth_default_id_int_config.json');
-
-
 
   static void _generateConfig(String mockFile) {
     final jsonConfig = File(path.joinAll([_basePath, 'mock', mockFile]));

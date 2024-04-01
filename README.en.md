@@ -115,6 +115,15 @@ DELETE /products/1                                  -> Delete a product based on
 
 In the example folder there is a postman file with all the examples above
 
+
+## Timeout test
+In all your HTTP requests now it's possible to interfere with the HTTP request so that you can test a connection timeout, as if it were a server delay. 
+*For it to work, it's necessary to include in the header of your request a field called mock-delay where its value is an integer in seconds.*
+
+ Example:
+
+ ```mock-delay:10```
+
 ## Authentication
 
 Json Rest Server already have all the auth process using JWT.

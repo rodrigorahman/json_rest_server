@@ -20,8 +20,6 @@ void main() {
     tearDownAll(() => server?.closeServer());
 
     test('Should login success', () async {
-
-
       final Response(
         data: {
           'access_token': accessToken,

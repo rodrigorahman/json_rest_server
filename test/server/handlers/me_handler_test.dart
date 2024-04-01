@@ -9,7 +9,7 @@ import '../mock/generate_database.dart';
 
 void main() {
   group('Tests get me', () {
-    setUpAll((){
+    setUpAll(() {
       GetIt.I.allowReassignment = true;
     });
     test('Shoud me data when id int', () async {
