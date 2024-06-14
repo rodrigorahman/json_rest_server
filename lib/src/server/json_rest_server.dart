@@ -67,7 +67,7 @@ class JsonRestServer {
     }
 
     final serverHandler = cascadeServer.handler;
-    
+
     _httpServer = await serve(serverHandler, ip, port);
     if (ip == '0.0.0.0') {
       final networks =
@@ -112,5 +112,4 @@ class JsonRestServer {
     await _httpServer.close(force: true);
     _socketHandler.server.close();
   }
-
 }
