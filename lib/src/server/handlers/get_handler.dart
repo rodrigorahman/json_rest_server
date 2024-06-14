@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
+import 'package:json_rest_server/src/core/enum/id_type_enum.dart';
 import 'package:json_rest_server/src/core/helper/cors_helper.dart';
 import 'package:json_rest_server/src/models/config_model.dart';
 import 'package:shelf/shelf.dart';
@@ -82,9 +83,14 @@ class GetHandler {
           body: jsonEncode({'error': 'param id required'}));
     }
 
+    final idUser = switch (_config.idType) {
+      IdTypeEnum.int => int.parse(id),
+      IdTypeEnum.uuid => id,
+    };
+
     final result = {
       ..._databaseRepository.getById(
-          adm ? 'adm_users' : 'users', int.tryParse(id) ?? id)
+          adm ? 'adm_users' : 'users', idUser)
     };
     result.remove('password');
 
