@@ -1,6 +1,13 @@
+## 3.2.0
+  feat: Mock timeout in Http request
+
+## 3.1.0
+  fix: When calling the /me route to fetch data from the logged in user, it is returning a 500 error, as the user has a uuid and not an int id. Thank You @luisgustavoo for the fix
+
+
 ## 3.1.0
   feat:
-    Support for customizing the login validation fields
+    Support for customizing the login validation fields (Thank You @adilsonjuniordev)
 
 ## 3.0.0
   fix: BREAK Change: change PUT behavior to return 404 when resource not found
