@@ -9,7 +9,6 @@ class GenerateDatabase {
   static void uuid() => _generateConfig('database_uuid.json');
   static void int() => _generateConfig('database_int.json');
 
-
   static void _generateConfig(String mockFile) {
     final jsonConfig = File(path.joinAll([_basePath, 'mock', mockFile]));
     final finalFile =

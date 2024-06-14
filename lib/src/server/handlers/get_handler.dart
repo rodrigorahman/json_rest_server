@@ -90,9 +90,7 @@ class GetHandler {
 
     final result = {
       ..._databaseRepository.getById(
-        adm ? 'adm_users' : 'users',
-        idUser,
-      )
+          adm ? 'adm_users' : 'users', int.tryParse(id) ?? id)
     };
     result.remove('password');
 
