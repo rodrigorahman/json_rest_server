@@ -1,3 +1,6 @@
+## 3.2.1
+  feat: Fix: Improvement in error messaging for the RefreshToken service.
+
 ## 3.2.0
   feat: Mock timeout in Http request
 
