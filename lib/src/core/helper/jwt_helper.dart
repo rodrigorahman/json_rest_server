@@ -60,7 +60,7 @@ class JwtHelper {
     if (jwtExpire == null || jwtSecret == null) {
       throw ConfigNotFoundException();
     }
-
+  
     return verifyJwtHS256Signature(token, jwtSecret);
   }
 }
