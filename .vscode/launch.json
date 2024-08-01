@@ -39,7 +39,7 @@
             "program": "${workspaceFolder}/bin/json_rest_server.dart",
             "args": ["run"],
             "toolArgs": [
-                "--define=debugPath=/Users/adilsonjunior/w2o/apps/pbs/pbs_api/"
+                "--define=debugPath=J:\\open-source\\packages\\json_rest_server\\example\\"
             ]
         },
 

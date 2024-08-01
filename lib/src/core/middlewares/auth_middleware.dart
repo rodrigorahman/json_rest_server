@@ -247,23 +247,53 @@ class AuthMiddleware extends Middlewares {
     if (authHeaderContent[0] != 'Bearer') {
       throw JwtException.invalidToken;
     }
-    _validRefreshToken(authHeaderContent[1], body['refresh_token'] ?? '');
-    final claims = JwtHelper.getClaims(authHeaderContent[1]).toJson();
+    try {
+      _validRefreshToken(authHeaderContent[1], body['refresh_token'] ?? '');
+      final claims = JwtHelper.getClaims(authHeaderContent[1]).toJson();
 
-    final id = claims['sub'];
-    final adm = claims['adm'];
+      final id = claims['sub'];
+      final adm = claims['adm'];
 
-    final token = JwtHelper.generateJWT(int.parse(id), adm);
-    final refreshToken = JwtHelper.refreshToken(token);
+      final token = JwtHelper.generateJWT(int.parse(id), adm);
+      final refreshToken = JwtHelper.refreshToken(token);
 
-    return Response.ok(
-      jsonEncode({
-        'access_token': token,
-        'refresh_token': refreshToken,
-        'type': 'Bearer',
-      }),
-      headers: jsonHelper.jsonReturn,
-    );
+      return Response.ok(
+        jsonEncode({
+          'access_token': token,
+          'refresh_token': refreshToken,
+          'type': 'Bearer',
+        }),
+        headers: jsonHelper.jsonReturn,
+      );
+    } on JwtException catch (e, s) {
+      log('Erro ao validar token JWT', error: e, stackTrace: s);
+      final claims = JwtHelper.getClaims(body['refresh_token']).toJson();
+      final date = DateTime.fromMillisecondsSinceEpoch(claims['nbf'] * 1000, isUtc: true);
+      return switch (e) {
+        JwtException.tokenNotYetAccepted =>
+          Response(_config.auth?.unauthorizedStatusCode ?? 403,
+              headers: jsonHelper.jsonReturn,
+              body: jsonEncode({
+                "error": "refresh_token_not_yet_valid",
+                "error_description":
+                    "The token cannote be used before ${date.toIso8601String()}"
+              })),
+        _ => Response(
+            _config.auth?.unauthorizedStatusCode ?? 403,
+            headers: jsonHelper.jsonReturn,
+            body: jsonEncode({
+              "error": "invalid_refresh_token",
+              "error_description": "The refresh token is invalid"
+            })
+          )
+      };
+    } catch (e, s) {
+      log('Internal Server Error', error: e, stackTrace: s);
+      return Response(
+        _config.auth?.unauthorizedStatusCode ?? 403,
+        headers: jsonHelper.jsonReturn,
+      );
+    }
   }
 
   void _validRefreshToken(String accessToken, String refreshToken) {
